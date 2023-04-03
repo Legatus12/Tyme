@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body, #root {
+ @apply w-full h-full
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    padding: 2em;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+}
