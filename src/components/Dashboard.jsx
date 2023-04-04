@@ -1,4 +1,4 @@
-import '../App.css'
+import '../styles.css'
 import { Link, Route, Routes } from 'react-router-dom'
 import Calendar from './Dashboard/Calendar'
 import Habits from './Dashboard/Habits'

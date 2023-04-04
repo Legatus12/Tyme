@@ -1,3 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body, #root { @apply w-full h-full }
+
+body { font-family: 'Inter', sans-serif; }
+
+.auth-input { @apply w-full p-2 bg-transparent focus:outline-none border-solid border-b-2 border-black }
+
+.auth-button { @apply p-2 bg-black hover:bg-coal w-full text-white }
+
+.auth-redirect { @apply hover:underline cursor-pointer }
+
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    padding: 2em;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+}
