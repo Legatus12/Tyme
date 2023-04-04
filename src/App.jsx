@@ -7,19 +7,10 @@ import Logout from './components/Logout'
 import Settings from './components/Settings'
 
 
-function App() {
+const App = () => {
 
   return (
-    <BrowserRouter >
-
-      <header>
-        <Link to='login'>Log in</Link>
-        <Link to='signup'>Sign up</Link>
-        <Link to='dashboard'>Dashboard</Link>
-        <Link to='settings'>Settings</Link>
-        <Link to='logout'>Logout</Link>
-      </header>
-
+    <BrowserRouter>
       <Routes>
         <Route path='/*' element = { <Dashboard /> } />
         <Route path='login' element = { <Login /> } />
@@ -28,7 +19,6 @@ function App() {
         <Route path='settings' element = { <Settings/> } />
         <Route path='logout' element = { <Logout/> } />
       </Routes>
-    
     </BrowserRouter>
   )
 }
