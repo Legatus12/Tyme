@@ -11,7 +11,8 @@ export default {
       silver: '#e3e4e5',
       black: '#121212',
       coal: '#424242',
-      ash: '#dfdfdf'
+      ash: '#dfdfdf',
+      sunset: '#fad6a5',
     },
     extend: {},
   },

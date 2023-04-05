@@ -8,9 +8,9 @@ html, body, #root { @apply w-full h-full }
 
 body { font-family: 'Inter', sans-serif; }
 
-.auth-input { @apply w-full p-2 bg-transparent focus:outline-none border-solid border-b-2 border-black }
+.auth-input { @apply w-full p-2 bg-white focus:outline-none border-solid border-2 border-ash rounded-xl }
 
-.auth-button { @apply p-2 bg-black hover:bg-coal w-full text-white }
+.auth-button { @apply bg-black hover:bg-coal duration-200 w-full text-white rounded-xl }
 
 .auth-redirect { @apply hover:underline cursor-pointer }
 
