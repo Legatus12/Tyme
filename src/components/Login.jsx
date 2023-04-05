@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { auth } from '../../firebase'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
+import { Link } from "react-router-dom"
 
 const Login = () => {
 
@@ -17,20 +18,17 @@ const Login = () => {
 
     const signInWithGoogle = (e) => {
       e.preventDefault()
-      signInWithPopup(auth, new GoogleAuthProvider())
+      signInWithRedirect(auth, new GoogleAuthProvider())
       .then(credentials => console.log(credentials))
       .catch(error => console.log(error))
     }
 
     return (
-      <div className='w-full h-full flex flex-col justify-center items-center gap-8 bg-silver'>
-        <form className='bg-white flex flex-col items-center gap-8 p-8 rounded-xl shadow-2xl w-96'>
-
-          <img src="src/img/tyme.png" alt="TYME" className='w-24' />
+      <div className='w-full h-full flex flex-col lg:flex-row justify-center gap-12 lg:gap-64 items-center bg-silver'>
+        <img src="src/img/tyme.png" alt="TYME" className='w-24 h-24 lg:w-64 lg:h-64 shadow-2xl'/>
+        <form className='flex flex-col gap-4 p-8 rounded-xl w-full sm:w-96'>
 
           <h1 className='text-3xl font-bold'>¡Bienvenido!</h1>
-
-          <br />
 
           <input type="email" placeholder='correo electrónico'
           value={email} onChange={e => setEmail(e.target.value)}
@@ -40,17 +38,21 @@ const Login = () => {
           value={password} onChange={e => setPassword(e.target.value)}
           className='auth-input' />
 
-          <button onClick={signIn} className='auth-button'>iniciar sesión</button>
-          
-          <p className='h-8'></p>
+          <p value={msg}
+          className='h-6'></p>
 
-          <button onClick={signInWithGoogle} className='w-full flex justify-center items-center gap-4 border-solid border-black border-2 p-2 hover:bg-ash'>
+          <button onClick={signIn} className='auth-button p-2'>iniciar sesión</button>
+          
+          <Link to='/signup' className='auth-redirect self-center'>¿Todavía no tienes una cuenta?</Link>
+
+          <hr className='my-8'/>
+
+          <button onClick={signInWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
             <p>o continúa con Google</p>
             <img src="src/img/google.png" className='w-8'/>
           </button>
 
         </form>
-        <p className='auth-redirect'>¿Todavía no tienes una cuenta? Crea una ahora.</p>
       </div>
     )
 }
