@@ -24,11 +24,13 @@ const Login = () => {
     }
 
     return (
-      <div className='w-full h-full flex flex-col lg:flex-row justify-center gap-12 lg:gap-64 items-center bg-silver'>
-        <img src="src/img/tyme.png" alt="TYME" className='w-24 h-24 lg:w-64 lg:h-64 shadow-2xl'/>
-        <form className='flex flex-col gap-4 p-8 rounded-xl w-full sm:w-96'>
+      <div className='auth'>
+        <img src="src/img/tyme.png" alt="TYME" className='auth-img'/>
+        <form className='auth-form'>
 
-          <h1 className='text-3xl font-bold'>¡Bienvenido!</h1>
+          <h1 className='auth-title'>¡Bienvenido!</h1>
+
+          <p className='auth-text'>Llegas justo a tiempo.</p>
 
           <input type="email" placeholder='correo electrónico'
           value={email} onChange={e => setEmail(e.target.value)}
