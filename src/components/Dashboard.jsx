@@ -1,4 +1,4 @@
-import '../App.css'
+import '../styles.css'
 import { Link, Route, Routes } from 'react-router-dom'
 import Calendar from './Dashboard/Calendar'
 import Habits from './Dashboard/Habits'
@@ -9,42 +9,43 @@ function Dashboard() {
 
     return (
         <div className='dashboard'>
-            <ul>
-                <li>
-                    <Link to='calendar'>
-                        Calendar
+
+            <div className='dashboard-menu'>
+
+                <p>
+                    <Link to='' className='dashboard-user'>
+                        <img src="src/img/user.png" className='w-12' />
+                        <p>username</p>
                     </Link>
-                </li>
-                <li>
-                    <Link to='habits'>
-                        Habits
-                    </Link>
-                </li>
-                <li>
-                    <Link to='notes'>
-                        Notes
-                    </Link>
-                </li>
-                <li>
-                    <Link to='projects'>
-                        Projects
-                    </Link>
-                </li>
+                    <button className='hide-dashboard-menu'><img src="src/img/hide.png" /></button>
+                </p>
+                <p>
+                    <img src="src/img/calendar.png" className='w-8' />
+                    <Link to='calendar'>Calendar</Link>
+                </p>
+                <p>
+                    <img src="src/img/habits.png" className='w-8' />
+                    <Link to='habits'>Habits</Link>
+                </p>
+                <p>
+                    <img src="src/img/notes.png" className='w-8' />
+                    <Link to='notes'>Notes</Link>
+                </p>
+                <p>
+                    <img src="src/img/projects.png" className='w-8' />
+                    <Link to='projects'>Projects</Link>
+                </p>
+            </div>
 
-            </ul>
-
-            <Routes>
-                <Route path='/*' element={<Calendar />} />
-
-                <Route path='calendar/*' element={<Calendar />} />
-
-                <Route path='habits' element={<Habits />} />
-
-                <Route path='notes' element={<Notes />} />
-
-                <Route path='projects' element={<Projects />} />
-            </Routes>
-
+            <div className='dashboard-view'>
+                <Routes>
+                    <Route path='/*' element={<Calendar />} />
+                    <Route path='calendar/*' element={<Calendar />} />
+                    <Route path='habits' element={<Habits />} />
+                    <Route path='notes' element={<Notes />} />
+                    <Route path='projects' element={<Projects />} />
+                </Routes>
+            </div>
 
         </div>
     )
