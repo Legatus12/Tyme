@@ -10,6 +10,8 @@ body { @apply bg-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
+/*header*/
+
 /*login && signup*/
 
 .auth { @apply flex flex-col lg:flex-row justify-center gap-12 lg:gap-64 items-center bg-silver }
@@ -30,17 +32,17 @@ body { font-family: 'Inter', sans-serif; }
 
 /*dashboard*/
 
-.dashboard { @apply flex p-8 gap-8 }
+.dashboard { @apply flex }
 
-.dashboard-menu { @apply w-96 bg-white flex flex-col rounded-xl text-lg font-bold }
+.dashboard-menu { @apply w-64 flex flex-col gap-16 font-bold }
 
-.dashboard-menu > * { @apply flex items-center gap-4 border-solid border-b-2 border-ash p-4 }
+.dashboard-title { @apply text-lg font-black p-4 }
 
-.dashboard-menu > *:first-child { @apply p-6 justify-between text-xl font-black }
+.menu-links { @apply flex flex-col }
 
-.dashboard-user { @apply flex items-center gap-4 hover:bg-ash rounded-xl p-2 duration-200 }
+.menu-links > * { @apply flex gap-4 items-center hover:bg-sunset duration-100 p-4 }
 
-.hide-dashboard-menu { @apply w-12 hover:bg-ash rounded-xl p-1 duration-200 }
+.dashboard-view { @apply w-full h-full bg-white border-solid border-l-2 border-ash }
 
 .calendar {
     display: flex;

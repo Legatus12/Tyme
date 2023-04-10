@@ -11,30 +11,33 @@ function Dashboard() {
         <div className='dashboard'>
 
             <div className='dashboard-menu'>
-
-                <p>
-                    <Link to='' className='dashboard-user'>
-                        <img src="src/img/user.png" className='w-12' />
-                        <p>username</p>
+                <div className='dashboard-title'>
+                    <h1>T Y M E</h1>
+                </div>
+                <div className='menu-links h-full'>
+                    <Link to='calendar'>
+                        <img src="src/img/calendar.png" className='w-6' />
+                        <p>Calendar</p>
                     </Link>
-                    <button className='hide-dashboard-menu'><img src="src/img/hide.png" /></button>
-                </p>
-                <p>
-                    <img src="src/img/calendar.png" className='w-8' />
-                    <Link to='calendar'>Calendar</Link>
-                </p>
-                <p>
-                    <img src="src/img/habits.png" className='w-8' />
-                    <Link to='habits'>Habits</Link>
-                </p>
-                <p>
-                    <img src="src/img/notes.png" className='w-8' />
-                    <Link to='notes'>Notes</Link>
-                </p>
-                <p>
-                    <img src="src/img/projects.png" className='w-8' />
-                    <Link to='projects'>Projects</Link>
-                </p>
+                    <Link to='habits'>
+                        <img src="src/img/habits.png" className='w-6' />
+                        <p>Habits</p>
+                    </Link>
+                    <Link to='notes'>
+                        <img src="src/img/notes.png" className='w-6' />
+                        <p>Notes</p>
+                    </Link>
+                    <Link to='projects'>
+                        <img src="src/img/projects.png" className='w-6' />
+                        <p>Projects</p>
+                    </Link>
+                </div>
+                <div className='menu-links mb-8'>
+                    <button><img src="src/img/notifications.png" className='w-6'/><p>Notificaciones</p></button>
+                    <button><img src="src/img/user.png" className='w-6'/>username</button>
+                    <button><img src="src/img/settings.png" className='w-6'/>ajustes</button>
+                </div>
+
             </div>
 
             <div className='dashboard-view'>
