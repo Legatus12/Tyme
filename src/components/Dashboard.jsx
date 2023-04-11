@@ -1,49 +1,32 @@
-import '../styles.css'
 import { Link, Route, Routes } from 'react-router-dom'
-import Calendar from './Dashboard/Calendar'
-import Habits from './Dashboard/Habits'
-import Notes from './Dashboard/Notes'
-import Projects from './Dashboard/Projects'
+import Overview from './Overview'
+import Notifications from './Notifications'
+import User from './User'
+import Settings from './Settings'
 
 function Dashboard() {
+
+    const menu = [
+        { path: 'overview', name: 'general' },
+        { path: 'notifications', name: 'general' },
+        { path: 'user', name: 'general' },
+        { path: 'settings', name: 'general' },
+    ]
 
     return (
         <div className='dashboard'>
 
             <div className='dashboard-menu'>
-
-                <p>
-                    <Link to='' className='dashboard-user'>
-                        <img src="src/img/user.png" className='w-12' />
-                        <p>username</p>
-                    </Link>
-                    <button className='hide-dashboard-menu'><img src="src/img/hide.png" /></button>
-                </p>
-                <p>
-                    <img src="src/img/calendar.png" className='w-8' />
-                    <Link to='calendar'>Calendar</Link>
-                </p>
-                <p>
-                    <img src="src/img/habits.png" className='w-8' />
-                    <Link to='habits'>Habits</Link>
-                </p>
-                <p>
-                    <img src="src/img/notes.png" className='w-8' />
-                    <Link to='notes'>Notes</Link>
-                </p>
-                <p>
-                    <img src="src/img/projects.png" className='w-8' />
-                    <Link to='projects'>Projects</Link>
-                </p>
+                {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
             </div>
 
             <div className='dashboard-view'>
                 <Routes>
-                    <Route path='/*' element={<Calendar />} />
-                    <Route path='calendar/*' element={<Calendar />} />
-                    <Route path='habits' element={<Habits />} />
-                    <Route path='notes' element={<Notes />} />
-                    <Route path='projects' element={<Projects />} />
+                    <Route path='/*' element={<Overview />} />
+                    <Route path='overview/*' element={<Overview />} />
+                    <Route path='notifications' element={<Notifications />} />
+                    <Route path='user' element={<User />} />
+                    <Route path='settings' element={<Settings />} />
                 </Routes>
             </div>
 

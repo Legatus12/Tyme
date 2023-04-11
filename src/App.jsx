@@ -4,7 +4,6 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Dashboard from './components/Dashboard'
 import Logout from './components/Logout'
-import Settings from './components/Settings'
 
 
 const App = () => {
@@ -16,7 +15,6 @@ const App = () => {
         <Route path='login' element = { <Login /> } />
         <Route path='signup' element = { <Signup /> } />
         <Route path='dashboard/*' element = { <Dashboard/> } />
-        <Route path='settings' element = { <Settings/> } />
         <Route path='logout' element = { <Logout/> } />
       </Routes>
     </BrowserRouter>
