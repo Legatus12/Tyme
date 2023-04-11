@@ -1,9 +1,14 @@
 import { useState } from 'react'
+import Header from './Header'
 import { auth } from '../../firebase'
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
 import { Link } from "react-router-dom"
 
+import { useTranslation } from 'react-i18next'
+
 const Signup = () => {
+
+    const { t } = useTranslation()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,32 +30,32 @@ const Signup = () => {
 
     return (
       <div className='auth'>
-        <img src="src/img/tyme.png" alt="TYME" className='auth-img'/>
+        <Header />
         <form className='auth-form'>
 
-          <h1 className='auth-title'>Crea tu cuenta ahora</h1>
+          <h1 className='auth-title'>{t('auth.signupTitle')}</h1>
 
-          <p className='auth-text'>¡Ha llegado el momento de empezar a ultizar TYME!</p>
+          <p className='auth-text'>{t('auth.signupIntro')}</p>
 
-          <input type="email" placeholder='correo electrónico'
+          <input type="email" placeholder={t('mail')}
           value={email} onChange={e => setEmail(e.target.value)}
           className='auth-input' />
 
-          <input type="password" placeholder='contraseña' 
+          <input type="password" placeholder={t('pass')}
           value={password} onChange={e => setPassword(e.target.value)}
           className='auth-input' />
 
           <p value={msg}
           className='h-6'></p>
 
-          <button onClick={signUp} className='auth-button p-2'>crear cuenta</button>
+          <button onClick={signUp} className='auth-button p-2'>{t('auth.signup')}</button>
           
-          <Link to='/login' className='auth-redirect self-center'>¿Ya tienes una cuenta?</Link>
+          <Link to='/login' className='auth-redirect self-center'>{t('auth.loginRedirect')}</Link>
 
           <hr className='my-8'/>
 
           <button onClick={signUpWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
-            <p>o continúa con Google</p>
+            <p>{t('auth.google')}</p>
             <img src="src/img/google.png" className='w-8'/>
           </button>
 
