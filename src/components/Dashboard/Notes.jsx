@@ -10,14 +10,11 @@ function Notes () {
 
   const  handleSubmit = (evt) => {
     evt.preventDefault();
-
     setNotes(values)
+    console.log(notes)
+    setValues({title: "", text: ""})
     
   }
-
-  useEffect(() => {
-    setNotes(values)
-  });
 
   const handleChange = (evt) => {
 

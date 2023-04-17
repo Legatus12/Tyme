@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import Header from './Header'
 import { auth } from '../../firebase'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, signInWithPopup } from 'firebase/auth'
 import { Link } from "react-router-dom"
-
 import { useTranslation } from 'react-i18next'
+
+const Login = ({setUser}) => {
+
 
 const Login = () => {
   
@@ -17,16 +19,24 @@ const Login = () => {
     const signIn = (e) => {
       e.preventDefault()
       signInWithEmailAndPassword(auth, email, password)
-      .then(credentials => console.log(credentials))
+      .then(credentials => handleUser(credentials))
       .catch(error => console.log(error))
     }
 
     const signInWithGoogle = (e) => {
       e.preventDefault()
-      signInWithRedirect(auth, new GoogleAuthProvider())
-      .then(credentials => console.log(credentials))
+      signInWithPopup(auth, new GoogleAuthProvider())
+      .then(credentials => handleUser(credentials))
       .catch(error => console.log(error))
     }
+
+    const handleUser = (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    };
 
     return (
       <div className='auth'>
