@@ -5,36 +5,36 @@ import Habits from './Dashboard/Habits'
 import Notes from './Dashboard/Notes'
 import Projects from './Dashboard/Projects'
 
-function Dashboard() {
+function Dashboard({user}) {
 
     return (
         <div className='dashboard'>
 
             <div className='dashboard-menu'>
 
-                <p>
+                <div>
                     <Link to='' className='dashboard-user'>
                         <img src="src/img/user.png" className='w-12' />
-                        <p>username</p>
+                        <p>{user.user.displayName}</p>
                     </Link>
                     <button className='hide-dashboard-menu'><img src="src/img/hide.png" /></button>
-                </p>
-                <p>
+                </div>
+                <div>
                     <img src="src/img/calendar.png" className='w-8' />
                     <Link to='calendar'>Calendar</Link>
-                </p>
-                <p>
+                </div>
+                <div>
                     <img src="src/img/habits.png" className='w-8' />
                     <Link to='habits'>Habits</Link>
-                </p>
-                <p>
+                </div>
+                <div>
                     <img src="src/img/notes.png" className='w-8' />
                     <Link to='notes'>Notes</Link>
-                </p>
-                <p>
+                </div>
+                <div>
                     <img src="src/img/projects.png" className='w-8' />
                     <Link to='projects'>Projects</Link>
-                </p>
+                </div>
             </div>
 
             <div className='dashboard-view'>

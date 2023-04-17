@@ -5,22 +5,37 @@ import Signup from './components/Signup'
 import Dashboard from './components/Dashboard'
 import Logout from './components/Logout'
 import Settings from './components/Settings'
+import { useState } from 'react'
 
 
 const App = () => {
+  
+  const [user, setUser] = useState(null);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/*' element = { <Dashboard /> } />
-        <Route path='login' element = { <Login /> } />
-        <Route path='signup' element = { <Signup /> } />
-        <Route path='dashboard/*' element = { <Dashboard/> } />
-        <Route path='settings' element = { <Settings/> } />
-        <Route path='logout' element = { <Logout/> } />
-      </Routes>
-    </BrowserRouter>
-  )
+  console.log(user)
+  if(user === null){
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path='/*' element = { <Login setUser={setUser}/> } />
+          <Route path='signup' element = { <Signup /> } />
+        </Routes>
+      </BrowserRouter>
+    )
+  }
+  else{
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path='/*' element = { <Dashboard user={user}/> } />
+          <Route path='dashboard/*' element = { <Dashboard/> } />
+          <Route path='settings' element = { <Settings/> } />
+          <Route path='logout' element = { <Logout/> } />
+        </Routes>
+      </BrowserRouter>
+    )
+  }
+
 }
 
 export default App
