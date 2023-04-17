@@ -10,13 +10,19 @@ body { @apply bg-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
+/*header*/
+
 /*login && signup*/
 
-.auth { @apply flex flex-col lg:flex-row justify-center gap-12 lg:gap-64 items-center bg-silver }
+.auth { @apply flex flex-col lg:flex-row justify-around lg:justify-center lg:gap-64 items-center bg-silver }
 
-.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 shadow-2xl }
+.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 shadow-2xl hidden lg:block }
 
-.auth-form { @apply fade-in flex flex-col gap-4 p-8 rounded-xl w-full sm:w-96 } 
+.auth-languages { @apply flex gap-4 }
+
+.auth-languages > div { @apply w-20 }
+
+.auth-form { @apply fade-in flex flex-col gap-3 lg:gap-4 p-4 lg:p-8 rounded-xl w-full sm:w-96 } 
 
 .auth-title { @apply text-3xl font-black }
 
@@ -30,23 +36,15 @@ body { font-family: 'Inter', sans-serif; }
 
 /*dashboard*/
 
-.dashboard { @apply flex p-8 gap-8 }
+.dashboard { @apply flex flex-col-reverse md:flex-row }
 
-.dashboard-menu { @apply w-96 bg-white flex flex-col rounded-xl text-lg font-bold }
+.dashboard-menu { @apply h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-24 font-bold shrink-0 }
 
-.dashboard-menu > * { @apply flex items-center gap-4 border-solid border-b-2 border-ash p-4 }
+.active-link { @apply bg-sunset }
 
-.dashboard-menu > *:first-child { @apply p-6 justify-between text-xl font-black }
+.dashboard-view { @apply w-full h-full bg-white border-solid border-l-2 border-ash }
 
-.dashboard-user { @apply flex items-center gap-4 hover:bg-ash rounded-xl p-2 duration-200 }
 
-.hide-dashboard-menu { @apply w-12 hover:bg-ash rounded-xl p-1 duration-200 }
-
-.calendar {
-    display: flex;
-    flex-direction: column;
-    padding: 2em;
-}
 
 .fade-in {
 	opacity: 1;

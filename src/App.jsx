@@ -7,7 +7,6 @@ import Logout from './components/Logout'
 import Settings from './components/Settings'
 import { useState } from 'react'
 
-
 const App = () => {
   
   const [user, setUser] = useState(null);
@@ -35,7 +34,6 @@ const App = () => {
       </BrowserRouter>
     )
   }
-
 }
 
 export default App

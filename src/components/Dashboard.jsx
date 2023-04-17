@@ -1,11 +1,17 @@
-import '../styles.css'
 import { Link, Route, Routes } from 'react-router-dom'
-import Calendar from './Dashboard/Calendar'
-import Habits from './Dashboard/Habits'
-import Notes from './Dashboard/Notes'
-import Projects from './Dashboard/Projects'
+import Overview from './Overview'
+import Notifications from './Notifications'
+import User from './User'
+import Settings from './Settings'
 
 function Dashboard({user}) {
+
+    const menu = [
+        { path: 'overview', name: 'general' },
+        { path: 'notifications', name: 'general' },
+        { path: 'user', name: 'general' },
+        { path: 'settings', name: 'general' },
+    ]
 
     return (
         <div className='dashboard'>
@@ -35,15 +41,17 @@ function Dashboard({user}) {
                     <img src="src/img/projects.png" className='w-8' />
                     <Link to='projects'>Projects</Link>
                 </div>
+                {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
+
             </div>
 
             <div className='dashboard-view'>
                 <Routes>
-                    <Route path='/*' element={<Calendar />} />
-                    <Route path='calendar/*' element={<Calendar />} />
-                    <Route path='habits' element={<Habits />} />
-                    <Route path='notes' element={<Notes />} />
-                    <Route path='projects' element={<Projects />} />
+                    <Route path='/*' element={<Overview />} />
+                    <Route path='overview/*' element={<Overview />} />
+                    <Route path='notifications' element={<Notifications />} />
+                    <Route path='user' element={<User />} />
+                    <Route path='settings' element={<Settings />} />
                 </Routes>
             </div>
 
