@@ -6,9 +6,6 @@ import { Link } from "react-router-dom"
 import { useTranslation } from 'react-i18next'
 
 const Login = ({setUser}) => {
-
-
-const Login = () => {
   
     const { t } = useTranslation()
 
@@ -30,9 +27,9 @@ const Login = () => {
       .catch(error => console.log(error))
     }
 
-    const handleUser = (user) => {
-      if (user) {
-        setUser(user);
+    const handleUser = (credentials) => {
+      if (credentials) {
+        setUser(credentials.user);
       } else {
         setUser(null);
       }
