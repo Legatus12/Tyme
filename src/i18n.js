@@ -31,6 +31,14 @@ i18n
             signupRedirect: '¿Todavía no tienes una cuenta?',
             loginRedirect: '¿Ya tienes una cuenta?',
             google: 'o continúa con Google'
+          },
+          settings: {
+            title: 'Configuración',
+            preferences: 'Preferencias',
+            theme: 'Tema',
+            language: 'Idioma',
+            account: 'Cuenta',
+            notifications: 'Notificaciones',
           }
         }
       },

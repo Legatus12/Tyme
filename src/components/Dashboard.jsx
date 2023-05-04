@@ -14,7 +14,7 @@ const Dashboard = ({user}) => {
     ]
 
     return (
-        <div className='dashboard'>
+        <div className='dashboard full'>
 
             <div className='dashboard-menu'>
                 {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
