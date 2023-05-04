@@ -36,7 +36,7 @@ const Login = ({setUser}) => {
     };
 
     return (
-      <div className='auth'>
+      <div className='auth full'>
         <Header />
         <form className='auth-form'>
 

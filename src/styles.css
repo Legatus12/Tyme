@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root, .auth, .dashboard { @apply w-full h-full }
+html, body, #root, .full { @apply w-full h-full }
 
 body { @apply bg-silver }
 
@@ -42,9 +42,21 @@ body { font-family: 'Inter', sans-serif; }
 
 .active-link { @apply bg-sunset }
 
-.dashboard-view { @apply w-full h-full bg-white border-solid border-l-2 border-ash }
+.dashboard-view { @apply w-full h-full p-12 bg-white border-solid border-l-2 border-ash }
 
+/*settings*/
 
+.settings { @apply flex flex-col }
+
+.settings hr { @apply my-2 }
+
+.settings h1 { @apply font-black text-3xl mb-8 underline }
+
+.settings h2 { @apply font-bold text-2xl my-2 }
+
+.settings-option { @apply w-full flex items-center justify-between my-2 }
+
+/*login transition*/
 
 .fade-in {
 	opacity: 1;
@@ -61,4 +73,68 @@ body { font-family: 'Inter', sans-serif; }
 	100% {
 		opacity: 1;
 	}
+}
+
+/*theme switcher*/
+
+.toggle-switch {
+  position: relative;
+  width: 80px;
+  height: 40px;
+  --light: #fad6a5;
+  --dark: #28292c;
+  --link: rgb(27, 129, 112);
+  --link-hover: rgb(24, 94, 82);
+}
+
+.switch-label {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  background-color: var(--dark);
+  border-radius: 25px;
+  cursor: pointer;
+  border: 3px solid var(--dark);
+}
+
+.checkbox {
+  position: absolute;
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider {
+  background-color: white;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  -webkit-box-shadow: inset 12px -4px 0px 0px var(--light);
+  box-shadow: inset 12px -4px 0px 0px var(--light);
+  background-color: var(--dark);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider::before {
+  -webkit-transform: translateX(40px);
+  -ms-transform: translateX(40px);
+  transform: translateX(40px);
+  background-color: #fad6a5;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
