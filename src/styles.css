@@ -20,7 +20,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-languages { @apply flex gap-4 }
 
-.auth-languages > div { @apply w-20 }
+.auth-languages > div { @apply w-16 }
 
 .auth-form { @apply fade-in flex flex-col gap-3 lg:gap-4 p-4 lg:p-8 rounded-xl w-full sm:w-96 } 
 
@@ -28,7 +28,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-text { @apply text-lg h-16 }
 
-.auth-input { @apply w-full p-2 bg-white focus:outline-none border-solid border-2 border-ash rounded-xl }
+.auth-input { @apply w-full p-2 bg-white focus:outline-sunset border-solid border-2 border-ash rounded-xl }
 
 .auth-button { @apply bg-black hover:bg-coal duration-200 w-full text-white rounded-xl }
 
@@ -48,13 +48,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .settings { @apply flex flex-col }
 
-.settings hr { @apply my-2 }
+.settings h1 { @apply font-black text-3xl underline }
 
-.settings h1 { @apply font-black text-3xl mb-8 underline }
+.settings h2 { @apply font-bold text-2xl mt-8 }
 
-.settings h2 { @apply font-bold text-2xl my-2 }
-
-.settings-option { @apply w-full flex items-center justify-between my-2 }
+.settings-option { @apply w-full h-16 flex items-center justify-between border-solid border-b-2 border-silver p-2 }
 
 /*login transition*/
 
