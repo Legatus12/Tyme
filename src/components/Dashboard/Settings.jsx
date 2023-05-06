@@ -1,7 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const Settings = () => {
+
+    const [theme, setTheme] = useState(localStorage.getItem('theme'))
+
+    useEffect(() => {
+      theme == 'dark' ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
+    }, [theme])
+
+    const handleThemeSwitch = () => { 
+      if(theme == 'dark') {
+        setTheme('light')
+        localStorage.setItem('darkMode', 'light')
+      } else {
+        setTheme('dark')
+        localStorage.setItem('darkMode', 'dark')
+      }
+    }
 
     const { t, i18n } = useTranslation()
 
@@ -17,12 +33,7 @@ const Settings = () => {
         <h2>{t('settings.preferences')}</h2>
         <div className='settings-option'>
           <p>{t('settings.theme')}</p>
-          <div class="toggle-switch">
-            <label class="switch-label">
-              <input type="checkbox" class="checkbox"/>
-              <span class="slider"></span>
-            </label>
-          </div> 
+          <button onClick={handleThemeSwitch}>theme</button>
         </div>
         <div className='settings-option'>
           <p>{t('settings.language')}</p>

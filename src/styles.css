@@ -42,7 +42,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .active-link { @apply bg-sunset }
 
-.dashboard-view { @apply w-full h-full p-12 bg-white border-solid border-l-2 border-ash }
+.dashboard-view { @apply w-full h-full p-12 bg-white dark:bg-coal border-solid border-l-2 border-ash }
 
 /*settings*/
 

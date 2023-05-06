@@ -12,23 +12,29 @@ const App = () => {
   const { i18n } = useTranslation()
 
   useMountEffect(() => {
-
+    /*language config*/
     let lan = localStorage.getItem('language')
-    console.log(lan)
 
     if(lan == null) {
-      console.log('echo')
       if(navigator.language.substring(0, 2) == 'es') {
-        lan = { key: 'es', name: 'Español' }
+        lan = 'es'
         localStorage.setItem('language', lan)
       } else {
-        lan = { key: 'es', name: 'English' }
+        lan = 'en'
         localStorage.setItem('language', lan)
-        console.log(localStorage.getItem('language'))
       }
     } 
-    i18n.changeLanguage(lan.key)
-    
+    i18n.changeLanguage(lan)
+
+    /*theme config*/
+    let darkMode = localStorage.getItem('darkMode')
+
+    if(darkMode == null) {
+      localStorage.setItem('darkMode', 'light')
+    } else if(darkMode == true) {
+      localStorage.setItem('darkMode', 'dark')
+      document.documentElement.classList.add('dark')
+    }
   })
   
   const [user, setUser] = useState(null);
