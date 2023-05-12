@@ -27,12 +27,12 @@ const App = () => {
     i18n.changeLanguage(lan)
 
     /*theme config*/
-    let darkMode = localStorage.getItem('darkMode')
+    let darkMode = localStorage.getItem('theme')
 
-    if(darkMode == null) {
-      localStorage.setItem('darkMode', 'light')
-    } else if(darkMode == true) {
-      localStorage.setItem('darkMode', 'dark')
+    if(darkMode == null || darkMode == 'light') {
+      localStorage.setItem('theme', 'light')
+    } else {
+      localStorage.setItem('theme', 'dark')
       document.documentElement.classList.add('dark')
     }
   })

@@ -39,7 +39,9 @@ i18n
             language: 'Idioma',
             account: 'Cuenta',
             notifications: 'Notificaciones',
-          }
+          },
+          lightMode: 'claro',
+          darkMode: 'oscuro',
         }
       },
       en: {

@@ -6,7 +6,7 @@
 
 html, body, #root, .full { @apply w-full h-full }
 
-body { @apply bg-silver }
+body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
@@ -14,13 +14,11 @@ body { font-family: 'Inter', sans-serif; }
 
 /*login && signup*/
 
-.auth { @apply flex flex-col lg:flex-row justify-around lg:justify-center lg:gap-64 items-center bg-silver }
+.auth { @apply dark:bg-black flex flex-col lg:flex-row justify-around lg:justify-center lg:gap-64 items-center }
 
-.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 shadow-2xl hidden lg:block }
+.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 shadow-2xl dark:shadow-gray hidden lg:block }
 
-.auth-languages { @apply flex gap-4 }
-
-.auth-languages > div { @apply w-16 }
+.auth-languages { @apply flex gap-2 }
 
 .auth-form { @apply fade-in flex flex-col gap-3 lg:gap-4 p-4 lg:p-8 rounded-xl w-full sm:w-96 } 
 
@@ -28,9 +26,9 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-text { @apply text-lg h-16 }
 
-.auth-input { @apply w-full p-2 bg-white focus:outline-sunset border-solid border-2 border-ash rounded-xl }
+.auth-input { @apply w-full p-2 bg-white dark:bg-coal focus:outline-sunset border-solid border-2 border-ash rounded-xl }
 
-.auth-button { @apply bg-black hover:bg-coal duration-200 w-full text-white rounded-xl }
+.auth-button { @apply bg-black dark:bg-silver dark:text-black hover:bg-coal focus:bg-coal duration-200 w-full text-white rounded-xl }
 
 .auth-redirect { @apply hover:underline cursor-pointer }
 
@@ -42,7 +40,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .active-link { @apply bg-sunset }
 
-.dashboard-view { @apply w-full h-full p-12 bg-white dark:bg-coal border-solid border-l-2 border-ash }
+.dashboard-view { @apply w-full h-full p-12 bg-white dark:bg-black }
 
 /*settings*/
 
@@ -52,7 +50,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .settings h2 { @apply font-bold text-2xl mt-8 }
 
-.settings-option { @apply w-full h-16 flex items-center justify-between border-solid border-b-2 border-silver p-2 }
+.settings-option { @apply w-full h-16 flex items-center justify-between border-solid border-b-2 border-silver dark:border-gray p-2 }
 
 /*login transition*/
 
@@ -73,66 +71,38 @@ body { font-family: 'Inter', sans-serif; }
 	}
 }
 
-/*theme switcher*/
+/*selects*/
 
-.toggle-switch {
-  position: relative;
-  width: 80px;
-  height: 40px;
-  --light: #fad6a5;
-  --dark: #28292c;
-  --link: rgb(27, 129, 112);
-  --link-hover: rgb(24, 94, 82);
+.my-react-select-container .my-react-select__control {
+  @apply text-black dark:text-white bg-white dark:bg-black border-gray border-2 hover:border-ash dark:hover:border-gray;
 }
 
-.switch-label {
-  position: absolute;
-  width: 100%;
-  height: 40px;
-  background-color: var(--dark);
-  border-radius: 25px;
-  cursor: pointer;
-  border: 3px solid var(--dark);
+.my-react-select-container .my-react-select__control--is-focused {
+  @apply hover:border-gray dark:border-ash dark:hover:border-ash shadow-none;
 }
 
-.checkbox {
-  position: absolute;
-  display: none;
+.my-react-select-container .my-react-select__menu {
+  @apply bg-white dark:bg-coal;
 }
 
-.slider {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 25px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+.my-react-select-container .my-react-select__option {
+  @apply text-black dark:text-white hover:bg-silver hover:dark:bg-gray hover:dark:text-white;
 }
 
-.checkbox:checked ~ .slider {
-  background-color: white;
+.my-react-select-container .my-react-select__option--is-focused  {
+  @apply bg-white dark:bg-coal;
+} 
+
+.my-react-select-container .my-react-select__option--is-selected  {
+  @apply bg-sunset dark:text-black;
+} 
+
+.my-react-select-container .my-react-select__indicator-separator {
+  @apply bg-gray;
 }
 
-.slider::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  -webkit-box-shadow: inset 12px -4px 0px 0px var(--light);
-  box-shadow: inset 12px -4px 0px 0px var(--light);
-  background-color: var(--dark);
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-
-.checkbox:checked ~ .slider::before {
-  -webkit-transform: translateX(40px);
-  -ms-transform: translateX(40px);
-  transform: translateX(40px);
-  background-color: #fad6a5;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+.my-react-select-container .my-react-select__input-container,
+.my-react-select-container .my-react-select__placeholder,
+.my-react-select-container .my-react-select__single-value {
+  @apply dark:text-white;
 }
