@@ -13,9 +13,11 @@ export default {
       coal: '#424242',
       ash: '#dfdfdf',
       sunset: '#fad6a5',
+      black: '#232323',
+      gray: '#646464',
     },
     extend: {},
   },
   plugins: [],
+  darkMode: 'class',
 }
-
