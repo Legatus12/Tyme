@@ -40,11 +40,25 @@ body { font-family: 'Inter', sans-serif; }
 
 .active-link { @apply bg-sunset }
 
-.dashboard-view { @apply w-full h-full p-12 bg-white dark:bg-black }
+.dashboard-view { @apply w-full h-full bg-white dark:bg-black }
+
+/*overview*/
+
+.overview { @apply flex flex-wrap }
+
+.overview > div { @apply w-1/2 h-1/2 p-12 }
+
+.day { @apply flex flex-col }
+
+.calendar { @apply bg-sunset }
+
+.incoming {   }
+
+.tools { @apply bg-silver }
 
 /*settings*/
 
-.settings { @apply flex flex-col }
+.settings { @apply flex flex-col p-12 }
 
 .settings h1 { @apply font-black text-3xl underline }
 

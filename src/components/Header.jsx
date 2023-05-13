@@ -4,8 +4,6 @@ import LanguageSwitcher from './LanguageSwitcher'
 
 const Header = () => {
 
-    const { i18n } = useTranslation()
-
     return (
         <div className='flex justify-between items-center p-2'>
           <LanguageSwitcher />
