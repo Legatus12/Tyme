@@ -1,3 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body, #root, .full { @apply w-full h-full }
+
+body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
+
+body { font-family: 'Inter', sans-serif; }
+
+/*header*/
+
+/*login && signup*/
+
+.auth { @apply dark:bg-black flex flex-col lg:flex-row justify-around lg:justify-center lg:gap-64 items-center }
+
+.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 shadow-2xl dark:shadow-gray hidden lg:block }
+
+.auth-languages { @apply flex gap-2 }
+
+.auth-form { @apply fade-in flex flex-col gap-3 lg:gap-4 p-4 lg:p-8 rounded-xl w-full sm:w-96 } 
+
+.auth-title { @apply text-3xl font-black }
+
+.auth-text { @apply text-lg h-16 }
+
+.auth-input { @apply w-full p-2 bg-white dark:bg-coal focus:outline-sunset border-solid border-2 border-ash rounded-xl }
+
+.auth-button { @apply bg-black dark:bg-silver dark:text-black hover:bg-coal focus:bg-coal duration-200 w-full text-white rounded-xl }
+
+.auth-redirect { @apply hover:underline cursor-pointer }
+
+/*dashboard*/
+
+.dashboard { @apply flex flex-col-reverse md:flex-row }
+
+.dashboard-menu { @apply h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-24 font-bold shrink-0 }
+
+.active-link { @apply bg-sunset }
+
+.dashboard-view { @apply w-full h-full bg-white dark:bg-black }
+
+/*overview*/
+
+.overview { @apply flex flex-wrap }
+
+.overview > div { @apply w-1/2 h-1/2 p-12 }
+
+.day { @apply flex flex-col }
+
+.calendar { @apply bg-sunset }
+
+.incoming {   }
+
+.tools { @apply bg-silver }
+
+/*settings*/
+
+.settings { @apply flex flex-col p-12 }
+
+.settings h1 { @apply font-black text-3xl underline }
+
+.settings h2 { @apply font-bold text-2xl mt-8 }
+
+.settings-option { @apply w-full h-16 flex items-center justify-between border-solid border-b-2 border-silver dark:border-gray p-2 }
+
+/*login transition*/
+
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+/*selects*/
+
+.my-react-select-container .my-react-select__control {
+  @apply text-black dark:text-white bg-white dark:bg-black border-gray border-2 hover:border-ash dark:hover:border-gray;
+}
+
+.my-react-select-container .my-react-select__control--is-focused {
+  @apply hover:border-gray dark:border-ash dark:hover:border-ash shadow-none;
+}
+
+.my-react-select-container .my-react-select__menu {
+  @apply bg-white dark:bg-coal;
+}
+
+.my-react-select-container .my-react-select__option {
+  @apply text-black dark:text-white hover:bg-silver hover:dark:bg-gray hover:dark:text-white;
+}
+
+.my-react-select-container .my-react-select__option--is-focused  {
+  @apply bg-white dark:bg-coal;
+} 
+
+.my-react-select-container .my-react-select__option--is-selected  {
+  @apply bg-sunset dark:text-black;
+} 
+
+.my-react-select-container .my-react-select__indicator-separator {
+  @apply bg-gray;
+}
+
+.my-react-select-container .my-react-select__input-container,
+.my-react-select-container .my-react-select__placeholder,
+.my-react-select-container .my-react-select__single-value {
+  @apply dark:text-white;
+}
