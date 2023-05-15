@@ -12,7 +12,7 @@ const Dashboard = ({user}) => {
         { path: 'user', name: 'general' },
         { path: 'settings', name: 'general' },
     ]
-
+    //console.log(user)
     return (
         <div className='dashboard full'>
 
@@ -23,9 +23,9 @@ const Dashboard = ({user}) => {
             <div className='dashboard-view'>
                 <Routes>
                     <Route path='/*' element={<Overview />} />
-                    <Route path='overview/*' element={<Overview />} />
+                    <Route path='overview/*' element={<Overview user={user}/>} />
                     <Route path='notifications' element={<Notifications />} />
-                    <Route path='user' element={<User />} />
+                    <Route path='user' element={<User user={user}/>} />
                     <Route path='settings' element={<Settings />} />
                 </Routes>
             </div>
