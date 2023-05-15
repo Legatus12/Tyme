@@ -9,7 +9,7 @@ import Projects from './Overview/Projects'
 const Overview = ({user}) => {
 
     const [tymes, setTymes] = useState([]);
-    const [time, setTime] = useState(new Date())
+    const [date, setDate] = useState(new Date())
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
   
@@ -24,7 +24,7 @@ const Overview = ({user}) => {
     }, [user])
 
     useEffect(() => {
-        setInterval(() => setTime(new Date()), 1000)
+        setInterval(() => setDate(new Date()), 1000)
     }, [])
 
     const handleTitleChange = (e) => {
@@ -35,7 +35,6 @@ const Overview = ({user}) => {
         setBody(e.target.value)
     }
     
-
     const handleAddTyme = async () => {
         const tyme = { title, body }
         await addTymeFb(user.uid, tyme)
@@ -63,11 +62,11 @@ const Overview = ({user}) => {
                 <br /><br /><br />
                 <p className='text-8xl font-black self-end'>20º</p>
                 <p className='self-end mr-12'>12º - 26º</p>
-                <p className='mt-auto text-2xl'>{time.toLocaleTimeString()}</p>
+                <p className='mt-auto text-2xl'>{date.toLocaleTimeString()}</p>
             </div>
 
             <div className='calendar'>
-               <Calendar /> 
+               <Calendar tymes={tymes} /> 
             </div>
 
             <div className='incoming'>
