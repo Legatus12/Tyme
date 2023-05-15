@@ -9,6 +9,7 @@ import Projects from './Overview/Projects'
 const Overview = ({user}) => {
 
     const [tymes, setTymes] = useState([]);
+    const [time, setTime] = useState(new Date())
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
   
@@ -19,33 +20,37 @@ const Overview = ({user}) => {
     }
 
     useEffect(() => {
-        getTymes(user);
-    }, [user]);
+        getTymes(user)
+    }, [user])
+
+    useEffect(() => {
+        setInterval(() => setTime(new Date()), 1000)
+    }, [])
 
     const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-      };
+        setTitle(e.target.value)
+    }
     
-      const handleBodyChange = (e) => {
-        setBody(e.target.value);
-      };
+    const handleBodyChange = (e) => {
+        setBody(e.target.value)
+    }
     
 
     const handleAddTyme = async () => {
-        const tyme = { title, body };
-        await addTymeFb(user.uid, tyme);
-        setTymes([...tymes, tyme]);
-        setTitle('');
-        setBody('');
+        const tyme = { title, body }
+        await addTymeFb(user.uid, tyme)
+        setTymes([...tymes, tyme])
+        setTitle('')
+        setBody('')
       };
 
       const handleDeleteTyme = async (tymeId) => {
         try {
           await deleteTymeFb(user.uid, tymeId);
-          const updatedTymes = tymes.filter((tyme) => tyme.id !== tymeId);
-          setTymes(updatedTymes);
+          const updatedTymes = tymes.filter((tyme) => tyme.id !== tymeId)
+          setTymes(updatedTymes)
         } catch (error) {
-          console.error('Error deleting tyme:', error);
+          console.error('Error deleting tyme:', error)
         }
       };
     
@@ -58,11 +63,11 @@ const Overview = ({user}) => {
                 <br /><br /><br />
                 <p className='text-8xl font-black self-end'>20º</p>
                 <p className='self-end mr-12'>12º - 26º</p>
-                <p className='mt-auto text-5xl'>12:12</p>
+                <p className='mt-auto text-2xl'>{time.toLocaleTimeString()}</p>
             </div>
 
             <div className='calendar'>
-
+               <Calendar /> 
             </div>
 
             <div className='incoming'>
