@@ -58,7 +58,7 @@ const Signup = () => {
 
             <button onClick={signUpWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
               <p>{t('auth.google')}</p>
-              <img src="src/img/google.png" className='w-8'/>
+              <img src="../src/img/google.png" className='w-8'/>
             </button>
 
           </form>
