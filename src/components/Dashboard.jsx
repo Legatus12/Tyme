@@ -3,6 +3,7 @@ import Overview from './Dashboard/Overview'
 import Notifications from './Dashboard/Notifications'
 import User from './Dashboard/User'
 import Settings from './Dashboard/Settings'
+import Day from './Dashboard/Overview/Day'
 
 const Dashboard = ({user}) => {
 
@@ -17,19 +18,18 @@ const Dashboard = ({user}) => {
         <div className='dashboard full'>
 
             <div className='dashboard-menu'>
-                {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
+                {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
             </div>
 
-            <div className='overlay'>
-                <div className='dashboard-view'>
-                    <Routes>
-                        <Route path='/*' element={<Overview />} />
-                        <Route path='overview/*' element={<Overview user={user}/>} />
-                        <Route path='notifications' element={<Notifications />} />
-                        <Route path='user' element={<User user={user}/>} />
-                        <Route path='settings' element={<Settings />} />
-                    </Routes>
-                </div>
+            <div className='dashboard-view'>
+                <Routes>
+                    <Route path='/*' element={<Overview />} />
+                    <Route path='overview/*' element={<Overview user={user}/>} />
+                    <Route path='overview/day' element={<Day />} />
+                    <Route path='notifications' element={<Notifications />} />
+                    <Route path='user' element={<User user={user}/>} />
+                    <Route path='settings' element={<Settings />} />
+                </Routes>
             </div>
             
 

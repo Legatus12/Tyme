@@ -39,7 +39,7 @@ const Login = ({setUser}) => {
       <div className='flex flex-col full'>
         <Header />
         <div className='auth full'>
-          <img src="src/img/tyme.png" alt="TYME" className='auth-img'/>
+          <img src="../src/img/tyme.png" alt="TYME" className='auth-img'/>
           <form className='auth-form'>
 
             <h1 className='auth-title'>{t('auth.loginTitle')}</h1>
@@ -65,7 +65,7 @@ const Login = ({setUser}) => {
 
             <button onClick={signInWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
               <p>{t('auth.google')}</p>
-              <img src="src/img/google.png" className='w-8'/>
+              <img src="../src/img/google.png" className='w-8'/>
             </button>
 
           </form>

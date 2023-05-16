@@ -1,19 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
-import {
-  add,
-  eachDayOfInterval,
-  endOfMonth,
-  format,
-  getDay,
-  isEqual,
-  isSameDay,
-  isSameMonth,
-  isToday,
-  parse,
-  parseISO,
-  startOfToday,
-} from 'date-fns'
+import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import { Fragment, useEffect, useState } from 'react'
+import { Link, Route } from 'react-router-dom'
+import Day from './Day'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -97,7 +86,7 @@ export default function Calendar({tymes}) {
                   'py-1.5'
                 )}
               >
-                <button
+                <Link to='day' element={<Day day={day.getDate()} />}
                   type="button"
                   onClick={() => openDayModal(day)}
                   className={classNames(
@@ -126,23 +115,7 @@ export default function Calendar({tymes}) {
                   <time dateTime={format(day, 'yyyy-MM-dd')}>
                     {format(day, 'd')}
                   </time>
-                </button>
-
-                {dayModal && (
-                  <div className="modal">
-                    <div onClick={closeDayModal} className="overlay"></div>
-                    <div className="modal-content">
-                      <h2>Hello Modal</h2>
-                      <p>
-                        {selectedDay.getDate()}
-                      </p>
-                      <button className="close-modal" onClick={closeDayModal}>
-                        CLOSE
-                      </button>
-                    </div>
-                  </div>
-                )}
-
+                </Link>
                 <div className="w-1 h-1 mx-auto mt-1">
                     <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                 </div>
