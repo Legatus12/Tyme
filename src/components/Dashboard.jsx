@@ -20,15 +20,18 @@ const Dashboard = ({user}) => {
                 {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
             </div>
 
-            <div className='dashboard-view'>
-                <Routes>
-                    <Route path='/*' element={<Overview />} />
-                    <Route path='overview/*' element={<Overview user={user}/>} />
-                    <Route path='notifications' element={<Notifications />} />
-                    <Route path='user' element={<User user={user}/>} />
-                    <Route path='settings' element={<Settings />} />
-                </Routes>
+            <div className='overlay'>
+                <div className='dashboard-view'>
+                    <Routes>
+                        <Route path='/*' element={<Overview />} />
+                        <Route path='overview/*' element={<Overview user={user}/>} />
+                        <Route path='notifications' element={<Notifications />} />
+                        <Route path='user' element={<User user={user}/>} />
+                        <Route path='settings' element={<Settings />} />
+                    </Routes>
+                </div>
             </div>
+            
 
         </div>
     )

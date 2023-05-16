@@ -65,10 +65,8 @@ const Overview = ({user}) => {
                 <p className='mt-auto text-2xl'>{date.toLocaleTimeString()}</p>
             </div>
 
-            <div className='calendar'>
-               <Calendar tymes={tymes} /> 
-            </div>
-
+            <Calendar tymes={tymes} /> 
+            
             <div className='incoming'>
                 <h1 className='text-2xl font-black'>Próximamente</h1>
                 <ul className='list-disc list-inside text-xl'>
