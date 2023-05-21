@@ -44,15 +44,19 @@ body { font-family: 'Inter', sans-serif; }
 
 /*overview*/
 
-.overview { @apply flex flex-wrap }
+.overview { @apply flex flex-wrap overflow-y-auto }
 
-.overview > div { @apply w-1/2 h-1/2 p-12 }
+.overview > div { @apply md:h-1/2 p-6 md:p-12 }
 
-.day { @apply flex flex-col }
+.day { @apply w-full md:w-1/2 lg:w-3/5 flex flex-col justify-center text-center }
 
-.calendar { @apply bg-sunset }
+.calendar { @apply w-full md:w-1/2 lg:w-2/5 bg-sunset }
 
-.tools { @apply bg-silver }
+.incoming { @apply w-full md:w-1/2 lg:w-3/5 }
+
+.tools { @apply w-full md:w-1/2 lg:w-2/5 bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 gap-12 }
+
+.tools > a { @apply bg-white dark:bg-black block full rounded-2xl p-6 }
 
 /*calendar*/
 
