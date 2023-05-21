@@ -3,6 +3,7 @@ import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay,
 import { Fragment, useEffect, useState } from 'react'
 import { Link, Route } from 'react-router-dom'
 import Day from './Day'
+import { useTranslation } from 'react-i18next'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -10,12 +11,15 @@ function classNames(...classes) {
 
 export default function Calendar({tymes}) {
 
+  const [date, setDate] = useState(new Date())
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
   const [dayModal, setDayModal] = useState(false)
+
+  const { t } = useTranslation()
 
   const openDayModal = (day) => {
     setSelectedDay(day)
@@ -46,15 +50,15 @@ export default function Calendar({tymes}) {
   return (
     <div className='calendar'>
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-        <div className="">
+        <div className="text-black">
           <div className="flex items-center">
-            <h2 className="flex-auto font-semibold text-gray-900">
-              {format(firstDayCurrentMonth, 'MMMM yyyy')}
+            <h2 className="flex-auto font-semibold">
+              {t('date.month.' + firstDayCurrentMonth.getMonth())} {format(firstDayCurrentMonth, 'yyyy')}
             </h2>
             <button
               type="button"
               onClick={previousMonth}
-              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+              className="-my-1.5 flex flex-none items-center justify-center p-1.5"
             >
               <span className="sr-only">Previous month</span>
               <span>&lt;</span>
@@ -62,13 +66,13 @@ export default function Calendar({tymes}) {
             <button
               onClick={nextMonth}
               type="button"
-              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5"
             >
               <span className="sr-only">Next month</span>
               &gt;
             </button>
           </div>
-          <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
+          <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center">
             <div>S</div>
             <div>M</div>
             <div>T</div>
@@ -97,7 +101,7 @@ export default function Calendar({tymes}) {
                     !isEqual(day, selectedDay) &&
                       !isToday(day) &&
                       isSameMonth(day, firstDayCurrentMonth) &&
-                      'text-gray-900',
+                      '',
                     !isEqual(day, selectedDay) &&
                       !isToday(day) &&
                       !isSameMonth(day, firstDayCurrentMonth) &&

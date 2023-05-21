@@ -1,12 +1,10 @@
 import { useState } from "react"
 
-const Day = ({day}) => {
-
-    console.log('day', day)
+const Day = ({data}) => {
 
     return(
         <div className="day-view full">
-            {day}
+            {data}
         </div>
     )
 
