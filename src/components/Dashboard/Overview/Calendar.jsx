@@ -18,8 +18,8 @@ export default function Calendar({tymes}) {
   const [dayModal, setDayModal] = useState(false)
 
   const openDayModal = (day) => {
-    setDayModal(true)
     setSelectedDay(day)
+    setDayModal(true)
   }
  
   const closeDayModal = () => setDayModal(false)
