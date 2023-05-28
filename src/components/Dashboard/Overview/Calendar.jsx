@@ -9,25 +9,25 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Calendar({tymes}) {
+export default function Calendar({ tymes, openDayModal, closeDayModal, selectedDay }) {
+  
+  const { t } = useTranslation()
 
   const [date, setDate] = useState(new Date())
   let today = startOfToday()
-  let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
-
+/**
   const [dayModal, setDayModal] = useState(false)
-
-  const { t } = useTranslation()
+  let [selectedDay, setSelectedDay] = useState(today)
 
   const openDayModal = (day) => {
     setSelectedDay(day)
     setDayModal(true)
   }
- 
-  const closeDayModal = () => setDayModal(false)
 
+  const closeDayModal = () => setDayModal(false)
+ */
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
@@ -42,11 +42,7 @@ export default function Calendar({tymes}) {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
     setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
-  /*
-  let selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  )
-  */
+
   return (
     <div className='calendar'>
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
@@ -90,38 +86,27 @@ export default function Calendar({tymes}) {
                   'py-1.5'
                 )}
               >
-                <Link to='day' element={<Day day={day.getDate()} />}
+                <button
                   type="button"
                   onClick={() => openDayModal(day)}
                   className={classNames(
                     isEqual(day, selectedDay) && 'text-white',
-                    !isEqual(day, selectedDay) &&
-                      isToday(day) &&
-                      'text-red-500',
-                    !isEqual(day, selectedDay) &&
-                      !isToday(day) &&
-                      isSameMonth(day, firstDayCurrentMonth) &&
-                      '',
-                    !isEqual(day, selectedDay) &&
-                      !isToday(day) &&
-                      !isSameMonth(day, firstDayCurrentMonth) &&
-                      'text-gray-400',
+                    !isEqual(day, selectedDay) && isToday(day) && 'text-red-500',
+                    !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && '',
+                    !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400',
                     isEqual(day, selectedDay) && isToday(day) && 'bg-red-500',
-                    isEqual(day, selectedDay) &&
-                      !isToday(day) &&
-                      'bg-gray-900',
+                    isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
                     !isEqual(day, selectedDay) && 'hover:bg-gray-200',
-                    (isEqual(day, selectedDay) || isToday(day)) &&
-                      'font-semibold',
+                    (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
                     'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
                   )}
                 >
                   <time dateTime={format(day, 'yyyy-MM-dd')}>
                     {format(day, 'd')}
                   </time>
-                </Link>
+                </button>
                 <div className="w-1 h-1 mx-auto mt-1">
-                    <div className="w-1 h-1 rounded-full bg-sky-500"></div>
+                  <div className="w-1 h-1 rounded-full bg-sky-500"></div>
                 </div>
               </div>
             ))}
@@ -130,8 +115,18 @@ export default function Calendar({tymes}) {
       </div>
     </div>
   )
+  /**
+  else{return(
+    <div>
+      <Day day={selectedDay}  closeDayModal={closeDayModal} />
+    </div>
+  )} */
 }
-
+/*
+let selectedDayMeetings = meetings.filter((meeting) =>
+  isSameDay(parseISO(meeting.startDatetime), selectedDay)
+)
+*/
 function Meeting({ meeting }) {
   let startDateTime = parseISO(meeting.startDatetime)
   let endDateTime = parseISO(meeting.endDatetime)
