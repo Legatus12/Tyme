@@ -1,9 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit } from 'firebase/firestore'
+import { getAuth } from "firebase/auth"
 
-// Initialize Firebase
 const app = initializeApp({
   apiKey: "AIzaSyCneoCJoAptrrMHjfZRqZerfY3Py1nLSpk",
   authDomain: "tyme-app-project.firebaseapp.com",
@@ -20,16 +19,17 @@ export const auth = getAuth(app)
 
 export const db = getFirestore(app);
 
-export const getTymesFb = async (userId) => {
-  console.log('userId:', userId); // Agregado para debuggear
-  const tymesRef = collection(db, "users", userId, "tymes");
-  const querySnapshot = await getDocs(tymesRef);
-  const tymes = [];
-  querySnapshot.forEach((doc) => {
-    tymes.push({ id: doc.id, ...doc.data() });
-  });
-  return tymes;
-};
+export const getTymes = (uid, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid)), callback)
+
+export const getTymesInMonth = (uid, month, year, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("month", "==", month), where("uid", "==", year)), callback)
+
+export const getTymesInDay = (uid, day, month, year, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("day", "==", day), where("month", "==", month), where("year", "==", year)), callback)
+
+export const getIncomingTymes = (uid, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), orderBy("year"), orderBy("month"), orderBy("day"), limit(3)), callback)
+
+export const addTyme = (uid, day, month, year) => addDoc(collection(db, 'tymes'), { title: 'addTest', body: 'addBody', day: day, month: month, year: year, uid: uid})
+
+export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 
 export const addTymeFb = async (userId, tyme) => {
   const userRef = doc(db, "users", userId);
@@ -47,13 +47,3 @@ export const addTymeFb = async (userId, tyme) => {
     body: tyme.body,
   });
 }
-
-export const deleteTymeFb = async (userId, tymeId) => {
-  try {
-    const docRef = doc(db, "users", userId, "tymes", tymeId);
-    await deleteDoc(docRef);
-    console.log('Tyme eliminado correctamente');
-  } catch (error) {
-    console.log('Error eliminando tyme:', error);
-  }
-};

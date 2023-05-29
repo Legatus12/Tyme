@@ -40,6 +40,10 @@ i18n
             account: 'Cuenta',
             notifications: 'Notificaciones',
           },
+          overview:{
+            today: 'Hoy',
+            incoming: 'Próximamente'
+          },
           lightMode: 'claro',
           darkMode: 'oscuro',
           date: {
