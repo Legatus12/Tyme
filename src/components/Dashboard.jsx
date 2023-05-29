@@ -27,7 +27,7 @@ const Dashboard = ({user}) => {
 
             <div className='dashboard-view'>
                 <Routes>
-                    <Route path='/*' element={<Overview />} />
+                    <Route path='/*' element={<Overview user={user}/>} />
                     <Route path='overview/*' element={<Overview user={user}/>} />
                     <Route path='overview/day' element={<Day />} />
                     <Route path='overview/habits' element={<Habits />} />

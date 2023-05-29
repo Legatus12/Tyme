@@ -19,7 +19,7 @@ const Day = ({day, closeDayModal, user}) => {
     }
 
     useEffect(() => {
-        loadTymes(user.uid)
+      loadTymes(user.uid);
     }, [user])
 
     //

@@ -58,10 +58,8 @@ const Overview = ({user}) => {
   }
 
   useEffect(() => {
-    loadTymes(user.uid)
+    loadTymes(user.uid);
   }, [user])
-
-  //
 
   const getLocationByIP = async () => {
       try {
