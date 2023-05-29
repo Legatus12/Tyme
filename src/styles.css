@@ -52,7 +52,15 @@ body { font-family: 'Inter', sans-serif; }
 
 .calendar { @apply w-full md:w-1/2 lg:w-2/5 bg-sunset }
 
-.incoming { @apply w-full md:w-1/2 lg:w-3/5 }
+.tymes { @apply w-full md:w-1/2 lg:w-3/5 flex gap-4 }
+
+.today, .incoming { @apply w-1/2 h-full flex flex-col gap-4 overflow-y-auto }
+
+.today { @apply border-r-2 border-solid border-silver pr-4 }
+
+.tyme-container { @apply flex flex-col gap-4 }
+
+.mini-tyme { @apply flex flex-col bg-silver rounded-2xl p-4 border-2 border-solid border-gray }
 
 .tools { @apply w-full md:w-1/2 lg:w-2/5 bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 gap-12 }
 
@@ -64,7 +72,9 @@ body { font-family: 'Inter', sans-serif; }
 
 /*day*/
 
-.day-view { @apply bg-sunset }
+.day-view { @apply flex flex-col p-6 md:p-12 }
+
+.close { @apply mb-8 w-10 rounded-full hover:bg-silver }
 
 /*user*/
 
