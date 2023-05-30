@@ -19,15 +19,26 @@ export const auth = getAuth(app)
 
 export const db = getFirestore(app);
 
-export const getTymes = (uid, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid)), callback)
+//
 
-export const getTymesInMonth = (uid, month, year, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("month", "==", month), where("uid", "==", year)), callback)
+const today = new Date()
+const tomorrow = new Date(today)
+tomorrow.setDate(today.getDate() + 1) //obtenemos el dia de mañana
+tomorrow.setHours(0, 0, 0, 0) //establecemos el dia de mañana en la hora 00:00
 
-export const getTymesInDay = (uid, day, month, year, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("day", "==", day), where("month", "==", month), where("year", "==", year)), callback)
+const tymesRef = collection(db, 'tymes')
 
-export const getIncomingTymes = (uid, callback) => onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), orderBy("year"), orderBy("month"), orderBy("day"), limit(3)), callback)
+//
 
-export const addTyme = (uid, day, month, year) => addDoc(collection(db, 'tymes'), { title: 'addTest', body: 'addBody', day: day, month: month, year: year, uid: uid})
+export const getTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid)), callback)
+
+export const getTymesInMonth = (uid, month, year, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("month", "==", month), where("uid", "==", year)), callback)
+
+export const getTymesInDay = (uid, date, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("date", "==", date)), callback)
+
+export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp'), limit(3)), callback)
+
+export const addTyme = (uid, title, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: 'body', date: date, timestamp: timestamp})
 
 export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 

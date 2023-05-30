@@ -46,15 +46,15 @@ const Overview = ({user}) => {
 
   const loadTymes = (uid) => {
     setTodayTymes([])
-    const today = []
-    getTymesInDay(uid, date.getDate(), date.getMonth() + 1, date.getFullYear(), docs => docs.forEach(doc => today.push({id: doc.id, ...doc.data()})))
+    const todayTymes = []
+    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => docs.forEach(doc => todayTymes.push({id: doc.id, ...doc.data()})))
     //console.log(today)
-    setTodayTymes(today)
+    setTodayTymes(todayTymes)
 
     setIncomingTymes([])
-    const incoming = []
-    getIncomingTymes(uid, docs => docs.forEach(doc => incoming.push(doc.data())))
-    setIncomingTymes(incoming)
+    const incomingTymes = []
+    getIncomingTymes(uid, docs => docs.forEach(doc => incomingTymes.push(doc.data())))
+    setIncomingTymes(incomingTymes)
   }
 
   useEffect(() => {
@@ -156,7 +156,8 @@ const Overview = ({user}) => {
               <div className='tyme-container'>
                 {incomingTymes.map((tyme, index) => (
                   <div className='mini-tyme' key={index}>
-                      {tyme.title}
+                    <p>dentro de {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} días</p>
+                    <p>{tyme.title}</p>
                   </div>
                 ))}
               </div>
