@@ -14,7 +14,7 @@ const Day = ({day, closeDayModal, user}) => {
     const loadTymes = async (uid) => {
         setTymes([])
         const arr = []
-        getTymesInDay(uid, day.getDate(), day.getMonth() + 1, day.getFullYear(), docs => docs.forEach(doc => arr.push(doc.data())))
+        getTymesInDay(uid, format(day, 'dd-MM-yyyy'), docs => docs.forEach(doc => arr.push(doc.data())))
         setTymes(arr)
     }
 
@@ -67,7 +67,7 @@ const Day = ({day, closeDayModal, user}) => {
     }
 
     const test = () => {
-        addTyme(user.uid, day.getDate(), day.getMonth() + 1, day.getFullYear())
+        addTyme(user.uid, format(day, 'dd-MM-yyyy'), format(day, 'dd-MM-yyyy'), day.getTime())
     }
 
     const deleteTest = (id) => {
