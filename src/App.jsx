@@ -39,7 +39,6 @@ const App = () => {
   
   const [user, setUser] = useState(null);
 
-  console.log(user)
   if(user === null){
     return (
       <BrowserRouter>
@@ -55,7 +54,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/*' element = { <Dashboard user={user}/> } />
-          <Route path='dashboard/*' element = { <Dashboard/> } />
+          <Route path='dashboard/*' element = { <Dashboard  user={user}/> } />
         </Routes>
       </BrowserRouter>
     )
