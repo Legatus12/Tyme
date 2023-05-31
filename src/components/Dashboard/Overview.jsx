@@ -82,7 +82,7 @@ const Overview = ({user}) => {
         .get(`https://api.openweathermap.org/data/2.5/weather?lat=${pos.lat}&lon=${pos.lon}&units=metric&appid=${key}`)
         .then((data) => {
           setWeather(data.data)
-          console.log(data.data)
+          //console.log(data.data)
         })
     }
   }
