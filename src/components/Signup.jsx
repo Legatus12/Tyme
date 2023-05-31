@@ -18,14 +18,14 @@ const Signup = () => {
       e.preventDefault()
       createUserWithEmailAndPassword(auth, email, password)
       .then(credentials => console.log(credentials))
-      .catch(error => console.log(error))
+      .catch(error => alert(error))
     }
 
     const signUpWithGoogle = (e) => {
       e.preventDefault()
       signInWithRedirect(auth, new GoogleAuthProvider())
       .then(credentials => console.log(credentials))
-      .catch(error => console.log(error))
+      .catch(error => alert(error))
     }
 
     return (
