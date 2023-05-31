@@ -22,7 +22,6 @@ const Overview = ({user}) => {
   const { t, i18n } = useTranslation()
 
   let today = startOfToday()
-  const [tymes, setTymes] = useState([])
   const [todayTymes, setTodayTymes] = useState([])
   const [incomingTymes, setIncomingTymes] = useState([])
   const [date, setDate] = useState(new Date())
@@ -138,7 +137,7 @@ const Overview = ({user}) => {
               </div>
           </div>
 
-          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal}/>
+          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal} user={user}/>
           
           <div className='tymes'>
             <div className='today'>
