@@ -46,29 +46,29 @@ body { font-family: 'Inter', sans-serif; }
 
 .overview { @apply flex flex-wrap overflow-y-auto }
 
-.overview > div { @apply md:h-1/2 p-6 md:p-12 }
+.overview > div { @apply md:h-1/2 }
 
-.day { @apply w-full md:w-1/2 lg:w-3/5 flex flex-col justify-center text-center }
+.day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col justify-center text-center p-12 }
 
-.calendar { @apply w-full md:w-1/2 lg:w-2/5 bg-sunset }
+.calendar { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 bg-sunset }
 
-.tymes { @apply w-full md:w-1/2 lg:w-3/5 flex gap-4 }
+.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex p-8 lg:p-12 gap-4 md:gap-8 lg:gap-12 }
 
-.today, .incoming { @apply w-1/2 h-full flex flex-col gap-4 overflow-y-auto }
+.today, .incoming { @apply w-1/2 h-full flex flex-col gap-4  }
 
-.today { @apply border-r-2 border-solid border-silver pr-4 }
+.today { @apply border-r-2 border-solid border-silver dark:border-gray pr-4 md:pr-8 lg:pr-12 }
 
-.tyme-container { @apply flex flex-col gap-4 }
+.tyme-container { @apply flex flex-col gap-6 }
 
-.mini-tyme { @apply flex flex-col bg-silver rounded-2xl p-4 border-2 border-solid border-gray }
+.mini-tyme { @apply flex flex-col bg-silver rounded-2xl p-4 duration-200 border-2 border-solid border-ash dark:border-gray dark:bg-coal }
 
-.tools { @apply w-full md:w-1/2 lg:w-2/5 bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 gap-12 }
+.tools { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 p-8 gap-12 }
 
-.tools > a { @apply bg-white dark:bg-black block full rounded-2xl p-6 }
+.tools > a { @apply bg-white dark:bg-black block full rounded-2xl p-6 shadow-lg hover:shadow-2xl duration-200 }
 
 /*calendar*/
 
-.calendar { @apply bg-sunset }
+.calendar { @apply p-8 bg-gray text-white }
 
 /*day*/
 

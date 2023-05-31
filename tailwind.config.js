@@ -15,6 +15,7 @@ export default {
       sunset: '#fad6a5',
       black: '#232323',
       gray: '#646464',
+      lightgray: '#808080',
     },
     extend: {},
   },
