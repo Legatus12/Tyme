@@ -70,6 +70,13 @@ i18n
               10: 'Noviembre',
               11: 'Diciembre'
             }
+          },
+          error: {
+            userNotFound: 'El usuario no existe.',
+            wrongPassword: 'Contraseña incorrecta.',
+            invalidEmail: 'Correo electrónico inválido.',
+            userDisabled: 'El usuario ha sido deshabilitado.',
+            default: 'Ocurrió un error al iniciar sesión.'
           }
         }
       },

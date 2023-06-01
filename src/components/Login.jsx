@@ -17,7 +17,7 @@ const Login = ({setUser}) => {
       e.preventDefault()
       signInWithEmailAndPassword(auth, email, password)
       .then(credentials => handleUser(credentials))
-      .catch(error => console.log(error))
+      .catch(error => handleFirebaseAuthError(error))
     }
 
     const signInWithGoogle = (e) => {
@@ -81,6 +81,27 @@ const Login = ({setUser}) => {
       })
     }
 
+    const handleFirebaseAuthError = (error) => {
+      console.log(error.code)
+      switch (error.code) {
+        case 'auth/user-not-found':
+          setMsg(t('error.userNotFound'))
+          break
+        case 'auth/wrong-password':
+          setMsg(t('error.wrongPassword'))
+          break
+        case 'auth/invalid-email':
+          setMsg(t('error.invalidEmail'))
+          break
+        case 'auth/user-disabled':
+          setMsg(t('error.userDisabled'))
+          break
+        default:
+          setMsg(t('error.default'))
+          break
+      }
+    }
+
     const handleUser = (credentials) => {
       if (credentials) {
         setUser(credentials.user)
@@ -108,8 +129,7 @@ const Login = ({setUser}) => {
             value={password} onChange={e => setPassword(e.target.value)}
             className='auth-input' />
 
-            <p value={msg}
-            className='h-6'></p>
+            <p className='h-6 text-[#f1121f]'>{msg}</p>
 
             <button onClick={signIn} className='auth-button p-2'>{t('auth.login')}</button>
             
