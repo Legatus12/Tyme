@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { getTymes, getTymesInDay, getIncomingTymes } from "../../../firebase"
 import axios from 'axios'
 import Day from './Overview/Day'
@@ -10,6 +10,7 @@ import Projects from './Overview/Projects'
 import { Menu, Transition } from '@headlessui/react'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import { useTranslation } from 'react-i18next'
+import { AuthContext } from '../../AuthProvider'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -17,7 +18,9 @@ function classNames(...classes) {
 
 const key = import.meta.env.VITE_API_KEY
 
-const Overview = ({user}) => {
+const Overview = () => {
+
+  const user = useContext(AuthContext)
 
   const { t, i18n } = useTranslation()
 
@@ -114,7 +117,7 @@ const Overview = ({user}) => {
 
   //
     
-  if(weather.data!==null && !dayModal){return (
+  if(!dayModal){return (
       <div className='overview full'>
 
           <div className='day'>
@@ -127,17 +130,19 @@ const Overview = ({user}) => {
               <p className='text-gray self-start'>{date.toLocaleTimeString()}</p>
               <br />
               <p>{pos.city}</p>
-              <div className='flex flex-col items-center'>
-                <img className='' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="120" height="120"></img>
-                <div className='flex justify-center gap-4'>
-                  <p className='self-center mr-2'>{ Math.round(weather.main.temp_min)}º</p>
-                  <p className='text-8xl font-black'>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
-                  <p className='self-center'>{Math.round(weather.main.temp_max)}º</p>
+              {weather.data !== null && 
+                <div className='flex flex-col items-center'>
+                  <img className='' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="120" height="120"></img>
+                  <div className='flex justify-center gap-4'>
+                    <p className='self-center mr-2'>{ Math.round(weather.main.temp_min)}º</p>
+                    <p className='text-8xl font-black'>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
+                    <p className='self-center'>{Math.round(weather.main.temp_max)}º</p>
+                  </div>
                 </div>
-              </div>
+              }
           </div>
 
-          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal} user={user}/>
+          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal}/>
           
           <div className='tymes'>
             <div className='today'>

@@ -8,6 +8,8 @@ const LanguageSwitcher = () => {
 
     const [lan, setLan] = useState(localStorage.getItem('language'))
 
+    //
+
     useEffect(() => {
         i18n.changeLanguage(lan)
     }, [lan])
