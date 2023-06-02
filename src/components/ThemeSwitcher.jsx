@@ -8,6 +8,8 @@ const ThemeSwitcher = () => {
 
     const [theme, setTheme] = useState(localStorage.getItem('theme'))
 
+    //
+
     useEffect(() => {
         theme == 'dark' ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
     }, [theme])
@@ -26,6 +28,8 @@ const ThemeSwitcher = () => {
         { value: 'light', label: t('lightMode') },
         { value: 'dark', label: t('darkMode') }
     ]
+
+    //
 
     return(
         <Select options={options}

@@ -1,9 +1,10 @@
 import './styles.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import Login from './components/Login'
-import Signup from './components/Signup'
+import Auth from './components/Auth'
+import { auth } from '../firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 import Dashboard from './components/Dashboard'
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 import useMountEffect from '@restart/hooks/useMountEffect'
 import { useTranslation } from 'react-i18next'
 
@@ -11,10 +12,10 @@ const App = () => {
 
   const { i18n } = useTranslation()
 
+  /*config*/
   useMountEffect(() => {
-    /*language config*/
+    /*language*/
     let lan = localStorage.getItem('language')
-
     if(lan == null) {
       if(navigator.language.substring(0, 2) == 'es') {
         lan = 'es'
@@ -26,9 +27,8 @@ const App = () => {
     } 
     i18n.changeLanguage(lan)
 
-    /*theme config*/
+    /*theme*/
     let darkMode = localStorage.getItem('theme')
-
     if(darkMode == null || darkMode == 'light') {
       localStorage.setItem('theme', 'light')
     } else {
@@ -37,29 +37,15 @@ const App = () => {
     }
   })
   
-  const [user, setUser] = useState(null);
-
-  //console.log(user)
-  if(user === null){
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path='/*' element = { <Login setUser={setUser}/> } />
-          <Route path='signup' element = { <Signup /> } />
-        </Routes>
-      </BrowserRouter>
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Auth/>} />
+        <Route path="/authentication" element={<Auth />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
     )
-  }
-  else{
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path='/*' element = { <Dashboard user={user}/> } />
-          <Route path='dashboard/*' element = { <Dashboard/> } />
-        </Routes>
-      </BrowserRouter>
-    )
-  }
 }
 
 export default App

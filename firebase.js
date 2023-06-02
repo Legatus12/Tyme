@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app"
 import { getAnalytics } from "firebase/analytics"
-import { getFirestore } from "firebase/firestore"
+import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit } from 'firebase/firestore'
 import { getAuth } from "firebase/auth"
 
-// Initialize Firebase
 const app = initializeApp({
   apiKey: "AIzaSyCneoCJoAptrrMHjfZRqZerfY3Py1nLSpk",
   authDomain: "tyme-app-project.firebaseapp.com",
@@ -17,3 +16,45 @@ const app = initializeApp({
 const analytics = getAnalytics(app)
 
 export const auth = getAuth(app)
+
+export const db = getFirestore(app);
+
+//
+
+const today = new Date()
+const tomorrow = new Date(today)
+tomorrow.setDate(today.getDate() + 1) //obtenemos el dia de mañana
+tomorrow.setHours(0, 0, 0, 0) //establecemos el dia de mañana en la hora 00:00
+
+const tymesRef = collection(db, 'tymes')
+
+//
+
+export const getTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid)), callback)
+
+export const getTymesInMonth = (uid, month, year, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("month", "==", month), where("uid", "==", year)), callback)
+
+export const getTymesInDay = (uid, date, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("date", "==", date)), callback)
+
+export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp'), limit(3)), callback)
+
+export const addTyme = (uid, title, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: 'body', date: date, timestamp: timestamp})
+
+export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
+
+export const addTymeFb = async (userId, tyme) => {
+  const userRef = doc(db, "users", userId);
+  const tymesRef = collection(userRef, "tymes");
+
+  // Comprueba si la colección ya existe
+  const docSnapshot = await getDoc(userRef);
+  if (!docSnapshot.exists()) {
+    await setDoc(tymesRef.parent, {tymes: []}); // Crea la colección si no existe
+  }
+
+  // Agrega el nuevo documento a la colección tymes
+  await addDoc(tymesRef, {
+    title: tyme.title,
+    body: tyme.body,
+  });
+}

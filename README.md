@@ -7,4 +7,6 @@ npm install
 npm install -D tailwindcss
 npm install firebase
 npm i react-select
+npm i date-fns
+npm i @headlessui/react
 ```
