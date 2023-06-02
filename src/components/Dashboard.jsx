@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, Navigate } from 'react-router-dom'
 import Overview from './Dashboard/Overview'
 import Notifications from './Dashboard/Notifications'
 import User from './Dashboard/User'
@@ -8,8 +8,14 @@ import Habits from './Dashboard/Overview/Habits'
 import Notes from './Dashboard/Overview/Notes'
 import Projects from './Dashboard/Overview/Projects'
 import Charts from './Dashboard/Overview/Charts'
+import { useContext } from 'react'
+import { AuthContext } from '../AuthProvider'
 
-const Dashboard = ({user}) => {
+const Dashboard = () => {
+
+    const user = useContext(AuthContext)
+
+    //
 
     const menu = [
         { path: 'overview', name: 'general' },
@@ -17,8 +23,10 @@ const Dashboard = ({user}) => {
         { path: 'user', name: 'general' },
         { path: 'settings', name: 'general' },
     ]
-    //console.log(user)
-    return (
+
+    //
+    
+    if(user) {return (
         <div className='dashboard full'>
 
             <div className='dashboard-menu'>
@@ -27,22 +35,22 @@ const Dashboard = ({user}) => {
 
             <div className='dashboard-view'>
                 <Routes>
-                    <Route path='/*' element={<Overview user={user}/>} />
-                    <Route path='overview/*' element={<Overview user={user}/>} />
-                    <Route path='overview/day' element={<Day />} />
-                    <Route path='overview/habits' element={<Habits />} />
-                    <Route path='overview/notes' element={<Notes />} />
-                    <Route path='overview/projects' element={<Projects />} />
-                    <Route path='overview/charts' element={<Charts />} />
-                    <Route path='notifications' element={<Notifications />} />
-                    <Route path='user' element={<User user={user}/>} />
-                    <Route path='settings' element={<Settings />} />
+                    <Route path='/overview' element={<Overview />} />
+                    <Route path='/notifications' element={<Notifications />} />
+                    <Route path='/user' element={<User />} />
+                    <Route path='/settings' element={<Settings />} />
+                    <Route path='/day' element={<Day />} />
+                    <Route path='dashboard/overview/habits' element={<Habits />} />
+                    <Route path='dashboard/overview/notes' element={<Notes />} />
+                    <Route path='dashboard/overview/projects' element={<Projects />} />
+                    <Route path='dashboard/overview/charts' element={<Charts />} />
+                    <Route path='/*' element={<Overview />} />
                 </Routes>
             </div>
             
 
         </div>
-    )
+    )} else { return <Navigate to="/authentication" replace /> }
 }
 
 export default Dashboard

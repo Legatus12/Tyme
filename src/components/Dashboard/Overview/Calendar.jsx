@@ -1,16 +1,19 @@
 import { Menu, Transition } from '@headlessui/react'
 import { add, eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek } from 'date-fns'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useContext } from 'react'
 import { Link, Route } from 'react-router-dom'
 import { getTymes } from '../../../../firebase'
 import Day from './Day'
 import { useTranslation } from 'react-i18next'
+import { AuthContext } from '../../../AuthProvider'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Calendar({ openDayModal, closeDayModal, selectedDay, user }) {
+export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
+
+  const user = useContext(AuthContext)
   
   const { t } = useTranslation()
 
@@ -68,10 +71,10 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay, use
               {t('date.month.' + firstDayCurrentMonth.getMonth())} {format(firstDayCurrentMonth, 'yyyy')}
             </h2>
             <button type="button" onClick={previousMonth} className="hover:bg-lightgray rounded-full w-10 h-10 p-1 flex justify-center items-center">
-              <img src="src/img/left.png" alt="" />
+              <img src="/src/img/left.png" alt="" />
             </button>
             <button onClick={nextMonth} type="button" className="hover:bg-lightgray rounded-full w-10 h-10 p-1 flex justify-center items-center">
-              <img src="src/img/right.png" alt="" />
+              <img src="/src/img/right.png" alt="" />
             </button>
           </div>
           <div className="grid grid-cols-7 mt-8 text-xs leading-6 text-center text-silver">
