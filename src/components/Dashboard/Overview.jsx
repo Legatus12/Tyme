@@ -49,13 +49,26 @@ const Overview = () => {
   const loadTymes = (uid) => {
     setTodayTymes([])
     const todayTymes = []
-    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => docs.forEach(doc => todayTymes.push({id: doc.id, ...doc.data()})))
+    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => docs.forEach(doc =>{ 
+      const aux = {
+        ...doc.data(),
+        id: doc.id
+      }
+      todayTymes.push(aux)
+  }))
     //console.log(today)
     setTodayTymes(todayTymes)
 
     setIncomingTymes([])
     const incomingTymes = []
-    getIncomingTymes(uid, docs => docs.forEach(doc => incomingTymes.push(doc.data())))
+    getIncomingTymes(uid, docs => docs.forEach(doc => {
+      const aux = {
+        ...doc.data(),
+        id: doc.id
+      }
+      incomingTymes.push(aux)
+    
+    }))
     setIncomingTymes(incomingTymes)
   }
 
@@ -178,7 +191,7 @@ const Overview = () => {
       </div>
   )}
   else{return(
-    <Day day={selectedDay} closeDayModal={closeDayModal} user={user} />
+    <Day day={selectedDay} closeDayModal={closeDayModal} user={user} loadTymesOv={loadTymes}/>
   )}
 }
 
