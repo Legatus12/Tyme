@@ -38,9 +38,11 @@ export const getTymesInDay = (uid, date, callback) => onSnapshot(query(tymesRef,
 
 export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp'), limit(3)), callback)
 
-export const addTyme = (uid, title, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: 'body', date: date, timestamp: timestamp})
+export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp})
 
-export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
+export const deleteTyme = (id) =>{ 
+  deleteDoc(doc(db, 'tymes', id))
+}
 
 export const addTymeFb = async (userId, tyme) => {
   const userRef = doc(db, "users", userId);
