@@ -28,7 +28,7 @@ const LanguageSwitcher = () => {
         <Select options={options}
         defaultValue={ options.find(lan => lan.value == i18n.resolvedLanguage) }
         onChange={handleLanguageSwitch}
-        className="my-react-select-container"
+        className="my-react-select-container w-52"
         classNamePrefix="my-react-select" />
     )
 

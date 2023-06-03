@@ -20,7 +20,6 @@ const Dashboard = () => {
     const menu = [
         { path: 'overview', name: 'general' },
         { path: 'notifications', name: 'general' },
-        { path: 'user', name: 'general' },
         { path: 'settings', name: 'general' },
     ]
 
@@ -37,7 +36,6 @@ const Dashboard = () => {
                 <Routes>
                     <Route path='/overview' element={<Overview />} />
                     <Route path='/notifications' element={<Notifications />} />
-                    <Route path='/user' element={<User />} />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='/day' element={<Day />} />
                     <Route path='dashboard/overview/habits' element={<Habits />} />

@@ -32,12 +32,17 @@ i18n
             loginRedirect: '¿Ya tienes una cuenta?',
             google: 'o continúa con Google'
           },
+          user: {
+            title: 'Tu perfil',
+          },
           settings: {
             title: 'Configuración',
             preferences: 'Preferencias',
             theme: 'Tema',
             language: 'Idioma',
             account: 'Cuenta',
+            username: 'Nombre de usuario',
+            mail: 'Correo electrónico',
             notifications: 'Notificaciones',
           },
           overview:{
