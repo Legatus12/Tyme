@@ -5,8 +5,8 @@ import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, sig
 import { useTranslation } from 'react-i18next'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+//import Swal from 'sweetalert2'
+//import withReactContent from 'sweetalert2-react-content'
 
 const Login = () => {
 
@@ -14,7 +14,7 @@ const Login = () => {
 
   const { t } = useTranslation()
 
-  const MySwal = withReactContent(Swal)
+  //const MySwal = withReactContent(Swal)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
