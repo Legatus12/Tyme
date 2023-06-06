@@ -21,6 +21,7 @@ i18n
         translation: {
           mail: 'correo electrónico',
           pass: 'contraseña',
+          cancel: 'cancelar',
           auth: {
             loginTitle: '¡Bienvenido!',
             loginIntro: 'Llegas justo a tiempo.',
@@ -30,7 +31,13 @@ i18n
             signup: 'crear cuenta',
             signupRedirect: '¿Todavía no tienes una cuenta?',
             loginRedirect: '¿Ya tienes una cuenta?',
-            google: 'o continúa con Google'
+            google: 'o continúa con Google',
+            reset: '¿Has olvidado tu contraseña?',
+            continue: 'enviar correo de recuperación',
+            sent: 'correo de recuperación enviado a la dirección de correo proporcionada'
+          },
+          user: {
+            title: 'Tu perfil',
           },
           settings: {
             title: 'Configuración',
@@ -38,6 +45,8 @@ i18n
             theme: 'Tema',
             language: 'Idioma',
             account: 'Cuenta',
+            username: 'Nombre de usuario',
+            mail: 'Correo electrónico',
             notifications: 'Notificaciones',
           },
           overview:{

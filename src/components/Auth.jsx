@@ -1,10 +1,12 @@
 import { useState, useContext, useEffect } from 'react'
 import Header from './Header'
 import { auth } from '../../firebase'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
+//import Swal from 'sweetalert2'
+//import withReactContent from 'sweetalert2-react-content'
 
 const Login = () => {
 
@@ -12,10 +14,14 @@ const Login = () => {
 
   const { t } = useTranslation()
 
-  const [login, setLogin] = useState(true)
+  //const MySwal = withReactContent(Swal)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [msg, setMsg] = useState('')
+  
+  const [login, setLogin] = useState(true)
+  const [reset, setReset] = useState(false)
 
   //
 
@@ -117,9 +123,30 @@ const Login = () => {
     }
   }
 
-  const authRedirect = () => {
-    setLogin(!login)
+  const switchAuth = () => {
+    if (login) {
+      setLogin(false)
+      setReset(false)
+    } else setLogin(true)
+
     setMsg('')
+  }
+
+  const switchReset = () => {
+    setReset(!reset)
+    setMsg('')
+  }
+
+  const sendReset = (e) => {
+    e.preventDefault()
+    if (email == "")
+      setMsg(t('error.invalidEmail'))
+    else {
+      sendPasswordResetEmail(auth, email)
+      setReset(false)
+      setMsg('')
+      alert(t('auth.sent'))
+    }
   }
 
   //
@@ -132,9 +159,9 @@ const Login = () => {
           <div className='auth-img-container'>
             <img src="../src/img/tyme.png" alt="TYME" className='auth-img'/>
             {login ? (
-              <p tabIndex={0} onClick={authRedirect} className='auth-redirect self-center'>{t('auth.signupRedirect')}</p>
+              <p tabIndex={0} onClick={switchAuth} className='auth-redirect self-center'>{t('auth.signupRedirect')}</p>
             ) : (
-              <p tabIndex={0} onClick={authRedirect} className='auth-redirect self-center'>{t('auth.loginRedirect')}</p>
+              <p tabIndex={0} onClick={switchAuth} className='auth-redirect self-center'>{t('auth.loginRedirect')}</p>
             )}
           </div>
           <form className='auth-form'>
@@ -157,24 +184,43 @@ const Login = () => {
             value={email} onChange={e => setEmail(e.target.value)}
             className='auth-input' />
 
-            <input type="password" placeholder={t('pass')} 
-            value={password} onChange={e => setPassword(e.target.value)}
-            className='auth-input' />
+            {!reset ? (
+              <div>
+                <input type="password" placeholder={t('pass')} 
+                value={password} onChange={e => setPassword(e.target.value)}
+                className='auth-input' />
+              </div>
+            ) : (
+              <div className='hidden'></div>
+            )}
+            
+            { reset ? (
+              <div className='flex flex-col items-center gap-4'>
+                <button onClick={sendReset} className='auth-button p-2'>{t('auth.continue')}</button>
+                <p className='auth-reset' onClick={switchReset}>{t('cancel')}</p>
+              </div>
+            ) : login ? (
+              <div className='flex flex-col items-center gap-4'>
+                <button onClick={signIn} className='auth-button p-2'>{t('auth.login')}</button>
+                <p className='auth-reset' onClick={switchReset}>{t('auth.reset')}</p>
+              </div>
+            ) : (
+              <button onClick={signUp} className='auth-button p-2'>{t('auth.signup')}</button>
+            )}
 
             <p className='h-6 text-[#f1121f]'>{msg}</p>
-            
-              {login ? (
-                <button onClick={signIn} className='auth-button p-2'>{t('auth.login')}</button>
-              ) : (
-                <button onClick={signUp} className='auth-button p-2'>{t('auth.signup')}</button>
-              )}
-            
-            <hr className='my-8'/>
 
-            <button onClick={signInWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
-              <p>{t('auth.google')}</p>
-              <img src="../src/img/google.png" className='w-8'/>
-            </button>
+            { !reset ? (
+              <div className='flex flex-col items-center gap-6'>
+                <hr className='w-full'/>
+                <button onClick={signInWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
+                  <p>{t('auth.google')}</p>
+                  <img src="../src/img/google.png" className='w-8'/>
+                </button>
+              </div>
+            ) :  (
+              <div className='hidden'></div>
+            )}
 
           </form>
         </div>

@@ -35,7 +35,7 @@ const ThemeSwitcher = () => {
         <Select options={options}
         defaultValue={ localStorage.getItem('theme') == 'light' ? options[0] : options[1] }
         onChange={handleThemeSwitch}
-        className="my-react-select-container"
+        className="my-react-select-container w-52"
         classNamePrefix="my-react-select" />
     )
 

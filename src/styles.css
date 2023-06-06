@@ -22,7 +22,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-languages { @apply flex gap-2 }
 
-.auth-form { @apply flex flex-col gap-3 lg:gap-4 p-8 w-full sm:w-96 bg-white } 
+.auth-form { @apply h-[32rem] sm:h-[36rem] flex flex-col gap-3 lg:gap-5 p-8 w-full sm:w-96 bg-white } 
 
 .auth-title { @apply text-3xl font-black }
 
@@ -34,11 +34,13 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-redirect { @apply hover:underline cursor-pointer }
 
+.auth-reset { @apply hover:underline cursor-pointer w-fit }
+
 /*dashboard*/
 
 .dashboard { @apply flex flex-col-reverse md:flex-row }
 
-.dashboard-menu { @apply h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-24 font-bold shrink-0 }
+.dashboard-menu { @apply h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-32 font-bold shrink-0 }
 
 .active-link { @apply bg-sunset }
 
@@ -80,17 +82,33 @@ body { font-family: 'Inter', sans-serif; }
 
 /*user*/
 
-.user { @apply p-12 }
+.user { @apply flex flex-col p-12 }
+
+.info { @apply flex gap-12 m-auto }
+
+.img-container { @apply bg-silver w-96 h-96 rounded-full overflow-hidden }
+
+.img-container img { @apply object-cover w-full h-full }
+
+.info-container form { @apply h-full flex flex-col justify-around }
 
 /*settings*/
 
 .settings { @apply flex flex-col p-12 }
 
-.settings h1 { @apply font-black text-3xl underline }
+.settings h1, .user h1 { @apply font-black text-3xl underline }
 
 .settings h2 { @apply font-bold text-2xl mt-8 }
 
-.settings-option { @apply w-full h-16 flex items-center justify-between border-solid border-b-2 border-silver dark:border-gray p-2 }
+.settings-option { @apply w-full h-16 flex justify-between items-center gap-8 border-solid border-b-0 border-silver dark:border-gray p-2 }
+
+.settings hr { @apply hidden md:block w-full }
+
+.settings label { @apply w-fit whitespace-nowrap }
+
+.settings input { @apply bg-white dark:bg-black p-2 }
+
+.settings button { @apply bg-silver dark:bg-coal p-2 w-52 rounded-2xl }
 
 /*selects*/
 
