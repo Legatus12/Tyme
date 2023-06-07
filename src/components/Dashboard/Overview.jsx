@@ -165,7 +165,10 @@ const Overview = () => {
                 <div className='mini-tyme' key={index}>
                     {tyme.title}
                 </div>
-              ))}
+                ))}
+                {todayTymes.length < 1 && (
+                  <button className='overview-add'>{t('overview.todayMsg')}</button>
+                )}
               </div>
             </div>
             <div className='incoming'>
@@ -177,6 +180,9 @@ const Overview = () => {
                     <p>{tyme.title}</p>
                   </div>
                 ))}
+                {incomingTymes.length < 1 && (
+                  <p className='my-6'>{t('overview.incomingMsg')}</p>
+                )}
               </div>
             </div>
           </div>

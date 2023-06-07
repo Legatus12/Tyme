@@ -36,6 +36,10 @@ i18n
             continue: 'enviar correo de recuperación',
             sent: 'correo de recuperación enviado a la dirección de correo proporcionada'
           },
+          verify: {
+            message: 'Para finalizar el proceso de registro, haz click en el enlace que hemos enviado a tu dirección de correo electrónico. Una vez que hayas verificado tu cuenta, podrás acceder a todas las funcionalidades de nuestra plataforma. Si no recibes el correo de confirmación en unos minutos, revisa tu carpeta de spam o correo no deseado. Después, refresca la página.',
+            cancel: 'cancelar proceso'
+          },
           user: {
             title: 'Tu perfil',
           },
@@ -51,7 +55,9 @@ i18n
           },
           overview:{
             today: 'Hoy',
-            incoming: 'Próximamente'
+            incoming: 'Próximamente',
+            todayMsg: 'añade un TYME',
+            incomingMsg: 'nada en el horizonte',
           },
           lightMode: 'claro',
           darkMode: 'oscuro',
@@ -85,7 +91,8 @@ i18n
             wrongPassword: 'Contraseña incorrecta.',
             invalidEmail: 'Correo electrónico inválido.',
             userDisabled: 'El usuario ha sido deshabilitado.',
-            default: 'Ocurrió un error al iniciar sesión.'
+            default: 'Ocurrió un error al iniciar sesión.',
+            alreadyInUse: 'Correo electrónico en uso.'
           }
         }
       },

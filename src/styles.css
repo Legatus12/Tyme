@@ -36,6 +36,14 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-reset { @apply hover:underline cursor-pointer w-fit }
 
+/*verify*/
+
+.verify { @apply flex flex-col justify-center items-center gap-12 p-8 md:p-24 }
+
+.verify-message { @apply w-full md:text-lg }
+
+.verify-button { @apply w-fit hover:underline text-lightgray dark:text-[#c8c8c8] }
+
 /*dashboard*/
 
 .dashboard { @apply flex flex-col-reverse md:flex-row }
@@ -52,15 +60,17 @@ body { font-family: 'Inter', sans-serif; }
 
 .overview > div { @apply md:h-1/2 }
 
+.overview-add { @apply p-2 bg-sunset text-black font-bold my-4 rounded-2xl hover:shadow-lg focus:shadow-lg hover:bg-[#fcddb4] focus:bg-[#fcddb4] duration-200  }
+
 .day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col justify-center text-center p-12 }
 
 .calendar { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 bg-sunset }
 
-.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex p-8 lg:p-12 gap-4 md:gap-8 lg:gap-12 }
+.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col lg:flex-row p-8 lg:p-12 gap-12 }
 
-.today, .incoming { @apply w-1/2 h-full flex flex-col gap-4  }
+.today, .incoming { @apply w-full lg:w-1/2 h-fit lg:h-full flex flex-col gap-4 overflow-y-auto }
 
-.today { @apply border-r-2 border-solid border-silver dark:border-gray pr-4 md:pr-8 lg:pr-12 }
+.today { @apply lg:border-r-2 border-solid border-silver dark:border-gray lg:pr-12 }
 
 .tyme-container { @apply flex flex-col gap-6 }
 
