@@ -1,20 +1,16 @@
 import { useState, useContext, useEffect } from 'react'
 import Header from './Header'
 import { auth } from '../../firebase'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification  } from 'firebase/auth'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { AuthContext } from '../AuthProvider'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
 const Login = () => {
 
   const user = useContext(AuthContext)
 
   const { t } = useTranslation()
-
-  const MySwal = withReactContent(Swal)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,6 +20,23 @@ const Login = () => {
   const [reset, setReset] = useState(false)
 
   //
+
+  const actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: 'http://localhost:5173/dashboard/overview',
+    // This must be true.
+    handleCodeInApp: true,
+    iOS: {
+      bundleId: 'http://localhost:5173/dashboard/overview'
+    },
+    android: {
+      packageName: 'http://localhost:5173/dashboard/overview',
+      installApp: true,
+      minimumVersion: '12'
+    },
+    dynamicLinkDomain: 'http://localhost:5173/dashboard/overview'
+  }
 
   const signIn = (e) => {
     e.preventDefault()
@@ -35,7 +48,10 @@ const Login = () => {
   const signUp = (e) => {
     e.preventDefault()
     createUserWithEmailAndPassword(auth, email, password)
-    .then(credentials => console.log(credentials))
+    .then(() => {
+      sendEmailVerification(auth.currentUser)
+      console.log('sent')
+    })
     .catch(error => handleFirebaseAuthError(error))
   }
 
@@ -117,6 +133,9 @@ const Login = () => {
       case 'auth/user-disabled':
         setMsg(t('error.userDisabled'))
         break
+      case 'auth/email-already-in-use':
+        setMsg(t('error.alreadyInUse'))
+        break
       default:
         setMsg(t('error.default'))
         break
@@ -129,11 +148,13 @@ const Login = () => {
       setReset(false)
     } else setLogin(true)
 
+    setPassword('')
     setMsg('')
   }
 
   const switchReset = () => {
     setReset(!reset)
+    setPassword('')
     setMsg('')
   }
 
@@ -226,7 +247,11 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )} else { return <Navigate to="/dashboard/overview" replace /> }
+  )} else if (user && !user.emailVerified) {
+    return <Navigate to="/verify" replace />
+  } else { 
+    return <Navigate to="/dashboard/overview" replace /> 
+  }
 }
   
 export default Login
