@@ -3,7 +3,7 @@ import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay,
 import { useTranslation } from 'react-i18next'
 import { getTymesInDay, addTymeFb, deleteTyme, addTyme } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
-import ModalAddTyme from '../../ModalAddTyme'
+import Tyme from '../../Tyme'
 
 const Day = ({ day, closeDayModal, loadTymesOv }) => {
 
@@ -47,50 +47,51 @@ const Day = ({ day, closeDayModal, loadTymesOv }) => {
   }
 
   const deleteTest = (id) => {
-    deleteTyme(id);
-    loadTymes(user.uid);
+    deleteTyme(id)
+    loadTymes(user.uid)
   }
 
   //
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTyme, setSelectedTyme] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const openModalAddTyme = () => {
-    setIsModalOpen(true);
-  };
+  const openTyme = (tyme) => {
+    console.log(tyme)
+    setSelectedTyme(tyme)
+    setIsModalOpen(true)
+  }
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    loadTymes(user.uid);
-  };
+    setIsModalOpen(false)
+    loadTymes(user.uid)
+  }
 
   //
 
   return (
     <div className="day-view full">
-      <button className="close" onClick={() => closeDayModal()}><img src="/src/img/close.png" /></button>
-      <button className="bg-[#f1121f] w-fit ml-auto p-2 text-white" onClick={openModalAddTyme}>add</button>
-      <div>
+      <div className="flex items-center gap-4">
+        <button className="day-close" onClick={() => closeDayModal()}><img src="/src/img/back.png" /></button>
         <h1 className='text-3xl'>
           {t('date.day.' + day.getDay()) + ', '}
           {i18n.resolvedLanguage == 'es'
             ? day.getDate() + ' de ' + t('date.month.' + day.getMonth())
             : t('date.month.' + day.getMonth()) + ' ' + day.getDate() + getOrdinal(day.getDate())}
         </h1>
+      </div>
+      <div>
+        <button className="bg-[#f1121f] w-fit mb-4 p-2 text-white" onClick={() => openTyme(null)}>add</button>
         <div className="tyme-container">
           {tymes.map((tyme, index) => (
-            <div className='mini-tyme' key={index}>
-              <p>{tyme.title}</p>
-              <p>{tyme.body}</p>
-              <button className="ml-auto" onClick={() => deleteTest(tyme.id)}>delete</button>
+            <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+              <p className="tyme-sm-title">{tyme.title}</p>
+              <p className="tyme-sm-body">{tyme.body}</p>
             </div>
           ))}
         </div>
       </div>
-
-      <ModalAddTyme day={day} isOpen={isModalOpen} onClose={closeModal} >
-        <h2>Añadir Tyme</h2>
-      </ModalAddTyme>
+      <Tyme tyme={selectedTyme} day={day} isOpen={isModalOpen} onClose={closeModal}/>
     </div>
   )
 }
@@ -99,21 +100,21 @@ export default Day
 
 /**
 const Modal = ({ isOpen, onClose, children }) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef(null)
 
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   useEffect(() => {
-    const handleMouseDown = (event) => handleClickOutside(event);
-    document.addEventListener('mousedown', handleMouseDown);
+    const handleMouseDown = (event) => handleClickOutside(event)
+    document.addEventListener('mousedown', handleMouseDown)
     return () => {
-      document.removeEventListener('mousedown', handleMouseDown);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleMouseDown)
+    }
+  }, [])
 
   return isOpen ? (
     <div className="modal">
@@ -124,8 +125,8 @@ const Modal = ({ isOpen, onClose, children }) => {
         </button>
       </div>
     </div>
-  ) : null;
-};
+  ) : null
+}
  */
 
     /*

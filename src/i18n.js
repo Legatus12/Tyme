@@ -71,6 +71,15 @@ i18n
               5: 'Viernes',
               6: 'Sábado'
             },
+            d: {
+              0: 'D',
+              1: 'L',
+              2: 'M',
+              3: 'X',
+              4: 'J',
+              5: 'V',
+              6: 'S'
+            },
             month: {
               0: 'Enero',
               1: 'Febrero',
@@ -93,6 +102,14 @@ i18n
             userDisabled: 'El usuario ha sido deshabilitado.',
             default: 'Ocurrió un error al iniciar sesión.',
             alreadyInUse: 'Correo electrónico en uso.'
+          },
+          tyme: {
+            withoutTitle: 'Sin título',
+            withoutDesc: 'Añade una descripción',
+            date: 'fecha',
+            save: 'guardar cambios',
+            add: 'crear tyme',
+            tag: 'categoria'
           }
         }
       },
