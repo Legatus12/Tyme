@@ -38,10 +38,10 @@ const Dashboard = () => {
                     <Route path='/notifications' element={<Notifications />} />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='/day' element={<Day />} />
-                    <Route path='dashboard/overview/habits' element={<Habits />} />
-                    <Route path='dashboard/overview/notes' element={<Notes />} />
-                    <Route path='dashboard/overview/projects' element={<Projects />} />
-                    <Route path='dashboard/overview/charts' element={<Charts />} />
+                    <Route path='/overview/habits' element={<Habits />} />
+                    <Route path='/overview/notes' element={<Notes />} />
+                    <Route path='/overview/projects' element={<Projects />} />
+                    <Route path='/overview/charts' element={<Charts />} />
                     <Route path='/*' element={<Overview />} />
                 </Routes>
             </div>

@@ -70,21 +70,21 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
             <h2 className="flex-auto font-semibold">
               {t('date.month.' + firstDayCurrentMonth.getMonth())} {format(firstDayCurrentMonth, 'yyyy')}
             </h2>
-            <button type="button" onClick={previousMonth} className="hover:bg-lightgray rounded-full w-10 h-10 p-1 flex justify-center items-center">
+            <button type="button" onClick={previousMonth} className="hover:bg-gray duration-200 rounded-full w-10 h-10 p-1 flex justify-center items-center">
               <img src="/src/img/left.png" alt="" />
             </button>
-            <button onClick={nextMonth} type="button" className="hover:bg-lightgray rounded-full w-10 h-10 p-1 flex justify-center items-center">
+            <button onClick={nextMonth} type="button" className="hover:bg-gray duration-200 rounded-full w-10 h-10 p-1 flex justify-center items-center">
               <img src="/src/img/right.png" alt="" />
             </button>
           </div>
           <div className="grid grid-cols-7 mt-8 text-xs leading-6 text-center text-silver">
-            <div>S</div>
-            <div>M</div>
-            <div>T</div>
-            <div>W</div>
-            <div>T</div>
-            <div>F</div>
-            <div>S</div>
+            <div>{t('date.d.0')}</div>
+            <div>{t('date.d.1')}</div>
+            <div>{t('date.d.2')}</div>
+            <div>{t('date.d.3')}</div>
+            <div>{t('date.d.4')}</div>
+            <div>{t('date.d.5')}</div>
+            <div>{t('date.d.6')}</div>
           </div>
           <div className="grid grid-cols-7 text-sm">
             {days.map((day, dayIdx) => (
@@ -102,7 +102,7 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
                     isEqual(day, selectedDay) && 'text-white',
                     !isEqual(day, selectedDay) && isToday(day) && '',
                     !isEqual(day, selectedDay) && !isToday(day) && isSameMonth(day, firstDayCurrentMonth) && '',
-                    !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'font-extralight text-[#c8c8c8]',
+                    !isEqual(day, selectedDay) && !isToday(day) && !isSameMonth(day, firstDayCurrentMonth) && 'font-extralight text-gray',
                     isEqual(day, selectedDay) && isToday(day) && '',
                     isEqual(day, selectedDay) && !isToday(day) && '',
                     !isEqual(day, selectedDay) && '',
