@@ -29,7 +29,7 @@ const Dashboard = () => {
         <div className='dashboard full'>
 
             <div className='dashboard-menu'>
-                {menu.map(item => (<Link to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
+                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/img/${item.path}.png`} className='w-8' /></abbr></Link>))}
             </div>
 
             <div className='dashboard-view'>
