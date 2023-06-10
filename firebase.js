@@ -27,6 +27,7 @@ tomorrow.setDate(today.getDate() + 1) //obtenemos el dia de mañana
 tomorrow.setHours(0, 0, 0, 0) //establecemos el dia de mañana en la hora 00:00
 
 const tymesRef = collection(db, 'tymes')
+const notesRef = collection(db, 'notes')
 
 //
 
@@ -38,9 +39,20 @@ export const getTymesInDay = (uid, date, callback) => onSnapshot(query(tymesRef,
 
 export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp'), limit(3)), callback)
 
-export const addTyme = (uid, title, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: 'body', date: date, timestamp: timestamp})
+export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp})
 
 export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
+
+export const updateTyme = (id, tyme) => updateDoc(doc(db, 'tymes', id), tyme)
+
+
+export const addNote = (uid, title, text) => addDoc(notesRef, { uid: uid, title: title, text: text})
+
+export const getNotes = (uid, callback) => onSnapshot(query(notesRef, where("uid", "==", uid)), callback)
+
+export const deleteNoteFB = (id) =>{ 
+  deleteDoc(doc(db, 'notes', id))
+}
 
 export const addTymeFb = async (userId, tyme) => {
   const userRef = doc(db, "users", userId);
