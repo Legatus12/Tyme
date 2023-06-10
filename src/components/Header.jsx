@@ -4,7 +4,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 const Header = () => {
 
     return (
-        <div className='flex justify-between items-center p-2'>
+        <div className='hidden md:flex justify-between items-center p-2'>
           <LanguageSwitcher />
           <ThemeSwitcher />
         </div>

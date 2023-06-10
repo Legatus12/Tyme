@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard'
 import { useState, createContext } from 'react'
 import useMountEffect from '@restart/hooks/useMountEffect'
 import { useTranslation } from 'react-i18next'
+import Verify from './components/Verify'
 
 const App = () => {
 
@@ -42,6 +43,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Auth/>} />
         <Route path="/authentication" element={<Auth />} />
+        <Route path="/verify" element={<Verify />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

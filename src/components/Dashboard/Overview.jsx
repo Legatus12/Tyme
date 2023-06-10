@@ -11,6 +11,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../../AuthProvider'
+import Tyme from '../Tyme'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -129,6 +130,22 @@ const Overview = () => {
   }
 
   //
+
+  const [selectedTyme, setSelectedTyme] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openTyme = (tyme) => {
+    console.log(tyme)
+    setSelectedTyme(tyme)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    loadTymes(user.uid)
+  }
+
+  //
     
   if(!dayModal){return (
       <div className='overview full'>
@@ -162,21 +179,27 @@ const Overview = () => {
               <h1 className='text-2xl font-black'>{t('overview.today')}</h1>
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
-                <div className='mini-tyme' key={index}>
+                <div className='mini-tyme' key={index} tabIndex={0}>
                     {tyme.title}
                 </div>
-              ))}
+                ))}
+                {todayTymes.length < 1 && (
+                  <button className='tyme-sm-add'>{t('overview.todayMsg')}</button>
+                )}
               </div>
             </div>
             <div className='incoming'>
               <h1 className='text-2xl font-black'>{t('overview.incoming')}</h1>
               <div className='tyme-container'>
                 {incomingTymes.map((tyme, index) => (
-                  <div className='mini-tyme' key={index}>
-                    <p>dentro de {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} días</p>
-                    <p>{tyme.title}</p>
+                  <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+                    <p className='tyme-sm-days'>dentro de {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} días</p>
+                    <p className='tyme-sm-title'>{tyme.title}</p>
                   </div>
                 ))}
+                {incomingTymes.length < 1 && (
+                  <p className='my-6'>{t('overview.incomingMsg')}</p>
+                )}
               </div>
             </div>
           </div>
@@ -188,6 +211,7 @@ const Overview = () => {
               <Link to={'charts'} >charts</Link>
           </div>
 
+          <Tyme tyme={selectedTyme} day={null} isOpen={isModalOpen} onClose={closeModal}/>
       </div>
   )}
   else{return(

@@ -25,7 +25,7 @@ const Dashboard = () => {
 
     //
     
-    if(user) {return (
+    if(user && user.emailVerified) {return (
         <div className='dashboard full'>
 
             <div className='dashboard-menu'>
@@ -48,7 +48,11 @@ const Dashboard = () => {
             
 
         </div>
-    )} else { return <Navigate to="/authentication" replace /> }
+    )} else if (user && !user.emailVerified) {
+        return <Navigate to="/verify" replace />
+    } else { 
+        return <Navigate to="/authentication" replace /> 
+    }
 }
 
 export default Dashboard

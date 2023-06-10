@@ -41,9 +41,10 @@ export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, wh
 
 export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp})
 
-export const deleteTyme = (id) =>{ 
-  deleteDoc(doc(db, 'tymes', id))
-}
+export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
+
+export const updateTyme = (id, tyme) => updateDoc(doc(db, 'tymes', id), tyme)
+
 
 export const addNote = (uid, title, text) => addDoc(notesRef, { uid: uid, title: title, text: text})
 
