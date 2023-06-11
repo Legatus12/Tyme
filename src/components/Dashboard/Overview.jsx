@@ -184,7 +184,7 @@ const Overview = () => {
                 </div>
                 ))}
                 {todayTymes.length < 1 && (
-                  <button className='tyme-sm-add'>{t('overview.todayMsg')}</button>
+                  <button className='tyme-sm-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
                 )}
               </div>
             </div>

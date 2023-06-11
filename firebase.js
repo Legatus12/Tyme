@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAnalytics } from "firebase/analytics"
-import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit } from 'firebase/firestore'
+import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit, getDoc, setDoc } from 'firebase/firestore'
 import { getAuth } from "firebase/auth"
 
 const app = initializeApp({
@@ -28,6 +28,8 @@ tomorrow.setHours(0, 0, 0, 0) //establecemos el dia de mañana en la hora 00:00
 
 const tymesRef = collection(db, 'tymes')
 const notesRef = collection(db, 'notes')
+const habitsRef = collection(db, 'habits')
+const projectsRef = collection(db, 'projects')
 
 //
 
@@ -38,6 +40,8 @@ export const getTymesInMonth = (uid, month, year, callback) => onSnapshot(query(
 export const getTymesInDay = (uid, date, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("date", "==", date)), callback)
 
 export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp'), limit(3)), callback)
+
+export const getTymesByProject = (uid, project, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("project", "==", project)), callback)
 
 export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp})
 
@@ -53,6 +57,46 @@ export const getNotes = (uid, callback) => onSnapshot(query(notesRef, where("uid
 export const deleteNoteFB = (id) =>{ 
   deleteDoc(doc(db, 'notes', id))
 }
+
+export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: []})
+
+export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
+
+export const deleteHabitFB = (id) =>{ 
+  deleteDoc(doc(db, 'habits', id))
+}
+export const addProject = (uid, name, description) => addDoc(projectsRef, { uid: uid, name: name, description: description})
+
+export const getProjects = (uid, callback) => onSnapshot(query(projectsRef, where("uid", "==", uid)), callback)
+
+export const deleteProjectFB = (id) =>{ 
+  deleteDoc(doc(db, 'projects', id))
+}
+
+export const setProjectInTyme = async (tymeId, projectId) => {
+  console.log('HOLAAA')
+  const tymeRef = doc(db, 'tymes', tymeId);
+  const tymeDoc = await getDoc(tymeRef);
+  if (!tymeDoc.exists()) {
+    await setDoc(tymeRef, { project: projectId });
+  } else {
+    await updateDoc(tymeRef, { project: projectId });
+  }
+  console.log('Campo "project" añadido o actualizado correctamente en el documento "tyme"');
+};
+/** 
+export const getProjects = (uid, callback) => {
+  onSnapshot(
+    query(projectsRef, where("uid", "==", uid)),
+    (snapshot) => {
+      const projects = snapshot.docs.map((doc) => doc.data().list);
+      callback(projects);
+    }
+  );
+};
+
+
+*/
 
 export const addTymeFb = async (userId, tyme) => {
   const userRef = doc(db, "users", userId);
