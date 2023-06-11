@@ -29,8 +29,6 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
       const auxDate = new Date(tyme.timestamp)
       setDate(auxDate)
     } else {
-      setTitle('')
-      setBody('')
       setDate(day)
     }
   }, [tyme, day])
@@ -125,9 +123,8 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
                 <input
                   type="date"
                   id="date"
-                  required pattern="\d{2}-\d{2}-\d{4}"
-                  value=''
-                  onChange={(e) => setDate(e.target.value)}
+                  value={format(date, 'yyyy-MM-dd')}
+                  onChange={(e) => setDate(format(e.target.value, 'yyyy-MM-dd'))}
                 />
               </div>
               <div className='flex items-center'>
