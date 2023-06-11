@@ -112,10 +112,6 @@ const Overview = () => {
 
   //
 
-  useEffect(() => {
-      setInterval(() => setDate(new Date()), 1000)
-  }, [])
-
   //
 
   const getOrdinal = (number) => {
