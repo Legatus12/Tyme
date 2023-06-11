@@ -211,7 +211,7 @@ const Overview = () => {
               <Link to={'charts'} >charts</Link>
           </div>
 
-          <Tyme tyme={selectedTyme} day={null} isOpen={isModalOpen} onClose={closeModal}/>
+          <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal}/>
       </div>
   )}
   else{return(
