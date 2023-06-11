@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAnalytics } from "firebase/analytics"
-import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit, getDoc, setDoc } from 'firebase/firestore'
+import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { getAuth } from "firebase/auth"
 
 const app = initializeApp({
@@ -47,7 +47,12 @@ export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, {
 
 export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 
-export const updateTyme = (id, tyme) => updateDoc(doc(db, 'tymes', id), tyme)
+export const deleteTymeByProject = async (uid, project) =>(await getDocs(query(tymesRef, where("uid", "==", uid), where('project', '==', project)))).forEach((doc) => deleteDoc(doc.ref));
+
+export const updateTyme = (id, tyme) => {
+  console.log(tyme)
+  updateDoc(doc(db, 'tymes', id), tyme)
+} 
 
 
 export const addNote = (uid, title, text) => addDoc(notesRef, { uid: uid, title: title, text: text})

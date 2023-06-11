@@ -49,28 +49,32 @@ const Overview = () => {
 
   const loadTymes = (uid) => {
     setTodayTymes([])
-    const todayTymes = []
-    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => docs.forEach(doc =>{ 
-      const aux = {
-        ...doc.data(),
-        id: doc.id
-      }
-      todayTymes.push(aux)
-  }))
-    //console.log(today)
-    setTodayTymes(todayTymes)
 
+    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => {
+      const todayTymes = []
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        todayTymes.push(aux)
+      })
+      setTodayTymes(todayTymes)
+    })
+   
     setIncomingTymes([])
     const incomingTymes = []
-    getIncomingTymes(uid, docs => docs.forEach(doc => {
-      const aux = {
-        ...doc.data(),
-        id: doc.id
-      }
-      incomingTymes.push(aux)
-    
-    }))
-    setIncomingTymes(incomingTymes)
+    getIncomingTymes(uid, docs => {
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        incomingTymes.push(aux)
+        setIncomingTymes(incomingTymes)
+      })
+    })
+
   }
 
   useEffect(() => {
@@ -175,7 +179,7 @@ const Overview = () => {
               <h1 className='text-2xl font-black'>{t('overview.today')}</h1>
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
-                <div className='mini-tyme' key={index} tabIndex={0}>
+                <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
                     {tyme.title}
                 </div>
                 ))}

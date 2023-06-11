@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
-import { addProject, getProjects, getTymesByProject, deleteProjectFB } from "../../../../firebase"
+import { addProject, getProjects, getTymesByProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
 import Tyme from '../../Tyme'
 import { startOfToday } from 'date-fns';
@@ -15,8 +15,8 @@ function Projects() {
 
   const loadProjects = async (uid) => {
     if (uid) {
-      const arr = []
       getProjects(uid, (projects) => {
+        const arr = []
         projects.forEach((project) => {
           const aux = {
             ...project.data(),
@@ -32,15 +32,18 @@ function Projects() {
   const loadTymesByProject = async (uid, project) => {
     //console.log(project)
     setTymes([])
-    const arr = []
-    getTymesByProject(uid, project, docs => docs.forEach(doc => {
-      const aux = {
-        ...doc.data(),
-        id: doc.id
-      }
-      arr.push(aux)
-    }))
-    setTymes(arr)
+    getTymesByProject(uid, project, docs => { 
+      const arr = []
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        arr.push(aux)
+      })
+      setTymes(arr)
+    })
+
     console.log(tymes)
   }
 
@@ -82,10 +85,13 @@ function Projects() {
     name: "",
     description: "",
   });
+  const [msgerror, setmsgerror] = useState('')
+  const [showDelete, setShowDelete] = useState(false)
   const modalRef = useRef(null)
 
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
+      console.log('modal')
       setShowAdd(false)
     }
   }
@@ -99,14 +105,19 @@ function Projects() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values)
-    addProject(user.uid, values.name, values.description)
-    setValues({
-      name: "",
-      description: "",
-    });
-    loadProjects(user.uid)
-    setShowAdd(false)
+    if(projects.some(project => project.name === values.name)){
+      setmsgerror('No puedes añadir dos proyectos con el mismo nombre')
+    }
+    else{
+      addProject(user.uid, values.name, values.description)
+      setValues({
+        name: "",
+        description: "",
+      });
+      loadProjects(user.uid)
+      setShowAdd(false)
+    }
+
   };
 
   const handleChange = (evt) => {
@@ -122,9 +133,15 @@ function Projects() {
     setValues(newValues);
   }
 
-  const deleteProject = (id) => {
-    deleteProjectFB(id)
-    loadProjects(user.id)
+  const deleteProject = (deleteTymes) => {
+    if(!deleteTymes){
+      deleteProjectFB(selectedProject.id)
+    }
+    else{
+      deleteProjectFB(selectedProject.id)
+      deleteTymeByProject(user.uid, selectedProject.name)
+    }
+    loadProjects(user.uid)
     setSelectedProject(null)
   }
 
@@ -160,6 +177,7 @@ function Projects() {
                   value={values.description}
                   onChange={handleChange}
                 ></textarea>
+                <p>{msgerror}</p>
                 <button type="submit">Send</button>
               </form>
             </div>
@@ -173,7 +191,19 @@ function Projects() {
         <button onClick={() => setSelectedProject(null)}>back</button>
         <p>{selectedProject.name}</p>
         <div className="tyme-container">
-          <button onClick={() => deleteProject(selectedProject.id)}>delete project</button>
+          <button onClick={() => setShowAdd(true)}>delete project</button>
+          {
+            showAdd ? 
+            <div className="modal">
+              <div className="modal-content" ref={modalRef}>
+                <p>¿Deseas eliminar los Tymes asociados a este proyecto?</p>
+                <button onClick={() => deleteProject(false)}>Eliminar proyecto</button>
+                <button onClick={() => deleteProject(true)}>Eliminar proyecto y Tymes</button>
+                <button onClick={() => setShowDelete(false)}>canclel</button>
+              </div>
+            </div>
+            : null
+          }
           {tymes.map((tyme, index) => (
             <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
               <p className="tyme-sm-title">{tyme.title}</p>
