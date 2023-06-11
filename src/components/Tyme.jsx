@@ -5,7 +5,7 @@ import { AuthContext } from '../AuthProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
 
-const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
+const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   const user = useContext(AuthContext)
 
@@ -22,7 +22,6 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
   //
 
   useEffect(() => {
-    console.log(day)
     if (tyme !== null) {
       setTitle(tyme.title)
       setBody(tyme.body)
@@ -30,7 +29,11 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
       const auxDate = new Date(tyme.timestamp)
       setDate(auxDate)
     }
-    console.log(date)
+    else {
+      setTitle('')
+      setBody('')
+      setDate(day)
+    }
   }, [tyme, day])
 
   //
@@ -69,9 +72,12 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
   //TODO: Implementar el proyecto OPCIONALMENTE
   const handleSubmit = (event) => {
     event.preventDefault()
-
-    if (tyme !== null)
-      updateTyme(tyme.id, { title: title, body: body, project: selectedProject, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime()})
+    if (tyme !== null){
+      let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime()}
+      console.log(typeof selectedProject === 'undefined')
+      typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
+      updateTyme(tyme.id, aux)
+    }
     else
       addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
 

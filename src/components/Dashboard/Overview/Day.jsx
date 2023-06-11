@@ -5,7 +5,7 @@ import { getTymesInDay, addTymeFb, deleteTyme, addTyme } from "../../../../fireb
 import { AuthContext } from '../../../AuthProvider'
 import Tyme from '../../Tyme'
 
-const Day = ({ day, closeDayModal, loadTymesOv }) => {
+const Day = ({ day, closeDayModal }) => {
 
   const user = useContext(AuthContext)
 
@@ -18,15 +18,16 @@ const Day = ({ day, closeDayModal, loadTymesOv }) => {
   const loadTymes = async (uid) => {
     setTymes([])
     const arr = []
-    getTymesInDay(uid, format(day, 'dd-MM-yyyy'), docs => docs.forEach(doc => {
-      const aux = {
-        ...doc.data(),
-        id: doc.id
-      }
-      arr.push(aux)
-    }))
+    getTymesInDay(uid, format(day, 'dd-MM-yyyy'), docs => {
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        arr.push(aux)
+    })
     setTymes(arr)
-    loadTymesOv(uid)
+  })
   }
 
   useEffect(() => {

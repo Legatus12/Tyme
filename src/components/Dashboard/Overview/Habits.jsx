@@ -25,8 +25,9 @@ function Habits() {
 
   const loadHabits = async (uid) => {
     if (uid) {
-      const arr = []
+
       getHabits(uid, (habits) => {
+        const arr = []
         habits.forEach((habit) => {
           const aux = {
             ...habit.data(),
@@ -37,7 +38,6 @@ function Habits() {
         setHabits(arr)
       })
     }
-    console.log(habits)
   }
 
   useEffect(() => {
