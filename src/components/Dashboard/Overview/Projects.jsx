@@ -3,6 +3,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { addProject, getProjects, getTymesByProject, deleteProjectFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
 import Tyme from '../../Tyme'
+import { startOfToday } from 'date-fns';
 
 function Projects() {
 
@@ -180,7 +181,7 @@ function Projects() {
             </div>
           ))}
         </div>
-        <Tyme tyme={selectedTyme} day={null} isOpen={isModalOpen} onClose={closeModal} />
+        <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal} />
       </div>
     )
 }

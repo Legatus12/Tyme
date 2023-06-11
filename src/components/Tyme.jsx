@@ -22,15 +22,15 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
   //
 
   useEffect(() => {
-    if (tyme != null) {
+    console.log(day)
+    if (tyme !== null) {
       setTitle(tyme.title)
       setBody(tyme.body)
       setSelectedProject(tyme.project)
       const auxDate = new Date(tyme.timestamp)
       setDate(auxDate)
-    } else {
-      setDate(day)
     }
+    console.log(date)
   }, [tyme, day])
 
   //
@@ -70,8 +70,8 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (tyme)
-      updateTyme(tyme.id, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
+    if (tyme !== null)
+      updateTyme(tyme.id, { title: title, body: body, project: selectedProject, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime()})
     else
       addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
 
@@ -98,8 +98,10 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
     }
   }, [])
 
-  const newFormat = (date) => {
-    return date.split('-')[2] + '-' + date.split('-')[1] + '-' + date.split('-')[0]
+  const onChangeDate = (date) => {
+    const dateArray = date.split("-")
+    const dateObject = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
+    setDate(dateObject)
   }
 
   return isOpen ? (
@@ -124,7 +126,7 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
                   type="date"
                   id="date"
                   value={format(date, 'yyyy-MM-dd')}
-                  onChange={(e) => setDate(format(e.target.value, 'yyyy-MM-dd'))}
+                  onChange={(e) => onChangeDate(e.target.value)}
                 />
               </div>
               <div className='flex items-center'>
