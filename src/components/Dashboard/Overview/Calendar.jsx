@@ -27,10 +27,15 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
 
   const loadTymes = (uid) => {
     setTymesDates([])
-    const arr = []
-    getTymes(uid, docs => docs.forEach(doc => arr.push(doc.data().date)))
+    getTymes(uid, docs => {
+      const arr = []
+      docs.forEach(doc =>{
+        arr.push(doc.data().date)
+      })
+      setTymesDates(arr)
+    })
     //console.log(today)
-    setTymesDates(arr)
+
   }
 
   useEffect(() => {

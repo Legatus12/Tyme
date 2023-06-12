@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme, getProjects, setProjectInTyme } from "../../firebase"
+import { addTyme, updateTyme, getProjects, setProjectInTyme, updateTymeField } from "../../firebase"
 import { AuthContext } from '../AuthProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
@@ -15,6 +15,8 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
   const [body, setBody] = useState('')
   const [date, setDate] = useState(day)
   const [timestamp, setTimestamp] = useState('')
+  const [hora, setHora] = useState('')
+  const [done, setDone] = useState('')
   const [projects, setProjects] = useState([]);
   //const [selectedProject, setSelectedProject] = useState('');
   const [selectedProject, setSelectedProject] = useState(tyme ? tyme.project : '');
@@ -28,11 +30,14 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       setSelectedProject(tyme.project)
       const auxDate = new Date(tyme.timestamp)
       setDate(auxDate)
+      setDone(tyme.done)
+      setHora(new Date(tyme.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
     }
     else {
       setTitle('')
       setBody('')
       setDate(day)
+      setDone(false)
     }
   }, [tyme, day])
 
@@ -49,7 +54,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
           };
           arr.push(aux);
         });
-  
+
         setProjects(arr);
       });
     }
@@ -62,29 +67,46 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   const handleProjectChange = (newProject) => {
     console.log(newProject)
-    if(tyme != null){
+    if (tyme != null) {
       setProjectInTyme(tyme.id, newProject)
       setSelectedProject(newProject);
     }
   };
 
+  const handleDone = (event) => {
+    const isChecked = event.target.checked;
+    setDone(isChecked);
+  };
+
 
   //TODO: Implementar el proyecto OPCIONALMENTE
   const handleSubmit = (event) => {
+    console.log(tyme)
+    console.log(day)
     event.preventDefault()
-    if (tyme !== null){
-      let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime()}
-      console.log(typeof selectedProject === 'undefined')
+    if (tyme !== null) {
+      const [hour, minute] = hora.split(':');
+      let newDate = date;
+      newDate.setHours(hour);
+      newDate.setMinutes(minute);
+      let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: newDate.getTime(), done: done }
       typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
       updateTyme(tyme.id, aux)
+      console.log(aux)
     }
-    else
-      addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
+    else {
+      const [hour, minute] = hora.split(':');
+      let newDate = date;
+      newDate.setHours(hour);
+      newDate.setMinutes(minute);
+      addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), newDate.getTime())
+    }
+
 
     onClose()
     setTitle('')
     setBody('')
-    setDate('')
+    //setDate('')
     setTimestamp('')
   }
 
@@ -136,15 +158,34 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
                 />
               </div>
               <div className='flex items-center'>
+                <label htmlFor="hora">Hora:</label>
+                <input
+                  type="time"
+                  id="hora"
+                  value={hora}
+                  onChange={(e) => setHora(e.target.value)}
+                  required
+                />
+              </div>
+              <div className='flex items-center'>
                 <label className='p-4' htmlFor="date">{t('tyme.tag')}</label>
                 <select id="project" value={selectedProject} onChange={(e) => handleProjectChange(e.target.value)}>
-                <option value="">Sin proyecto</option> {/* Agrega esta opción */}
+                  <option value="">Sin proyecto</option> {/* Agrega esta opción */}
                   {projects.map((project, index) => (
                     <option key={index} value={project.name}>
                       {project.name}
                     </option>
                   ))}
                 </select>
+                <div className='flex items-center'>
+                  <label htmlFor="done">Completado:</label>
+                  <input
+                    type="checkbox"
+                    id="done"
+                    checked={done}
+                    onChange={handleDone}
+                  />
+                </div>
               </div>
             </div>
             <hr />
