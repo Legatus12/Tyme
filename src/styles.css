@@ -115,7 +115,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .tools > a { @apply bg-silver dark:bg-darkgray full rounded-2xl p-6 duration-200 }
 
-.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-full md:h-1/2 flex flex-col lg:flex-row p-8 justify-between lg:gap-8 }
+.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-fit md:h-1/2 flex flex-col lg:flex-row p-8 justify-between gap-8 }
 
 .today, .incoming { @apply w-full lg:w-1/2 h-fit lg:h-full flex flex-col gap-2 lg:gap-4 }
 
