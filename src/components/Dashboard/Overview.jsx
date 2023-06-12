@@ -49,28 +49,32 @@ const Overview = () => {
 
   const loadTymes = (uid) => {
     setTodayTymes([])
-    const todayTymes = []
-    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => docs.forEach(doc =>{ 
-      const aux = {
-        ...doc.data(),
-        id: doc.id
-      }
-      todayTymes.push(aux)
-  }))
-    //console.log(today)
-    setTodayTymes(todayTymes)
 
+    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => {
+      const todayTymes = []
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        todayTymes.push(aux)
+      })
+      setTodayTymes(todayTymes)
+    })
+   
     setIncomingTymes([])
     const incomingTymes = []
-    getIncomingTymes(uid, docs => docs.forEach(doc => {
-      const aux = {
-        ...doc.data(),
-        id: doc.id
-      }
-      incomingTymes.push(aux)
-    
-    }))
-    setIncomingTymes(incomingTymes)
+    getIncomingTymes(uid, docs => {
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        incomingTymes.push(aux)
+        setIncomingTymes(incomingTymes)
+      })
+    })
+
   }
 
   useEffect(() => {
@@ -111,10 +115,6 @@ const Overview = () => {
   }, [pos])
 
   //
-
-  useEffect(() => {
-      setInterval(() => setDate(new Date()), 1000)
-  }, [])
 
   //
 
@@ -179,12 +179,12 @@ const Overview = () => {
               <h1 className='text-2xl font-black'>{t('overview.today')}</h1>
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
-                <div className='mini-tyme' key={index} tabIndex={0}>
+                <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
                     {tyme.title}
                 </div>
                 ))}
                 {todayTymes.length < 1 && (
-                  <button className='tyme-sm-add'>{t('overview.todayMsg')}</button>
+                  <button className='tyme-sm-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
                 )}
               </div>
             </div>
@@ -211,7 +211,7 @@ const Overview = () => {
               <Link to={'charts'} >charts</Link>
           </div>
 
-          <Tyme tyme={selectedTyme} day={null} isOpen={isModalOpen} onClose={closeModal}/>
+          <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal}/>
       </div>
   )}
   else{return(

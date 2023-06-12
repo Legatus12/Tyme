@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect,useContext } from "react"
+import { useState, useEffect,useContext } from "react"
 import { Link, Route, Routes } from 'react-router-dom';
 import { addNote, getNotes, deleteNoteFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
+import useMountEffect from '@restart/hooks/useMountEffect'
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -15,30 +16,36 @@ function Notes() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(user.uid)
     addNote(user.uid, values.title, values.text);
-    values.title = ''
-    values.text = ''
+    setValues({
+      title: "",
+      text: "",
+    });
     loadNotes(user.uid)
   };
 
   const loadNotes = async (uid) => {
-    const arr = []
-    getNotes(uid, notes => notes.forEach(note => {
-      const aux = {
-        ...note.data(),
-        id: note.id
-      }
-      console.log(aux)
-      arr.push(aux)
-    }))
-    setNotes(arr)
-  }
+    if (uid) {
+      const arr = [];
+      getNotes(uid, (notes) => {
+        notes.forEach((note) => {
+          const aux = {
+            ...note.data(),
+            id: note.id,
+          };
+          arr.push(aux);
+        });
+  
+        setNotes(arr); // Actualizar el estado de las notas aquí
+      });
+    }
+  };
 
   const deleteNote = (id) => {
     deleteNoteFB(id)
+    loadNotes(user.uid)
   }
-
+  
   useEffect(() => {
     loadNotes(user.uid)
   }, [user])
@@ -56,6 +63,10 @@ function Notes() {
 
     setValues(newValues);
   }
+
+  useMountEffect(() => {
+    loadNotes()
+  })
 
   return (
       <div className="day-view full">
@@ -90,6 +101,7 @@ function Notes() {
                 <div key={note.id}>
                   <p>{note.title}</p>
                   <p>{note.text}</p>
+                  <button onClick={()=> deleteNote(note.id)}>delete</button>
                 </div>
               )
               : null

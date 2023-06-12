@@ -1,42 +1,83 @@
-import React, { useState, useRef, useEffect,useContext } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme } from "../../firebase"
+import { addTyme, updateTyme, getProjects, setProjectInTyme } from "../../firebase"
 import { AuthContext } from '../AuthProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
 
-const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
+const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   const user = useContext(AuthContext)
 
   const { t, i18n } = useTranslation()
-  
+
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [date, setDate] = useState(day)
   const [timestamp, setTimestamp] = useState('')
+  const [projects, setProjects] = useState([]);
+  //const [selectedProject, setSelectedProject] = useState('');
+  const [selectedProject, setSelectedProject] = useState(tyme ? tyme.project : '');
 
   //
 
   useEffect(() => {
-    if(tyme != null) {
-      console.log('echo')
+    if (tyme !== null) {
       setTitle(tyme.title)
       setBody(tyme.body)
+      setSelectedProject(tyme.project)
       const auxDate = new Date(tyme.timestamp)
-      console.log(auxDate)
       setDate(auxDate)
-      console.log(date)
     }
-  }, [])
+    else {
+      setTitle('')
+      setBody('')
+      setDate(day)
+    }
+  }, [tyme, day])
 
   //
 
+  const loadProjects = async (uid) => {
+    if (uid) {
+      const arr = [];
+      getProjects(uid, (projects) => {
+        projects.forEach((project) => {
+          const aux = {
+            ...project.data(),
+            id: project.id,
+          };
+          arr.push(aux);
+        });
+  
+        setProjects(arr);
+      });
+    }
+  };
+
+  useEffect(() => {
+    loadProjects(user.uid);
+  }, [user]);
+
+
+  const handleProjectChange = (newProject) => {
+    console.log(newProject)
+    if(tyme != null){
+      setProjectInTyme(tyme.id, newProject)
+      setSelectedProject(newProject);
+    }
+  };
+
+
+  //TODO: Implementar el proyecto OPCIONALMENTE
   const handleSubmit = (event) => {
     event.preventDefault()
-
-    if(tyme)
-      updateTyme(tyme.id, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
+    if (tyme !== null){
+      let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime()}
+      console.log(typeof selectedProject === 'undefined')
+      typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
+      updateTyme(tyme.id, aux)
+    }
     else
       addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
 
@@ -63,8 +104,10 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
     }
   }, [])
 
-  const newFormat = (date) => {
-    return date.split('-')[2] + '-' + date.split('-')[1] + '-' + date.split('-')[0]
+  const onChangeDate = (date) => {
+    const dateArray = date.split("-")
+    const dateObject = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
+    setDate(dateObject)
   }
 
   return isOpen ? (
@@ -88,14 +131,20 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
                 <input
                   type="date"
                   id="date"
-                  required pattern="\d{2}-\d{2}-\d{4}"
-                  value=''
-                  onChange={(e) => setDate(e.target.value)}
+                  value={format(date, 'yyyy-MM-dd')}
+                  onChange={(e) => onChangeDate(e.target.value)}
                 />
               </div>
               <div className='flex items-center'>
                 <label className='p-4' htmlFor="date">{t('tyme.tag')}</label>
-                <Select />
+                <select id="project" value={selectedProject} onChange={(e) => handleProjectChange(e.target.value)}>
+                <option value="">Sin proyecto</option> {/* Agrega esta opción */}
+                  {projects.map((project, index) => (
+                    <option key={index} value={project.name}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <hr />
@@ -118,94 +167,4 @@ const ModalAddTyme = ({ tyme, day = startOfToday(), isOpen, onClose }) => {
   ) : null
 }
 
-  export default ModalAddTyme
-
-  /**
-   const ModalAddTyme = ({ day,  isOpen, onClose }) => {
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
-    const [date, setDate] = useState('')
-    const [timestamp, setTimestamp] = useState('')
-
-    const user = useContext(AuthContext)
-  
-    const handleSubmit = (event) => {
-      event.preventDefault()
-
-      console.log(day)
-      addTyme(user.uid, title, body, format(day, 'dd-MM-yyyy'), day.getTime())
-
-      onClose()
-      setTitle('')
-      setBody('')
-      setDate('')
-      setTimestamp('')
-    }
-
-    const modalRef = useRef(null)
-
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose()
-      }
-    }
-  
-    useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-      }
-    }, [])
-
-    return isOpen ? (
-      <div className="modal">
-        <div className="modal-content">
-          <h2>Formulario</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="title">Título:</label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="body">Contenido:</label>
-              <textarea
-                id="body"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-              ></textarea>
-            </div>
-            <div>
-              <label htmlFor="date">Fecha:</label>
-              <input
-                type="date"
-                id="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="timestamp">Marca de tiempo:</label>
-              <input
-                type="time"
-                id="timestamp"
-                value={timestamp}
-                onChange={(e) => setTimestamp(e.target.value)}
-              />
-            </div>
-            <div className="modal-buttons">
-              <button type="submit">Guardar</button>
-              <button className="modal-close" onClick={() => onClose(null)}>
-                Cerrar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    ) : null
-  }
-   */
+export default ModalAddTyme
