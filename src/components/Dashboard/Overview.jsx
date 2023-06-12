@@ -206,12 +206,15 @@ const Overview = () => {
             </div>
           </div>
 
-          <div className='tools'>
+          <div className='tools-container'>
+            <div className='tools'>
               <Link to={'notes'} >notes</Link>
               <Link to={'projects'} >projects</Link>
               <Link to={'habits'} >habits</Link>
               <Link to={'charts'} >charts</Link>
+            </div>
           </div>
+          
 
           <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal}/>
       </div>

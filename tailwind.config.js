@@ -15,7 +15,7 @@ export default {
       sunset: '#fad6a5',
       midDay: '#fcddb4',
       black: '#232323',
-      darKgray: '#646464',
+      darkgray: '#646464',
       gray: '#808080',
       lightgray: '#c8c8c8',
     },
