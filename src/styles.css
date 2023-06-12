@@ -95,7 +95,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .overview { @apply flex flex-wrap overflow-y-auto }
 
-.overview > div { @apply md:h-1/2 }
+.overview > div { @apply h-fit md:h-1/2 }
 
 .day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col justify-center text-center p-12 }
 
@@ -103,7 +103,13 @@ body { font-family: 'Inter', sans-serif; }
 
 .calendar-container { @apply pt-8 px-8 pb-4 }
 
+.calendar { @apply full bg-black dark:bg-coal rounded-2xl p-4 text-white }
+
 .tools-container { @apply pb-8 px-8 pt-4 }
+
+.tools { @apply full grid grid-cols-2 grid-rows-2 gap-6 }
+
+.tools > a { @apply bg-silver dark:bg-darkgray full rounded-2xl p-6 duration-200 }
 
 .tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col lg:flex-row p-8 lg:p-12 justify-between lg:gap-12 }
 
@@ -113,27 +119,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .tyme-container { @apply flex flex-col gap-4 lg:gap-6 overflow-y-auto }
 
-.tools { @apply full bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 gap-6 p-6 rounded-2xl }
-
-.tools > a { @apply bg-white dark:bg-black block full rounded-2xl p-6 shadow-lg hover:shadow-2xl duration-200 }
-
 /*day*/
 
 .day-view { @apply flex flex-col p-6 md:p-12 gap-4 }
 
 .day-close { @apply w-12 rounded-full hover:bg-silver p-2 duration-200 }
-
-/*user*/
-
-.user { @apply flex flex-col p-12 }
-
-.info { @apply flex gap-12 m-auto }
-
-.img-container { @apply bg-silver w-96 h-96 rounded-full overflow-hidden }
-
-.img-container img { @apply object-cover w-full h-full }
-
-.info-container form { @apply h-full flex flex-col justify-around }
 
 /*settings*/
 

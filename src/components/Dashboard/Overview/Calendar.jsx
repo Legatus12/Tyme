@@ -63,8 +63,8 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
   }
 
   return (
-    <div className='calendar'>
-      <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
+    <div className='calendar-container'>
+      <div className="calendar">
         <div className="">
           <div className="flex items-center">
             <h2 className="flex-auto font-semibold">
@@ -106,7 +106,7 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
                     isEqual(day, selectedDay) && isToday(day) && '',
                     isEqual(day, selectedDay) && !isToday(day) && '',
                     !isEqual(day, selectedDay) && '',
-                    (isEqual(day, selectedDay) || isToday(day)) && 'border-solid border-2 border-silver font-semibold bg-silver text-black hover:text-white',
+                    (isEqual(day, selectedDay) || isToday(day)) && 'bg-sunset hover:bg-white text-black',
                     'mx-auto font-semibold flex h-8 w-8 items-center justify-center rounded-full hover:bg-lightgray duration-200'
                   )}
                 >
