@@ -20,6 +20,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
   const [projects, setProjects] = useState([]);
   //const [selectedProject, setSelectedProject] = useState('');
   const [selectedProject, setSelectedProject] = useState(tyme ? tyme.project : '');
+  const [msgerror, setmsgerror] = useState('')
 
   //
 
@@ -81,33 +82,34 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   //TODO: Implementar el proyecto OPCIONALMENTE
   const handleSubmit = (event) => {
-    console.log(tyme)
-    console.log(day)
     event.preventDefault()
-    if (tyme !== null) {
-      const [hour, minute] = hora.split(':');
-      let newDate = date;
-      newDate.setHours(hour);
-      newDate.setMinutes(minute);
-      let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: newDate.getTime(), done: done }
-      typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
-      updateTyme(tyme.id, aux)
-      console.log(aux)
+    if(title !== ''){
+      if (tyme !== null) {
+        const [hour, minute] = hora.split(':');
+        let newDate = date;
+        newDate.setHours(hour);
+        newDate.setMinutes(minute);
+        let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: newDate.getTime(), done: done }
+        typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
+        updateTyme(tyme.id, aux)
+        console.log(aux)
+      }
+      else {
+        const [hour, minute] = hora.split(':');
+        let newDate = date;
+        newDate.setHours(hour);
+        newDate.setMinutes(minute);
+        addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), newDate.getTime())
+      }
+      onClose()
+      setTitle('')
+      setBody('')
+      //setDate('')
+      setTimestamp('')
     }
-    else {
-      const [hour, minute] = hora.split(':');
-      let newDate = date;
-      newDate.setHours(hour);
-      newDate.setMinutes(minute);
-      addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), newDate.getTime())
+    else{
+      setmsgerror('Es necesario añadir title al tyme');
     }
-
-
-    onClose()
-    setTitle('')
-    setBody('')
-    //setDate('')
-    setTimestamp('')
   }
 
   const modalRef = useRef(null)
@@ -199,7 +201,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
             </div>
           </div>
           <div className="modal-footer">
-            <p className='modal-error'>asd</p>
+            <p className='modal-error'>{msgerror}</p>
             <button className='auth-button p-2' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
           </div>
         </form>

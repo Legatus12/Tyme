@@ -49,7 +49,7 @@ export const getTymesByProject = (uid, project, callback) => onSnapshot(query(ty
 export const getTymesInNext24Hours = (uid, callback) => {
   const now = new Date();
   const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-  onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", now.getTime()), where("timestamp", "<", next24Hours.getTime()), orderBy('timestamp')), callback);
+  onSnapshot(query(tymesRef, where("uid", "==", uid),  where("timestamp", "<", next24Hours.getTime(), where("done", "==", false)), orderBy('timestamp')), callback);
 };
 
 export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp, done: false })
@@ -103,19 +103,6 @@ export const setProjectInTyme = async (tymeId, projectId) => {
   }
   console.log('Campo "project" añadido o actualizado correctamente en el documento "tyme"');
 };
-/** 
-export const getProjects = (uid, callback) => {
-  onSnapshot(
-    query(projectsRef, where("uid", "==", uid)),
-    (snapshot) => {
-      const projects = snapshot.docs.map((doc) => doc.data().list);
-      callback(projects);
-    }
-  );
-};
-
-
-*/
 
 export const addTymeFb = async (userId, tyme) => {
   const userRef = doc(db, "users", userId);
@@ -145,11 +132,12 @@ const messaging = getMessaging(app);
 
 getToken(messaging, {
   vapidKey:
-    "YOURKEY",
+    "BFINyNd5txECFKM1HvwLYMwYMt0eBksMXfnREE_UbWKKIBQYa7kTU46b1rwU31NvIf1W7LZ02cZp66NIaxbSwOs",
 })
   .then((currentToken) => {
     if (currentToken) {
       console.log("Firebase Token", currentToken);
+      
     } else {
       // Show permission request UI
       console.log(
