@@ -56,8 +56,11 @@ i18n
           overview:{
             today: 'Hoy',
             incoming: 'Próximamente',
-            todayMsg: 'añade un TYME',
+            todayMsg: '+ añade un tyme',
             incomingMsg: 'nada en el horizonte',
+            in: 'dentro de',
+            day: 'día',
+            days: 'días'
           },
           lightMode: 'claro',
           darkMode: 'oscuro',
@@ -109,7 +112,11 @@ i18n
             date: 'fecha',
             save: 'guardar cambios',
             add: 'crear tyme',
-            tag: 'categoria'
+            tag: 'proyecto',
+            withoutProj: 'ninguno',
+            close: 'cerrar',
+            cancel: 'cancelar',
+            delete: 'eliminar'
           }
         }
       },

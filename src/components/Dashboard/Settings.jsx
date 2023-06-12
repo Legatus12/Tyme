@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import ThemeSwitcher from '../ThemeSwitcher'
-import LanguageSwitcher from '../LanguageSwitcher'
+import ThemeSwitcher from './settings/ThemeSwitcher'
+import LanguageSwitcher from './settings/LanguageSwitcher'
 import { useContext } from 'react'
 import { AuthContext } from '../../AuthProvider'
 import { auth } from '../../../firebase'

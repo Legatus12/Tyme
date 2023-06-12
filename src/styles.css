@@ -12,13 +12,13 @@ body { font-family: 'Inter', sans-serif; }
 
 /*tymes*/
 
-.tyme-sm { @apply flex flex-col bg-ash dark:bg-coal hover:bg-silver focus:bg-silver dark:hover:bg-darkgray dark:focus:bg-darkgray outline-none rounded-r-2xl p-2 lg:p-4 duration-200 border-l-4 cursor-pointer border-solid border-lightgray }
+.tyme-sm { @apply w-fit flex flex-col hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
 
 .tyme-sm-days { @apply text-sm text-gray dark:text-lightgray }
 
 .tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
 
-.modal-content { @apply w-full h-full flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white p-6 md:p-12 rounded-2xl overflow-hidden }
+.modal-content { @apply w-full h-full flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
 
 .modal form { @apply full flex flex-col justify-between }
 
@@ -26,11 +26,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .modal input { @apply bg-white p-4 w-full focus:outline-none }
 
-.modal #title { @apply text-2xl font-bold }
+.modal-title { @apply text-2xl font-bold }
 
 .modal hr { @apply border-t-2 mx-2 border-solid border-silver }
 
-.modal-footer { @apply flex flex-col }
+.modal-footer { @apply flex flex-col md:flex-row gap-4 }
 
 .modal-error { @apply p-2 md:p-4 text-[#f1121f] }
 
@@ -47,7 +47,13 @@ body { font-family: 'Inter', sans-serif; }
   background-color: #aaa;
 }
 
-.tyme-sm-add { @apply p-2 bg-sunset text-black font-bold my-4 rounded-2xl hover:bg-midDay focus:bg-midDay duration-200 }
+.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-silver dark:hover:bg-coal focus:bg-silver dark:focus:bg-coal duration-200 }
+
+.tyme-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
+
+.tyme-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-ash focus:bg-silver dark:focus:bg-coal duration-200 }
+
+.tyme-delete { @apply w-full md:w-fit p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
 
 /*login && signup*/
 
@@ -67,7 +73,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-input { @apply w-full p-2 focus:outline-sunset border-solid border-2 border-ash rounded-xl }
 
-.auth-button { @apply bg-black hover:bg-coal focus:bg-coal duration-200 w-full text-white rounded-xl }
+.auth-button { @apply w-full bg-black hover:bg-coal focus:bg-coal duration-200 text-white rounded-xl }
 
 .auth-redirect { @apply hover:underline cursor-pointer }
 
@@ -95,15 +101,13 @@ body { font-family: 'Inter', sans-serif; }
 
 .overview { @apply flex flex-wrap overflow-y-auto }
 
-.overview > div { @apply h-fit md:h-1/2 }
-
-.day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col justify-center text-center p-12 }
+.day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-fit md:h-1/2 flex flex-col justify-center text-center p-8 }
 
 .calendar-container, .tools-container { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 }
 
-.calendar-container { @apply pt-8 px-8 pb-4 }
+.calendar-container { @apply pt-8 px-8 pb-4 h-1/2 }
 
-.calendar { @apply full bg-black dark:bg-coal rounded-2xl p-4 text-white }
+.calendar { @apply full flex flex-col justify-between bg-black dark:bg-coal rounded-2xl p-4 text-white }
 
 .tools-container { @apply pb-8 px-8 pt-4 }
 
@@ -111,19 +115,19 @@ body { font-family: 'Inter', sans-serif; }
 
 .tools > a { @apply bg-silver dark:bg-darkgray full rounded-2xl p-6 duration-200 }
 
-.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col lg:flex-row p-8 lg:p-12 justify-between lg:gap-12 }
+.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-full md:h-1/2 flex flex-col lg:flex-row p-8 justify-between lg:gap-8 }
 
 .today, .incoming { @apply w-full lg:w-1/2 h-fit lg:h-full flex flex-col gap-2 lg:gap-4 }
 
-.today { @apply lg:border-r-2 border-solid border-silver dark:border-gray lg:pr-12 }
+.today { @apply lg:border-r-2 border-solid border-silver dark:border-gray lg:pr-8 }
 
 .tyme-container { @apply flex flex-col gap-4 lg:gap-6 overflow-y-auto }
 
 /*day*/
 
-.day-view { @apply flex flex-col p-6 md:p-12 gap-4 }
+.day-view { @apply flex flex-col p-6 md:p-12 }
 
-.day-close { @apply w-12 rounded-full hover:bg-silver p-2 duration-200 }
+.back { @apply w-12 rounded-full hover:bg-silver focus:bg-silver dark:hover:bg-coal dark:focus:bg-coal p-2 duration-200 }
 
 /*settings*/
 

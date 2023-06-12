@@ -162,7 +162,7 @@ const Overview = () => {
               <p>{pos.city}</p>
               {weather.data !== null && 
                 <div className='flex flex-col items-center'>
-                  <img className='' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="120" height="120"></img>
+                  <img className='' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="100" height="100"></img>
                   <div className='flex justify-center gap-4'>
                     <p className='self-center mr-2'>{ Math.round(weather.main.temp_min)}º</p>
                     <p className='text-8xl font-black'>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
@@ -176,7 +176,7 @@ const Overview = () => {
           
           <div className='tymes'>
             <div className='today'>
-              <h1 className='text-2xl font-black'>{t('overview.today')}</h1>
+              <h1 className='text-xl font-black'>{t('overview.today')}</h1>
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
@@ -189,11 +189,11 @@ const Overview = () => {
               </div>
             </div>
             <div className='incoming'>
-              <h1 className='text-2xl font-black'>{t('overview.incoming')}</h1>
+              <h1 className='text-xl font-black'>{t('overview.incoming')}</h1>
               <div className='tyme-container'>
                 {incomingTymes.map((tyme, index) => (
                   <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-                    <p className='tyme-sm-days'>dentro de {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} días</p>
+                    <p className='tyme-sm-days'>{t('overview.in')} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24)) == 1 ? t('overview.day') : t('overview.days')}</p>
                     <p className='tyme-sm-title'>{tyme.title}</p>
                   </div>
                 ))}
