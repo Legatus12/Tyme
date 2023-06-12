@@ -12,11 +12,40 @@ body { font-family: 'Inter', sans-serif; }
 
 /*tymes*/
 
-.tyme-sm { @apply flex flex-col bg-ash hover:bg-silver focus:bg-silver outline-none rounded-r-2xl p-2 lg:p-4 duration-200 border-l-4 cursor-pointer border-solid border-lightgray dark:bg-coal }
+.tyme-sm { @apply flex flex-col bg-ash dark:bg-coal hover:bg-silver focus:bg-silver dark:hover:bg-darkgray dark:focus:bg-darkgray outline-none rounded-r-2xl p-2 lg:p-4 duration-200 border-l-4 cursor-pointer border-solid border-lightgray }
 
 .tyme-sm-days { @apply text-sm text-gray dark:text-lightgray }
 
-.tyme-sm-title { @apply font-bold }
+.tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
+
+.modal-content { @apply w-full h-full flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white p-6 md:p-12 rounded-2xl overflow-hidden }
+
+.modal form { @apply full flex flex-col justify-between }
+
+.modal h1 { @apply text-xl md:text-2xl font-bold }
+
+.modal input { @apply bg-white p-4 w-full focus:outline-none }
+
+.modal #title { @apply text-2xl font-bold }
+
+.modal hr { @apply border-t-2 mx-2 border-solid border-silver }
+
+.modal-footer { @apply flex flex-col }
+
+.modal-error { @apply p-2 md:p-4 text-[#f1121f] }
+
+.modal-close {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background-color: #aaa;
+}
 
 .tyme-sm-add { @apply p-2 bg-sunset text-black font-bold my-4 rounded-2xl hover:bg-midDay focus:bg-midDay duration-200 }
 
@@ -70,7 +99,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col justify-center text-center p-12 }
 
-.calendar { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 }
+.calendar-container, .tools-container { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 }
+
+.calendar-container { @apply pt-8 px-8 pb-4 }
+
+.tools-container { @apply pb-8 px-8 pt-4 }
 
 .tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col lg:flex-row p-8 lg:p-12 justify-between lg:gap-12 }
 
@@ -80,13 +113,9 @@ body { font-family: 'Inter', sans-serif; }
 
 .tyme-container { @apply flex flex-col gap-4 lg:gap-6 overflow-y-auto }
 
-.tools { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 p-8 gap-12 }
+.tools { @apply full bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 gap-6 p-6 rounded-2xl }
 
 .tools > a { @apply bg-white dark:bg-black block full rounded-2xl p-6 shadow-lg hover:shadow-2xl duration-200 }
-
-/*calendar*/
-
-.calendar { @apply p-8 bg-darKgray text-white }
 
 /*day*/
 
@@ -171,33 +200,4 @@ body { font-family: 'Inter', sans-serif; }
   justify-content: center;
   align-items: center;
   @apply p-8 md:p-24
-}
-
-.modal-content { @apply w-full h-full flex flex-col gap-8 shadow-2xl bg-white p-6 md:p-12 rounded-2xl overflow-hidden }
-
-.modal form { @apply full flex flex-col justify-between }
-
-.modal h1 { @apply text-2xl font-bold  }
-
-.modal input { @apply bg-white p-4 w-full focus:outline-none }
-
-.modal #title { @apply text-2xl font-bold }
-
-.modal hr { @apply border-t-2 mx-2 border-solid border-silver }
-
-.modal-footer { @apply flex flex-col }
-
-.modal-error { @apply p-2 md:p-4 text-[#f1121f] }
-
-.modal-close {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #ccc;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.modal-close:hover {
-  background-color: #aaa;
 }
