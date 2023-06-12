@@ -25,9 +25,9 @@ const Day = ({ day, closeDayModal }) => {
           id: doc.id
         }
         arr.push(aux)
+      })
+      setTymes(arr)
     })
-    setTymes(arr)
-  })
   }
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Day = ({ day, closeDayModal }) => {
       return 'th'
   }
 
-  const deleteTest = (id) => {
+  const deleteThisTyme = (id) => {
     deleteTyme(id)
     loadTymes(user.uid)
   }
@@ -88,11 +88,12 @@ const Day = ({ day, closeDayModal }) => {
             <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
               <p className="tyme-sm-title">{tyme.title}</p>
               <p className="tyme-sm-body">{tyme.body}</p>
+              <button onClick={()=>deleteThisTyme(tyme.id)}>Delete</button>
             </div>
           ))}
         </div>
       </div>
-      <Tyme tyme={selectedTyme} day={day} isOpen={isModalOpen} onClose={closeModal}/>
+      <Tyme tyme={selectedTyme} day={day} isOpen={isModalOpen} onClose={closeModal} />
     </div>
   )
 }
@@ -130,35 +131,35 @@ const Modal = ({ isOpen, onClose, children }) => {
 }
  */
 
-    /*
-  const handleDeleteTyme = async (tymeId) => {
+/*
+const handleDeleteTyme = async (tymeId) => {
 
-  try {
-    await deleteTymeFb(user.uid, tymeId)
-    const updatedTymes = tymes.filter((tyme) => tyme.id !== tymeId)
-    setTymes(updatedTymes)
-  } catch (error) {
-    console.error('Error deleting tyme:', error)
-  }
-  }
+try {
+await deleteTymeFb(user.uid, tymeId)
+const updatedTymes = tymes.filter((tyme) => tyme.id !== tymeId)
+setTymes(updatedTymes)
+} catch (error) {
+console.error('Error deleting tyme:', error)
+}
+}
 
 
 
-  
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value)
-  }
+ 
+const handleTitleChange = (e) => {
+setTitle(e.target.value)
+}
 
-  const handleBodyChange = (e) => {
-    setBody(e.target.value)
-  }
+const handleBodyChange = (e) => {
+setBody(e.target.value)
+}
 
-  const handleAddTyme = async () => {
-    const tyme = { title, body }
-    await addTymeFb(user.uid, tyme)
-    setTymes([...tymes, tyme])
-    setTitle('')
-    setBody('')
-  }
+const handleAddTyme = async () => {
+const tyme = { title, body }
+await addTymeFb(user.uid, tyme)
+setTymes([...tymes, tyme])
+setTitle('')
+setBody('')
+}
 
 */
