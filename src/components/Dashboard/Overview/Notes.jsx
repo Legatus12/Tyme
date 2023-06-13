@@ -1,45 +1,49 @@
 import { useState, useEffect,useContext } from "react"
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom'
 import { addNote, getNotes, deleteNoteFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
 import useMountEffect from '@restart/hooks/useMountEffect'
+import { useTranslation } from "react-i18next"
 
-function Notes() {
-  const [notes, setNotes] = useState([]);
+const Notes = () => {
 
-  const [values, setValues] = useState({
-    title: "",
-    text: "",
-  });
+  const { t } = useTranslation()
+
+  const [notes, setNotes] = useState([])
+
+  const [smth, setSmth] = useState(false)
+
+  const [text, setText] = useState('')
 
   const user = useContext(AuthContext)
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    addNote(user.uid, values.title, values.text);
-    setValues({
-      title: "",
-      text: "",
-    });
-    loadNotes(user.uid)
-  };
+    event.preventDefault()
+    if(smth) {
+      const date = new Date()
+      addNote(user.uid, text, date.getTime())
+      setText('')
+      loadNotes(user.uid)
+    }
+    
+  }
 
   const loadNotes = async (uid) => {
     if (uid) {
-      const arr = [];
+      const arr = []
       getNotes(uid, (notes) => {
         notes.forEach((note) => {
+          console.log(note.data())
           const aux = {
-            ...note.data(),
+            text: note.data().text,
             id: note.id,
-          };
-          arr.push(aux);
-        });
-  
-        setNotes(arr); // Actualizar el estado de las notas aquí
-      });
+          }
+          arr.push(aux)
+        })
+        setNotes(arr) // Actualizar el estado de las notas aquí
+      })
     }
-  };
+  }
 
   const deleteNote = (id) => {
     deleteNoteFB(id)
@@ -51,17 +55,12 @@ function Notes() {
   }, [user])
 
 
-  const handleChange = (evt) => {
-
-    const { target } = evt;
-    const { name, value } = target;
-
-    const newValues = {
-      ...values,
-      [name]: value,
-    };
-
-    setValues(newValues);
+  const handleChange = (event) => {
+    setText(event.target.value)
+    if(event.target.value !== '')
+      setSmth(true)
+    else
+      setSmth(false)
   }
 
   useMountEffect(() => {
@@ -69,44 +68,36 @@ function Notes() {
   })
 
   return (
-      <div className="day-view full">
-        <Link  to={'/dashboard/overview'} replace>
-          <button className="close" ><img src="/src/img/close.png" /></button>
-        </Link>
-        <div>
-          <h1>NOTES</h1>
+      <div className="notes full">
+        <div className="header-flex tool-header">
+          <Link  to={'/dashboard/overview'} replace>
+            <button className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+          </Link>
+          <h1>{t('notes.title')}</h1>
+        </div>
+        <div className="notes-container">
           <form onSubmit={handleSubmit}>
-            <label htmlFor="title">Title</label>
-            <input
-              id="title"
-              name="title"
-              type="title"
-              value={values.title}
-              onChange={handleChange}
-            />
-            <label htmlFor="text">Note</label>
             <textarea
               id="text"
               name="text"
               type="textarea"
-              value={values.text}
+              value={text}
               onChange={handleChange}
+              className="notes-submit"
+              placeholder={t('notes.write')}
               ></textarea>
-            <button type="submit">Send</button>
+            <button className={`notes-submit ${smth ? 'notes-smth' : 'notes-none'}`} type="submit">{t('notes.save')}</button>
           </form>
-          <div className="tyme-container">
           {
             notes.length > 0 ?
               notes.map(note =>
-                <div key={note.id}>
-                  <p>{note.title}</p>
+                <div className="note" key={note.id}>
                   <p>{note.text}</p>
-                  <button onClick={()=> deleteNote(note.id)}>delete</button>
+                  <button className="notes-submit" onClick={()=> deleteNote(note.id)}>delete</button>
                 </div>
               )
               : null
           }
-          </div>
         </div>
 
       </div>
@@ -119,27 +110,27 @@ function Form() {
   const [values, setValues] = useState({
     title: "",
     text: "",
-  });
+  })
 
   const  handleSubmit = async (evt) => {
-    evt.preventDefault();
+    evt.preventDefault()
 
-    await onSubmit(values);
+    await onSubmit(values)
     
   }
 
   function handleChange(evt) {
 
-    const { target } = evt;
-    const { name, value } = target;
+    const { target } = evt
+    const { name, value } = target
 
     const newValues = {
       ...values,
       [name]: value,
-    };
+    }
 
     // Sincroniza el estado de nuevo
-    setValues(newValues);
+    setValues(newValues)
   }
 
   return (
@@ -162,7 +153,7 @@ function Form() {
       />
       <button type="submit">Sign Up</button>
     </form>
-  );
+  )
 }
 */
 export default Notes

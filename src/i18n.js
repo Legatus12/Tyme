@@ -62,6 +62,11 @@ i18n
             day: 'día',
             days: 'días'
           },
+          notes : {
+            title: 'Notas',
+            write: 'Escribe algo...',
+            save: 'guardar'
+          },
           lightMode: 'claro',
           darkMode: 'oscuro',
           date: {
@@ -116,7 +121,9 @@ i18n
             withoutProj: 'ninguno',
             close: 'cerrar',
             cancel: 'cancelar',
-            delete: 'eliminar'
+            delete: 'eliminar',
+            done: 'completado',
+            noTitle: 'Es necesario añadir un título.'
           }
         }
       },

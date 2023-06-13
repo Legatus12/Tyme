@@ -1,15 +1,19 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom'
 import { addProject, getProjects, getTymesByProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
 import Tyme from '../../Tyme'
-import { startOfToday } from 'date-fns';
+import { startOfToday } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 
 function Projects() {
 
   const user = useContext(AuthContext)
-  const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
+
+  const { t } = useTranslation()
+
+  const [projects, setProjects] = useState([])
+  const [selectedProject, setSelectedProject] = useState(null)
   const [tymes, setTymes] = useState([])
 
 
@@ -21,8 +25,8 @@ function Projects() {
           const aux = {
             ...project.data(),
             id: project.id,
-          };
-          arr.push(aux);
+          }
+          arr.push(aux)
         })
         setProjects(arr)
       })
@@ -80,11 +84,11 @@ function Projects() {
   }
 
   //
-  const [showAdd, setShowAdd] = useState(false);
+  const [showAdd, setShowAdd] = useState(false)
   const [values, setValues] = useState({
     name: "",
     description: "",
-  });
+  })
   const [msgerror, setmsgerror] = useState('')
   const [showDelete, setShowDelete] = useState(false)
   const modalRef = useRef(null)
@@ -104,7 +108,7 @@ function Projects() {
   }, [])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if(projects.some(project => project.name === values.name)){
       setmsgerror('No puedes añadir dos proyectos con el mismo nombre')
     }
@@ -113,24 +117,24 @@ function Projects() {
       setValues({
         name: "",
         description: "",
-      });
+      })
       loadProjects(user.uid)
       setShowAdd(false)
     }
 
-  };
+  }
 
   const handleChange = (evt) => {
 
-    const { target } = evt;
-    const { name, value } = target;
+    const { target } = evt
+    const { name, value } = target
 
     const newValues = {
       ...values,
       [name]: value,
-    };
+    }
 
-    setValues(newValues);
+    setValues(newValues)
   }
 
   const deleteProject = (deleteTymes) => {
@@ -147,10 +151,12 @@ function Projects() {
 
   return selectedProject === null ? (
     <div>
-      <Link to={'/dashboard/overview'} replace>
-        <button className="close" ><img src="/src/img/close.png" /></button>
-      </Link>
-      <h1>Projects</h1>
+      <div className="header-flex tool-header">
+        <Link  to={'/dashboard/overview'} replace>
+          <button className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+        </Link>
+        <h1>{t('projects.title')}</h1>
+      </div>
       <button onClick={() => setShowAdd(true)}>add project</button>
       {projects.map((project, index) => (
         <div key={index} className="tyme-sm-title" onClick={() => handleSelectProject(project)}>{project.name}</div>

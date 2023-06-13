@@ -106,9 +106,10 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       setBody('')
       //setDate('')
       setTimestamp('')
+      setmsgerror('')
     }
     else{
-      setmsgerror('Es necesario añadir title al tyme');
+      setmsgerror(t('tyme.noTitle'))
     }
   }
 
@@ -134,6 +135,11 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
     setDate(dateObject)
   }
 
+  const close = () => {
+    onClose()
+    setmsgerror('')
+  }
+
   return isOpen ? (
     <div className="modal">
       <div className="modal-content" ref={modalRef}>
@@ -150,7 +156,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
               />
             </div>
             <hr />
-            <div className='flex flex-col md:flex-row md:gap-12'>
+            <div className='flex flex-col md:flex-row md: justify-between flex-wrap'>
               <div className='flex items-center'>
                 <label className='p-4' htmlFor="date">{t('tyme.date')}</label>
                 <input
@@ -181,15 +187,15 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
                     </option>
                   ))}
                 </select>
-                <div className='flex items-center'>
-                  <label htmlFor="done">Completado:</label>
-                  <input
-                    type="checkbox"
-                    id="done"
-                    checked={done}
-                    onChange={handleDone}
-                  />
-                </div>
+              </div>
+              <div className='flex items-center'>
+                <label htmlFor="done">{t('tyme.done')}</label>
+                <input
+                  type="checkbox"
+                  id="done"
+                  checked={done}
+                  onChange={handleDone}
+                />
               </div>
             </div>
             <hr />
@@ -202,11 +208,13 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
               />
             </div>
           </div>
-          <div className="modal-footer">
+          <div className='flex flex-col'>
             <p className='modal-error'>{msgerror}</p>
-            <button className='tyme-cancel' onClick={() => onClose()}>{tyme != null ? t('tyme.close') : t('tyme.cancel')}</button>
-            <button className='tyme-save' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
-            <button className={`${tyme != null ? 'block' : 'hidden'} tyme-delete`} onClick={() => deleteTyme(tyme.id)}>{t('tyme.delete')}</button>
+            <div className="modal-footer">
+              <button className='tyme-cancel' onClick={() => close()}>{tyme != null ? t('tyme.close') : t('tyme.cancel')}</button>
+              <button className='tyme-save' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
+              <button className={`${tyme != null ? 'block' : 'hidden'} tyme-delete`} onClick={() => deleteTyme(tyme.id)}>{t('tyme.delete')}</button>
+            </div>
           </div>
         </form>
       </div>

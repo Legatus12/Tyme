@@ -2,10 +2,13 @@ import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
 import { Link, Route, Routes } from 'react-router-dom';
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
+import { useTranslation } from "react-i18next";
 
-function Habits() {
+const Habits = () => {
 
   const user = useContext(AuthContext)
+
+  const { t } = useTranslation()
 
   const [habits, setHabits] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -85,11 +88,13 @@ function Habits() {
   }, [])
 
   return (
-    <div>
-      <Link to={'/dashboard/overview'} replace>
-        <button className="close" ><img src="/src/img/close.png" /></button>
-      </Link>
-      <h1>Habits</h1>
+    <div className="habits">
+      <div className="header-flex tool-header">
+        <Link  to={'/dashboard/overview'} replace>
+          <button className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+        </Link>
+        <h1>{t('notes.title')}</h1>
+      </div>
       <button onClick={() => setShowAdd(true)}>add</button>
       {
         showAdd ?
