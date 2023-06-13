@@ -43,14 +43,16 @@ const Overview = () => {
     setDayModal(true)
   }
 
-  const closeDayModal = () => setDayModal(false)
-
+  const closeDayModal = () => {
+    setDayModal(false)
+    loadTymes()
+  }
   //
 
-  const loadTymes = (uid) => {
+  const loadTymes = () => {
     setTodayTymes([])
 
-    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => {
+    getTymesInDay(user.uid, format(today, 'dd-MM-yyyy'), docs => {
       const todayTymes = []
       docs.forEach(doc => {
         const aux = {
@@ -64,7 +66,7 @@ const Overview = () => {
    
     setIncomingTymes([])
     const incomingTymes = []
-    getIncomingTymes(uid, docs => {
+    getIncomingTymes(user.uid, docs => {
       docs.forEach(doc => {
         const aux = {
           ...doc.data(),
@@ -78,7 +80,7 @@ const Overview = () => {
   }
 
   useEffect(() => {
-    loadTymes(user.uid);
+    loadTymes();
   }, [user])
 
   const getLocationByIP = async () => {
@@ -142,7 +144,7 @@ const Overview = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
-    loadTymes(user.uid)
+    loadTymes()
   }
 
   //

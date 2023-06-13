@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@firebase/messaging": "^0.12.4",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
     "@restart/hooks": "^0.4.9",
