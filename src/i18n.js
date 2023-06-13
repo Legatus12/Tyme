@@ -40,8 +40,22 @@ i18n
             message: 'Para finalizar el proceso de registro, haz click en el enlace que hemos enviado a tu dirección de correo electrónico. Una vez que hayas verificado tu cuenta, podrás acceder a todas las funcionalidades de nuestra plataforma. Si no recibes el correo de confirmación en unos minutos, revisa tu carpeta de spam o correo no deseado. Después, refresca la página.',
             cancel: 'cancelar proceso'
           },
-          user: {
-            title: 'Tu perfil',
+          overview:{
+            title: 'General',
+            today: 'Hoy',
+            incoming: 'Próximamente',
+            todayMsg: '+ añade un tyme',
+            incomingMsg: 'nada en el horizonte',
+            in: 'dentro de',
+            day: 'día',
+            days: 'días',
+            notes: 'Notas',
+            projects: 'Proyectos',
+            habits: 'Hábitos',
+            charts: 'Estadísticas'
+          },
+          notifications: {
+            title: 'Notificaciones',
           },
           settings: {
             title: 'Configuración',
@@ -53,19 +67,18 @@ i18n
             mail: 'Correo electrónico',
             notifications: 'Notificaciones',
           },
-          overview:{
-            today: 'Hoy',
-            incoming: 'Próximamente',
-            todayMsg: '+ añade un tyme',
-            incomingMsg: 'nada en el horizonte',
-            in: 'dentro de',
-            day: 'día',
-            days: 'días'
-          },
           notes : {
             title: 'Notas',
             write: 'Escribe algo...',
             save: 'guardar'
+          },
+          projects: {
+            title: 'Proyectos',
+            deleteMsg: '¿Deseas eliminar también los tymes asociados a este proyecto?',
+            delete: 'eliminar solo el proyecto',
+            deleteAll: 'eliminar proyecto y tymes',
+            deleteThis: 'eliminar proyecto',
+            add: '+ crear un proyecto'
           },
           lightMode: 'claro',
           darkMode: 'oscuro',
@@ -124,7 +137,7 @@ i18n
             delete: 'eliminar',
             done: 'completado',
             noTitle: 'Es necesario añadir un título.'
-          }
+          },
         }
       },
       en: {

@@ -20,13 +20,15 @@ body { font-family: 'Inter', sans-serif; }
 
 .modal-content { @apply w-full h-full flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
 
-.modal form { @apply full flex flex-col justify-between }
+.modal form { @apply full flex flex-col }
 
 .modal h1 { @apply text-xl md:text-2xl font-bold }
 
-.modal input { @apply bg-white p-4 w-fit focus:outline-none }
+.modal input { @apply bg-transparent p-2 md:p-4 w-fit focus:outline-none }
 
-.modal label { @apply p-4 }
+.modal label { @apply p-2 md:p-4 }
+
+.modal textarea { @apply bg-transparent p-2 md:p-4 full }
 
 .modal-title { @apply text-2xl font-bold }
 
@@ -55,7 +57,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .tyme-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-ash focus:bg-silver duration-200 }
 
-.tyme-delete { @apply w-full md:w-fit p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
+.tyme-delete { @apply w-full p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
 
 /*login && signup*/
 
@@ -115,7 +117,9 @@ body { font-family: 'Inter', sans-serif; }
 
 .tools { @apply full grid grid-cols-2 grid-rows-2 gap-6 }
 
-.tools > a { @apply bg-silver dark:bg-darkgray full rounded-2xl p-6 duration-200 }
+.tools > a { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-darkgray dark:hover:bg-gray dark:focus:bg-gray text-sm full rounded-2xl p-6 duration-200 flex flex-col justify-center items-center gap-2 }
+
+.tools img { @apply w-10 }
 
 .tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-fit md:h-1/2 flex flex-col lg:flex-row p-8 justify-between gap-8 }
 
@@ -161,13 +165,33 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes-none { @apply cursor-not-allowed }
 
-.notes-smth { @apply text-black font-bold bg-sunset hover:bg-midDay }
+.notes-smth { @apply text-black bg-sunset hover:bg-midDay }
 
 .notes textarea { @apply w-full h-full bg-transparent outline-none }
 
 .note { @apply h-64 rounded-2xl flex flex-col gap-4 bg-ash dark:bg-darkgray border-2 border-solid border-silver dark:border-coal p-2 md:p-4 }
 
 .note p { @apply h-full overflow-y-auto break-words }
+
+/*projects*/
+
+.projects { @apply flex flex-col }
+
+.project-container { @apply flex flex-col gap-6 p-6 md:p-12 }
+
+.project-add { @apply w-full p-2 bg-silver rounded-2xl }
+
+.project { @apply flex items-center justify-between p-4 rounded-2xl duration-200 bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-coal dark:hover:bg-darkgray dark:focus:bg-darkgray cursor-pointer }
+
+.project-name { @apply text-lg md:text-2xl }
+
+.number-tymes { @apply text-gray dark:text-gray }
+
+/*charts*/
+
+.charts { @apply flex flex-col }
+
+.charts-container { @apply flex flex-col }
 
 /*selects*/
 
@@ -220,6 +244,6 @@ body { font-family: 'Inter', sans-serif; }
 
 .header-flex { @apply flex items-center gap-4 }
 
-.tool-header { @apply px-6 md:px-12 pt-6 md:pt-12 pb-3 md:pb-6 border-b-2 border-solid border-silver dark:border-coal }
+.tool-header { @apply p-4 md:p-8 border-b-2 border-solid border-silver dark:border-coal }
 
 .tool-header h1 { @apply text-xl md:text-3xl }

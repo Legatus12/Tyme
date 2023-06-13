@@ -56,7 +56,7 @@ const Habits = () => {
       completed: [],
     });
     loadHabits(user.uid)
-    showAdd(false)
+    setShowAdd(false)
   };
 
   const handleChange = (evt) => {
@@ -90,10 +90,10 @@ const Habits = () => {
   return (
     <div className="habits">
       <div className="header-flex tool-header">
-        <Link  to={'/dashboard/overview'} replace>
-          <button className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+        <Link className="back" to={'/dashboard/overview'} replace>
+          <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
-        <h1>{t('notes.title')}</h1>
+        <h1>{t('habits.title')}</h1>
       </div>
       <button onClick={() => setShowAdd(true)}>add</button>
       {
