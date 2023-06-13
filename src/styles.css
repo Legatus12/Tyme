@@ -191,7 +191,9 @@ body { font-family: 'Inter', sans-serif; }
 
 .charts { @apply flex flex-col }
 
-.charts-container { @apply flex flex-col }
+.charts-container { @apply h-96 flex flex-col }
+
+.charts canvas {  }
 
 /*selects*/
 
