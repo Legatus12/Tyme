@@ -73,7 +73,7 @@ const Day = ({ day, closeDayModal }) => {
   return (
     <div className="day-view full">
       <div className="flex items-center gap-4">
-        <button className="day-close" onClick={() => closeDayModal()}><img src="/src/img/back.png" /></button>
+        <button className="back" onClick={() => closeDayModal()}><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
         <h1 className='text-3xl'>
           {t('date.day.' + day.getDay()) + ', '}
           {i18n.resolvedLanguage == 'es'
@@ -81,17 +81,14 @@ const Day = ({ day, closeDayModal }) => {
             : t('date.month.' + day.getMonth()) + ' ' + day.getDate() + getOrdinal(day.getDate())}
         </h1>
       </div>
-      <div>
-        <button className="bg-[#f1121f] w-fit mb-4 p-2 text-white" onClick={() => openTyme(null)}>add</button>
-        <div className="tyme-container">
-          {tymes.map((tyme, index) => (
-            <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-              <p className="tyme-sm-title">{tyme.title}</p>
-              <p className="tyme-sm-body">{tyme.body}</p>
-              <button onClick={()=>deleteThisTyme(tyme.id)}>Delete</button>
-            </div>
-          ))}
-        </div>
+      <button className="self-end tyme-sm-add" onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
+      <div className="tyme-container">
+        {tymes.map((tyme, index) => (
+          <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+            <p className="tyme-sm-title">{tyme.title}</p>
+            <p className="tyme-sm-body">{tyme.body}</p>
+          </div>
+        ))}
       </div>
       <Tyme tyme={selectedTyme} day={day} isOpen={isModalOpen} onClose={closeModal} />
     </div>

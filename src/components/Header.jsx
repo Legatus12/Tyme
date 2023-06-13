@@ -1,5 +1,5 @@
-import ThemeSwitcher from './ThemeSwitcher'
-import LanguageSwitcher from './LanguageSwitcher'
+import ThemeSwitcher from './dashboard/settings/ThemeSwitcher'
+import LanguageSwitcher from './dashboard/settings/LanguageSwitcher'
 
 const Header = () => {
 

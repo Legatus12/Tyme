@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme, getProjects, setProjectInTyme, updateTymeField } from "../../firebase"
+import { addTyme, updateTyme, getProjects, setProjectInTyme, deleteTyme, updateTymeField } from "../../firebase"
 import { AuthContext } from '../AuthProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
@@ -139,10 +139,11 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       <div className="modal-content" ref={modalRef}>
         <form onSubmit={handleSubmit} className=''>
           <div>
-            <div>
+            <div className=''>
               <input
                 type="text"
                 id="title"
+                className='modal-title'
                 value={title}
                 placeholder={t('tyme.withoutTitle')}
                 onChange={(e) => setTitle(e.target.value)}
@@ -171,8 +172,9 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
               </div>
               <div className='flex items-center'>
                 <label className='p-4' htmlFor="date">{t('tyme.tag')}</label>
-                <select id="project" value={selectedProject} onChange={(e) => handleProjectChange(e.target.value)}>
-                  <option value="">Sin proyecto</option> {/* Agrega esta opción */}
+                <span className='mr-4'>-</span>
+                <select id="project" className='bg-white' value={selectedProject} onChange={(e) => handleProjectChange(e.target.value)}>
+                <option value="">{t('tyme.withoutProj')}</option> {/* Agrega esta opción */}
                   {projects.map((project, index) => (
                     <option key={index} value={project.name}>
                       {project.name}
@@ -202,7 +204,9 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
           </div>
           <div className="modal-footer">
             <p className='modal-error'>{msgerror}</p>
-            <button className='auth-button p-2' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
+            <button className='tyme-cancel' onClick={() => onClose()}>{tyme != null ? t('tyme.close') : t('tyme.cancel')}</button>
+            <button className='tyme-save' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
+            <button className={`${tyme != null ? 'block' : 'hidden'} tyme-delete`} onClick={() => deleteTyme(tyme.id)}>{t('tyme.delete')}</button>
           </div>
         </form>
       </div>
