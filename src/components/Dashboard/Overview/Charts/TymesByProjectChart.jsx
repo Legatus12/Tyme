@@ -18,7 +18,7 @@ useEffect(() => {
         labels: Object.keys(tymesByProject),
         datasets: [
           {
-            label: 'label',
+            label: 'tymes',
             data: Object.values(tymesByProject),
             backgroundColor: ['#fad6a5', '#fcddb4']
           }

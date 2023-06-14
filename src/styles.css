@@ -18,7 +18,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
 
-.modal-content { @apply w-full h-full flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
+.modal-content { @apply w-full z-10 flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
 
 .modal form { @apply full flex flex-col }
 
@@ -187,13 +187,23 @@ body { font-family: 'Inter', sans-serif; }
 
 .number-tymes { @apply text-gray dark:text-gray }
 
+/*habits*/
+
+.habits { @apply flex flex-col }
+
+.habits-container { @apply full flex flex-col p-4 md:p-8 overflow-y-auto gap-4 md:gap-8 }
+
+.habit { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-coal dark:hover:bg-darkgray dark:focus:bg-darkgray duration-200 w-full flex justify-between p-3 md:p-6 rounded-2xl }
+
 /*charts*/
 
 .charts { @apply flex flex-col }
 
-.charts-container { @apply h-96 flex flex-col }
+.charts-container { @apply full flex flex-col p-4 md:p-8 }
 
-.charts canvas {  }
+.charts canvas { height: 28rem !important; width: 28rem !important; }
+
+.chart { @apply w-1/2 h-full flex flex-col items-center justify-center }
 
 /*selects*/
 
@@ -241,8 +251,22 @@ body { font-family: 'Inter', sans-serif; }
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
   @apply p-8 md:p-24
 }
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+  z-index: 0;
+}
+
 
 .header-flex { @apply flex items-center gap-4 }
 

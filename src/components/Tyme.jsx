@@ -77,8 +77,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
   const handleDone = (event) => {
     const isChecked = event.target.checked;
     setDone(isChecked);
-  };
-
+  }
 
   //TODO: Implementar el proyecto OPCIONALMENTE
   const handleSubmit = (event) => {
@@ -155,7 +154,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
             />
           </div>
           <hr />
-          <div className='flex flex-col md:flex-row md: justify-between flex-wrap'>
+          <div className='flex flex-col md:flex-row md:justify-between flex-wrap py-2 gap-2 md:gap-0'>
             <div className='flex items-center'>
               <label className='p-4' htmlFor="date">{t('tyme.date')}</label>
               <input
@@ -194,6 +193,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
                 id="done"
                 checked={done}
                 onChange={handleDone}
+                className='mx-3'
               />
             </div>
           </div>

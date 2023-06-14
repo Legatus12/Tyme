@@ -39,7 +39,7 @@ const Charts = () => {
 
     setTymesByProject(tymes.reduce((acc, tyme) => {
       const { project } = tyme
-      acc[project] = (acc[project] || 0) + 1
+      acc[project == undefined ? t('tyme.withoutProj') : project] = (acc[project] || 0) + 1
       return acc
     }, {}))
     console.log(tymesByProject)
@@ -56,7 +56,11 @@ const Charts = () => {
         <h1>{t('charts.title')}</h1>
       </div>
       <div className="charts-container">
-        <TymesByProjectChart tymesByProject={tymesByProject} />
+        <div className="chart">
+          <h2>{t('charts.tymesByProject')}</h2>
+          <TymesByProjectChart tymesByProject={tymesByProject} />
+        </div>
+        
       </div>
     </div>
   )

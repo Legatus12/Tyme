@@ -80,6 +80,11 @@ i18n
             deleteThis: 'eliminar proyecto',
             add: '+ crear un proyecto'
           },
+          habits: {
+            title: 'Hábitos',
+            add: '+ crear un hábito',
+            write: 'Escribe el nombre del hábito',
+          },
           lightMode: 'claro',
           darkMode: 'oscuro',
           date: {
