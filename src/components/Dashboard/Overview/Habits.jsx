@@ -2,10 +2,13 @@ import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
 import { Link, Route, Routes } from 'react-router-dom';
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
+import { useTranslation } from "react-i18next";
 
-function Habits() {
+const Habits = () => {
 
   const user = useContext(AuthContext)
+
+  const { t } = useTranslation()
 
   const [habits, setHabits] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -53,7 +56,7 @@ function Habits() {
       completed: [],
     });
     loadHabits(user.uid)
-    showAdd(false)
+    setShowAdd(false)
   };
 
   const handleChange = (evt) => {
@@ -85,53 +88,49 @@ function Habits() {
   }, [])
 
   return (
-    <div>
-      <Link to={'/dashboard/overview'} replace>
-        <button className="close" ><img src="/src/img/close.png" /></button>
-      </Link>
-      <h1>Habits</h1>
-      <button onClick={() => setShowAdd(true)}>add</button>
+    <div className="habits full">
+      <div className="header-flex tool-header">
+        <Link className="back" to={'/dashboard/overview'} replace>
+          <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+        </Link>
+        <h1>{t('habits.title')}</h1>
+      </div>
       {
         showAdd ?
           <div className="modal">
             <div className="modal-content" ref={modalRef}>
-              <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Name</label>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <input
                   id="name"
                   name="name"
                   type="name"
                   value={values.name}
                   onChange={handleChange}
+                  placeholder={t('habits.write')}
                 />
-                <label htmlFor="text">Description</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  type="textarea"
-                  value={values.description}
-                  onChange={handleChange}
-                ></textarea>
-                <button type="submit">Send</button>
+                <button className="tyme-sm-add" type="submit">{t('notes.save')}</button>
               </form>
             </div>
           </div>
           : null
       }
-
-      {
-        habits.length > 0 ?
-          habits.map(habit =>
-            <div key={habit.id}>
-              <p>{habit.name}</p>
-              <p>{habit.description}</p>
-              <p>Marcar como realizado</p>
-              <input type="checkbox" />
-              <button onClick={() => deleteHabit(habit.id)}>delete</button>
-            </div>
-          )
-          : null
-      }
+      <div className="habits-container">
+        {
+          habits.length > 0 ?
+            habits.map(habit =>
+              <div className="habit" key={habit.id} tabIndex={0}>
+                <div className="flex gap-4">
+                  <input type="checkbox" />
+                  <p>{habit.name}</p>
+                </div>
+                <button onClick={() => deleteHabit(habit.id)}>delete</button>
+              </div>
+            )
+            : null
+        }
+        <button className="tyme-sm-add w-full" onClick={() => setShowAdd(true)}>{t('habits.add')}</button>
+      </div>
+      
     </div>
   )
 }

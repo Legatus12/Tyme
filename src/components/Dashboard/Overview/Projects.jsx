@@ -1,15 +1,19 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom'
 import { addProject, getProjects, getTymesByProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
 import Tyme from '../../Tyme'
-import { startOfToday } from 'date-fns';
+import { startOfToday } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 
 function Projects() {
 
   const user = useContext(AuthContext)
-  const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
+
+  const { t } = useTranslation()
+
+  const [projects, setProjects] = useState([])
+  const [selectedProject, setSelectedProject] = useState(null)
   const [tymes, setTymes] = useState([])
 
 
@@ -18,11 +22,14 @@ function Projects() {
       getProjects(uid, (projects) => {
         const arr = []
         projects.forEach((project) => {
+          let number = 0
+          getTymesByProject(uid, project.data().name, (docs) => docs.forEach(() => number ++))
           const aux = {
             ...project.data(),
             id: project.id,
-          };
-          arr.push(aux);
+            number: number
+          }
+          arr.push(aux)
         })
         setProjects(arr)
       })
@@ -34,7 +41,7 @@ function Projects() {
     setTymes([])
     getTymesByProject(uid, project, docs => { 
       const arr = []
-      docs.forEach(doc => {
+      docs.forEach(async(doc) => {
         const aux = {
           ...doc.data(),
           id: doc.id
@@ -80,11 +87,11 @@ function Projects() {
   }
 
   //
-  const [showAdd, setShowAdd] = useState(false);
+  const [showAdd, setShowAdd] = useState(false)
   const [values, setValues] = useState({
     name: "",
     description: "",
-  });
+  })
   const [msgerror, setmsgerror] = useState('')
   const [showDelete, setShowDelete] = useState(false)
   const modalRef = useRef(null)
@@ -104,7 +111,7 @@ function Projects() {
   }, [])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if(projects.some(project => project.name === values.name)){
       setmsgerror('No puedes añadir dos proyectos con el mismo nombre')
     }
@@ -113,24 +120,24 @@ function Projects() {
       setValues({
         name: "",
         description: "",
-      });
+      })
       loadProjects(user.uid)
       setShowAdd(false)
     }
 
-  };
+  }
 
   const handleChange = (evt) => {
 
-    const { target } = evt;
-    const { name, value } = target;
+    const { target } = evt
+    const { name, value } = target
 
     const newValues = {
       ...values,
       [name]: value,
-    };
+    }
 
-    setValues(newValues);
+    setValues(newValues)
   }
 
   const deleteProject = (deleteTymes) => {
@@ -146,39 +153,48 @@ function Projects() {
   }
 
   return selectedProject === null ? (
-    <div>
-      <Link to={'/dashboard/overview'} replace>
-        <button className="close" ><img src="/src/img/close.png" /></button>
-      </Link>
-      <h1>Projects</h1>
-      <button onClick={() => setShowAdd(true)}>add project</button>
-      {projects.map((project, index) => (
-        <div key={index} className="tyme-sm-title" onClick={() => handleSelectProject(project)}>{project.name}</div>
-      ))}
+    <div className='projects full'>
+      <div className="header-flex tool-header">
+        <Link className='back' to={'/dashboard/overview'} replace>
+          <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+        </Link>
+        <h1>{t('projects.title')}</h1>
+      </div>
+      <div className='project-container'>
+        {projects.map((project, index) => (
+          <div key={index} className="project" onClick={() => handleSelectProject(project)} tabIndex={0}>
+            <h1 className='project-name'>{project.name}</h1>
+            <p className='number-tymes'>{project.number} tymes</p>
+          </div>
+        ))}
+        <button className='tyme-sm-add w-full' onClick={() => setShowAdd(true)}>{t('projects.add')}</button>
+      </div>
+      
 
       {
         showAdd ?
           <div className="modal">
             <div className="modal-content" ref={modalRef}>
               <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Name</label>
                 <input
                   id="name"
                   name="name"
                   type="name"
                   value={values.name}
                   onChange={handleChange}
+                  placeholder={t('tyme.withoutTitle')}
                 />
-                <label htmlFor="text">Description</label>
+                <hr />
                 <textarea
                   id="description"
                   name="description"
                   type="textarea"
                   value={values.description}
                   onChange={handleChange}
+                  placeholder={t('tyme.withoutDesc')}
                 ></textarea>
                 <p>{msgerror}</p>
-                <button type="submit">Send</button>
+                <button type="submit">{t('tyme.save')}</button>
               </form>
             </div>
           </div>
@@ -187,27 +203,31 @@ function Projects() {
     </div>
   )
     : (
-      <div>
-        <button onClick={() => setSelectedProject(null)}>back</button>
-        <p>{selectedProject.name}</p>
-        <div className="tyme-container">
-          <button onClick={() => setShowAdd(true)}>delete project</button>
+      <div className='projects full'>
+        <div className="header-flex tool-header">
+          <button onClick={() => setSelectedProject(null)} className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+          <h1>{selectedProject.name}</h1>
+        </div>
+        <div className="tyme-container p-4 md:p-8 full">
+          <button className='tyme-delete md:w-fit ml-auto' onClick={() => setShowAdd(true)}>{t('projects.deleteThis')}</button>
           {
             showAdd ? 
             <div className="modal">
               <div className="modal-content" ref={modalRef}>
-                <p>¿Deseas eliminar los Tymes asociados a este proyecto?</p>
-                <button onClick={() => deleteProject(false)}>Eliminar proyecto</button>
-                <button onClick={() => deleteProject(true)}>Eliminar proyecto y Tymes</button>
-                <button onClick={() => setShowDelete(false)}>canclel</button>
+                <p>{t('projects.deleteMsg')}</p>
+                <div className='modal-footer mt-auto'>
+                  <button className='tyme-delete' onClick={() => deleteProject(false)}>{t('projects.delete')}</button>
+                  <button className='tyme-save' onClick={() => deleteProject(true)}>{t('projects.deleteAll')}</button>
+                </div>
+                <button className='tyme-cancel' onClick={() => setShowAdd(false)}>{t('tyme.cancel')}</button>
               </div>
             </div>
             : null
           }
           {tymes.map((tyme, index) => (
             <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-              <p className="tyme-sm-title">{tyme.title}</p>
-              <p className="tyme-sm-body">{tyme.body}</p>
+              <p className="tyme-sm-days">{tyme.date}</p>
+              <p className="tyme-sm-body">{tyme.title}</p>
             </div>
           ))}
         </div>

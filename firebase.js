@@ -69,9 +69,9 @@ export const updateTymeField = (id, field, value) => {
     .catch((error) => console.error('Error al actualizar el campo:', error));
 };
 
-export const addNote = (uid, title, text) => addDoc(notesRef, { uid: uid, title: title, text: text })
+export const addNote = (uid, text, timestamp) => addDoc(notesRef, { uid: uid, text: text, timestamp: timestamp })
 
-export const getNotes = (uid, callback) => onSnapshot(query(notesRef, where("uid", "==", uid)), callback)
+export const getNotes = (uid, callback) => onSnapshot(query(notesRef, where("uid", "==", uid), orderBy('timestamp')), callback)
 
 export const deleteNoteFB = (id) => {
   deleteDoc(doc(db, 'notes', id))

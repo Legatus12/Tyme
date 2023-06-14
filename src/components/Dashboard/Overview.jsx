@@ -208,10 +208,22 @@ const Overview = () => {
 
           <div className='tools-container'>
             <div className='tools'>
-              <Link to={'notes'} >notes</Link>
-              <Link to={'projects'} >projects</Link>
-              <Link to={'habits'} >habits</Link>
-              <Link to={'charts'} >charts</Link>
+              <Link to={'notes'} >
+                <img src={`/src/img/notes${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+                <p>{t('overview.notes')}</p>
+              </Link>
+              <Link to={'projects'} >
+                <img src={`/src/img/projects${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+                <p>{t('overview.projects')}</p>
+              </Link>
+              <Link to={'habits'} >
+                <img src={`/src/img/habits${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+                <p>{t('overview.habits')}</p>
+              </Link>
+              <Link to={'charts'} >
+                <img src={`/src/img/charts${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+                <p>{t('overview.charts')}</p>
+              </Link>
             </div>
           </div>
           

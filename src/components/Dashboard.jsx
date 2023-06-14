@@ -10,17 +10,20 @@ import Projects from './Dashboard/Overview/Projects'
 import Charts from './Dashboard/Overview/Charts'
 import { useContext } from 'react'
 import { AuthContext } from '../AuthProvider'
+import { useTranslation } from 'react-i18next'
 
 const Dashboard = () => {
 
     const user = useContext(AuthContext)
 
+    const { t } = useTranslation()
+
     //
 
     const menu = [
-        { path: 'overview', name: 'general' },
-        { path: 'notifications', name: 'general' },
-        { path: 'settings', name: 'general' },
+        { path: 'overview', name: t('ovewview.title') },
+        { path: 'notifications', name: t('notifications.title') },
+        { path: 'settings', name: t('settings.title') },
     ]
 
     //
