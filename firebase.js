@@ -4,6 +4,7 @@ import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, delete
 import { getAuth } from "firebase/auth"
 //import { getMessaging, getToken } from "firebase/messaging";
 //import { requestPermission } from "./firebase-messaging-sw"
+import { isSameDay, format } from 'date-fns'
  
 export const app = initializeApp({
   apiKey: "AIzaSyCneoCJoAptrrMHjfZRqZerfY3Py1nLSpk",
@@ -81,6 +82,8 @@ export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid
 
 export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
 
+export const getHabitById = (habitId) => getDoc(doc(habitsRef, habitId)).then((habitSnapshot) => habitSnapshot.exists() ? habitSnapshot.data() : null);
+
 export const deleteHabitFB = (id) => {
   deleteDoc(doc(db, 'habits', id))
 }
@@ -120,6 +123,54 @@ export const addTymeFb = async (userId, tyme) => {
     body: tyme.body,
   });
 }
+
+export const addDateToCompleted = async (userId, habitId, date) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId));
+  const querySnapshot = await getDocs(queryRef);
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId);
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+
+    if (habitDoc) {
+      const completedArray = habitDoc.get('completed') || [];
+      if (!completedArray.some(completed => completed === date))
+        await updateDoc(habitRef, { completed: [...completedArray, date] });
+
+      console.log('Fecha agregada con éxito al campo "completed".');
+    } else {
+      console.log('El documento no existe en la colección "habits".');
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+  }
+};
+
+export const handleDeleteCompleted = async (userId, habitId, date) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId));
+  const querySnapshot = await getDocs(queryRef);
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId);
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+
+    if (habitDoc) {
+      const completedArray = habitDoc.get('completed') || [];
+      console.log(completedArray)
+      console.log(date)
+      const updatedArray = completedArray.filter(completed => completed !== date);
+
+      await updateDoc(habitRef, { completed: updatedArray });
+
+      console.log('Fecha eliminada con éxito del campo "completed".');
+    } else {
+      console.log('El documento no existe en la colección "habits".');
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+  }
+};
+
 
 
 
