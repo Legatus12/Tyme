@@ -3,9 +3,11 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
 import { useTranslation } from "react-i18next";
+import { ModalHabit } from '../../Habit'
+import { isSameDay } from 'date-fns'
 
 const Habits = () => {
-
+  const currentDate = new Date();
   const user = useContext(AuthContext)
 
   const { t } = useTranslation()
@@ -43,6 +45,10 @@ const Habits = () => {
     }
   }
 
+  const checkedHabit = (habit) => {
+    return habit.completed.some(comp => !isSameDay(comp, new Date()))
+  }
+
   useEffect(() => {
     loadHabits(user.uid)
   }, [user])
@@ -58,6 +64,7 @@ const Habits = () => {
     loadHabits(user.uid)
     setShowAdd(false)
   };
+
 
   const handleChange = (evt) => {
 
@@ -87,6 +94,18 @@ const Habits = () => {
     }
   }, [])
 
+  const [isHabitOpen, setIsHabitOpen] = useState(false)
+  const [selectedHabit, setSelectedHabit] = useState()
+ 
+  const onClose =() => {
+    setIsHabitOpen(false)
+  }
+
+  const onOpen = (habit) => {
+    console.log('habit')
+    setIsHabitOpen(true)
+    setSelectedHabit(habit)
+  }
   return (
     <div className="habits full">
       <div className="header-flex tool-header">
@@ -118,9 +137,8 @@ const Habits = () => {
         {
           habits.length > 0 ?
             habits.map(habit =>
-              <div className="habit" key={habit.id} tabIndex={0}>
+              <div className="habit" key={habit.id} tabIndex={0} onClick={()=>onOpen(habit)}>
                 <div className="flex gap-4">
-                  <input type="checkbox" />
                   <p>{habit.name}</p>
                 </div>
                 <button onClick={() => deleteHabit(habit.id)}>delete</button>
@@ -129,6 +147,11 @@ const Habits = () => {
             : null
         }
         <button className="tyme-sm-add w-full" onClick={() => setShowAdd(true)}>{t('habits.add')}</button>
+        {
+          isHabitOpen ? 
+            <ModalHabit habit={selectedHabit} onClose={onClose} />
+          : null
+        }
       </div>
       
     </div>
@@ -137,3 +160,6 @@ const Habits = () => {
 
 export default Habits
 
+/**
+ * onClick={()=>onOpen(habit)}
+ */
