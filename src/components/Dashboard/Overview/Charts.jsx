@@ -25,15 +25,6 @@ const Charts = () => {
         const aux = { id: doc.id, ...doc.data() }
         arr.push(aux)
       })
-      setProjects(arr)
-    })
-
-    getTymes(user.uid, (docs) => {
-      const arr = []
-      docs.forEach(doc => {
-        const aux = { id: doc.id, ...doc.data() }
-        arr.push(aux)
-      })
       setTymes(arr)
     })
 
@@ -42,6 +33,7 @@ const Charts = () => {
       acc[project == undefined ? t('tyme.withoutProj') : project] = (acc[project] || 0) + 1
       return acc
     }, {}))
+    
     console.log(tymesByProject)
   }, [user])
 

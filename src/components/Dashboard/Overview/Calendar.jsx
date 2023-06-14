@@ -81,7 +81,7 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
             <img src="/src/img/right.png" alt="" />
           </button>
         </div>
-        <div className="grid grid-cols-7 text-xs mt-4 leading-6 text-center text-silver">
+        <div className="grid grid-cols-7 text-xs my-2 leading-6 text-center text-silver">
           <div>{t('date.d.0')}</div>
           <div>{t('date.d.1')}</div>
           <div>{t('date.d.2')}</div>

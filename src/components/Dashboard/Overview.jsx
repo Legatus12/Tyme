@@ -80,7 +80,7 @@ const Overview = () => {
   }
 
   useEffect(() => {
-    loadTymes();
+    loadTymes()
   }, [user])
 
   const getLocationByIP = async () => {
@@ -152,33 +152,31 @@ const Overview = () => {
   if(!dayModal){return (
       <div className='overview full'>
 
+        <div className='overview-left'>
+
           <div className='day'>
+            {weather.data !== null && 
+              <div className='flex flex-col justify-center items-center p-8 gap-4'>
+                <div className='wheather-container'>
+                  <div className='wheather'>
+                    <img className='w-full' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="100" height="100"></img>             
+                  </div>
+                  <div className='temperature'>
+                    <p>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
+                  </div>
+                </div>
+                <p className=''>{pos.city}</p>
+              </div>
+              
+            }
+            <div className='today'>
               <p className='text-3xl self-start'>
                 {t('date.day.' + date.getDay()) + ', '}
                 {i18n.resolvedLanguage == 'es' 
                 ? date.getDate() + ' de ' + t('date.month.' + date.getMonth())
                 : t('date.month.' + date.getMonth()) + ' ' + date.getDate() + getOrdinal(date.getDate())}
               </p>
-              <p className='text-gray self-start'>{date.toLocaleTimeString()}</p>
               <br />
-              <p>{pos.city}</p>
-              {weather.data !== null && 
-                <div className='flex flex-col items-center'>
-                  <img className='' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="100" height="100"></img>
-                  <div className='flex justify-center gap-4'>
-                    <p className='self-center mr-2'>{ Math.round(weather.main.temp_min)}º</p>
-                    <p className='text-8xl font-black'>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
-                    <p className='self-center'>{Math.round(weather.main.temp_max)}º</p>
-                  </div>
-                </div>
-              }
-          </div>
-
-          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal}/>
-          
-          <div className='tymes'>
-            <div className='today'>
-              <h1 className='text-xl font-black'>{t('overview.today')}</h1>
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
@@ -190,45 +188,47 @@ const Overview = () => {
                 )}
               </div>
             </div>
-            <div className='incoming'>
-              <h1 className='text-xl font-black'>{t('overview.incoming')}</h1>
-              <div className='tyme-container'>
-                {incomingTymes.map((tyme, index) => (
-                  <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-                    <p className='tyme-sm-days'>{t('overview.in')} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24)) == 1 ? t('overview.day') : t('overview.days')}</p>
-                    <p className='tyme-sm-title'>{tyme.title}</p>
-                  </div>
-                ))}
-                {incomingTymes.length < 1 && (
-                  <p className='my-6'>{t('overview.incomingMsg')}</p>
-                )}
-              </div>
+          </div>
+
+          <div className='tools'>
+            <Link to={'notes'} >
+              <img src={`/src/img/notes.png`} />
+              <p>{t('overview.notes')}</p>
+            </Link>
+            <Link to={'projects'} >
+              <img src={`/src/img/projects.png`} />
+              <p>{t('overview.projects')}</p>
+            </Link>
+            <Link to={'habits'} >
+              <img src={`/src/img/habits.png`} />
+              <p>{t('overview.habits')}</p>
+            </Link>
+          </div>
+
+        </div>
+
+        <div className='overview-right'>
+
+          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal}/>
+
+          <div className='incoming'>
+            <h1 className='text-xl font-black'>{t('overview.incoming')}</h1>
+            <div className='tyme-container'>
+              {incomingTymes.map((tyme, index) => (
+                <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+                  <p className='tyme-sm-days'>{t('overview.in')} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24)) == 1 ? t('overview.day') : t('overview.days')}</p>
+                  <p className='tyme-sm-title'>{tyme.title}</p>
+                </div>
+              ))}
+              {incomingTymes.length < 1 && (
+                <p className='my-6'>{t('overview.incomingMsg')}</p>
+              )}
             </div>
           </div>
 
-          <div className='tools-container'>
-            <div className='tools'>
-              <Link to={'notes'} >
-                <img src={`/src/img/notes${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
-                <p>{t('overview.notes')}</p>
-              </Link>
-              <Link to={'projects'} >
-                <img src={`/src/img/projects${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
-                <p>{t('overview.projects')}</p>
-              </Link>
-              <Link to={'habits'} >
-                <img src={`/src/img/habits${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
-                <p>{t('overview.habits')}</p>
-              </Link>
-              <Link to={'charts'} >
-                <img src={`/src/img/charts${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
-                <p>{t('overview.charts')}</p>
-              </Link>
-            </div>
-          </div>
-          
+        </div>
 
-          <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal}/>
+        <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal} />
       </div>
   )}
   else{return(

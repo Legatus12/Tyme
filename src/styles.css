@@ -10,11 +10,64 @@ body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
+/*dashboard*/
+
+.dashboard { @apply flex flex-col md:flex-row-reverse }
+
+.dashboard-menu { @apply bg-black h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-32 font-bold shrink-0 }
+
+.active-link { @apply bg-sunset }
+
+@media (max-width: 768px) {
+  .dashboard-view { height: calc(100% - 3rem); }
+}
+.dashboard-view { @apply w-full h-full flex dark:bg-coal overflow-y-auto }
+
+/*overview*/
+
+.overview { @apply flex flex-col md:flex-row overflow-y-auto }
+
+.tyme-container { @apply full bg-white dark:text-black flex flex-col gap-4 p-4 rounded-xl overflow-y-auto }
+
+.overview-left, .overview-right { @apply h-full }
+
+/**/
+
+.overview-left { @apply w-full flex flex-col md:w-1/2 lg:w-3/5 xl:w-4/6 h-full }
+
+.day { @apply h-full md:h-3/5 flex flex-col md:flex-row text-center }
+
+.wheather-container { @apply flex flex-row md:flex-col shrink-0 }
+
+.wheather, .temperature { @apply w-1/2 md:w-full aspect-square flex justify-center items-center p-4 }
+
+.wheather { @apply bg-black rounded-l-2xl md:rounded-t-2xl md:rounded-bl-none }
+
+.temperature { @apply bg-white dark:text-black rounded-r-2xl md:rounded-b-2xl md:rounded-tr-none text-4xl font-black }
+
+.today { @apply full flex flex-col px-8 md:px-0 md:pt-8 }
+
+.tools { @apply h-full md:h-2/5 flex justify-center items-center md:pb-8 pt-8 pl-8 pr-8 md:pr-0 gap-4 md:gap-8 }
+
+.tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base bg-lightgray text-black rounded-2xl }
+
+.tools img { @apply w-8 md:w-12 }
+
+/**/
+
+.overview-right { @apply w-full flex flex-col md:w-1/2 lg:w-2/5 xl:w-2/6 h-full p-8 gap-8 }
+
+.calendar-container { @apply h-[25rem] }
+
+.calendar { @apply full flex flex-col bg-black dark:bg-darkgray rounded-2xl p-4 text-white }
+
+.incoming { @apply flex flex-col overflow-y-auto gap-2 }
+
 /*tymes*/
 
 .tyme-sm { @apply w-fit flex flex-col hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
 
-.tyme-sm-days { @apply text-sm text-gray dark:text-lightgray }
+.tyme-sm-days { @apply text-sm text-gray }
 
 .tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
 
@@ -28,7 +81,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .modal label { @apply p-2 md:p-4 }
 
-.modal textarea { @apply bg-transparent p-2 md:p-4 full }
+.modal textarea { @apply bg-transparent p-2 md:p-4 w-full h-48 }
 
 .modal-title { @apply text-2xl font-bold }
 
@@ -51,7 +104,7 @@ body { font-family: 'Inter', sans-serif; }
   background-color: #aaa;
 }
 
-.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-silver dark:hover:bg-coal focus:bg-silver dark:focus:bg-coal duration-200 }
+.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-silver dark:hover:bg-darkgray focus:bg-silver dark:focus:bg-darkgray duration-200 }
 
 .tyme-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
 
@@ -91,49 +144,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .verify-button { @apply w-fit hover:underline text-lightgray dark:text-lightgray }
 
-/*dashboard*/
-
-.dashboard { @apply flex flex-col-reverse md:flex-row }
-
-.dashboard-menu { @apply h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-32 font-bold shrink-0 }
-
-.active-link { @apply bg-sunset }
-
-.dashboard-view { @apply w-full h-full bg-white dark:bg-black }
-
-/*overview*/
-
-.overview { @apply flex flex-wrap overflow-y-auto }
-
-.day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-fit md:h-1/2 flex flex-col justify-center text-center p-8 }
-
-.calendar-container, .tools-container { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 }
-
-.calendar-container { @apply pt-8 px-8 pb-4 h-1/2 }
-
-.calendar { @apply full flex flex-col justify-between bg-black dark:bg-coal rounded-2xl p-4 text-white }
-
-.tools-container { @apply pb-8 px-8 pt-4 }
-
-.tools { @apply full grid grid-cols-2 grid-rows-2 gap-6 }
-
-.tools > a { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-darkgray dark:hover:bg-gray dark:focus:bg-gray text-sm full rounded-2xl p-6 duration-200 flex flex-col justify-center items-center gap-2 }
-
-.tools img { @apply w-10 }
-
-.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 h-fit md:h-1/2 flex flex-col lg:flex-row p-8 justify-between gap-8 }
-
-.today, .incoming { @apply w-full lg:w-1/2 h-fit lg:h-full flex flex-col gap-2 lg:gap-4 }
-
-.today { @apply lg:border-r-2 border-solid border-silver dark:border-gray lg:pr-8 }
-
-.tyme-container { @apply flex flex-col gap-4 lg:gap-6 overflow-y-auto }
-
 /*day*/
 
 .day-view { @apply flex flex-col p-6 md:p-12 }
 
-.back { @apply w-12 rounded-full hover:bg-silver focus:bg-silver dark:hover:bg-coal dark:focus:bg-coal p-2 duration-200 }
+.back { @apply w-12 rounded-full hover:bg-silver focus:bg-silver dark:hover:bg-darkgray dark:focus:bg-darkgray p-2 duration-200 }
 
 /*settings*/
 
@@ -149,7 +164,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .settings label { @apply w-fit whitespace-nowrap }
 
-.settings input { @apply bg-white dark:bg-black p-2 }
+.settings input { @apply bg-transparent p-2 }
 
 .settings button { @apply bg-silver dark:bg-coal p-2 w-52 rounded-2xl }
 
@@ -159,7 +174,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes-container { @apply full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6 overflow-y-auto p-6 md:p-12 }
 
-.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-silver dark:border-darkgray dark:bg-coal p-2 md:p-4 rounded-2xl }
+.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-darkgray dark:bg-coal p-2 md:p-4 rounded-2xl }
 
 .notes-submit { @apply self-end p-2 rounded-2xl }
 
@@ -181,7 +196,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .project-add { @apply w-full p-2 bg-silver rounded-2xl }
 
-.project { @apply flex items-center justify-between p-4 rounded-2xl duration-200 bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-coal dark:hover:bg-darkgray dark:focus:bg-darkgray cursor-pointer }
+.project { @apply flex items-center justify-between p-4 rounded-2xl duration-200 bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-black dark:hover:bg-darkgray dark:focus:bg-darkgray cursor-pointer }
 
 .project-name { @apply text-lg md:text-2xl }
 
@@ -193,7 +208,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .habits-container { @apply full flex flex-col p-4 md:p-8 overflow-y-auto gap-4 md:gap-8 }
 
-.habit { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-coal dark:hover:bg-darkgray dark:focus:bg-darkgray duration-200 w-full flex justify-between p-3 md:p-6 rounded-2xl }
+.habit { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-darkgray duration-200 w-full flex justify-between p-3 md:p-6 rounded-2xl }
 
 /*charts*/
 
@@ -252,7 +267,7 @@ body { font-family: 'Inter', sans-serif; }
   justify-content: center;
   align-items: center;
   z-index: 1;
-  @apply p-8 md:p-24
+  @apply p-8 md:p-20
 }
 
 input[type=checkbox]
@@ -273,3 +288,21 @@ input[type=checkbox]
 .tool-header { @apply p-4 md:p-8 border-b-2 border-solid border-silver dark:border-coal }
 
 .tool-header h1 { @apply text-xl md:text-3xl }
+
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}

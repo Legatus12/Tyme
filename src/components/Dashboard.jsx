@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     const menu = [
         { path: 'overview', name: t('ovewview.title') },
-        { path: 'notifications', name: t('notifications.title') },
+        { path: 'charts', name: t('charts.title') },
         { path: 'settings', name: t('settings.title') },
     ]
 
@@ -31,24 +31,23 @@ const Dashboard = () => {
     if(user && user.emailVerified) {return (
         <div className='dashboard full'>
 
-            <div className='dashboard-menu'>
-                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/img/${item.path}${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} className='w-8' /></abbr></Link>))}
-            </div>
-
             <div className='dashboard-view'>
                 <Routes>
                     <Route path='/overview' element={<Overview />} />
+                    <Route path='/charts' element={<Charts />} />
                     <Route path='/notifications' element={<Notifications />} />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='/day' element={<Day />} />
                     <Route path='/overview/habits' element={<Habits />} />
                     <Route path='/overview/notes' element={<Notes />} />
                     <Route path='/overview/projects' element={<Projects />} />
-                    <Route path='/overview/charts' element={<Charts />} />
                     <Route path='/*' element={<Overview />} />
                 </Routes>
             </div>
             
+            <div className='dashboard-menu'>
+                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/img/${item.path}${document.documentElement.classList.contains("dark") ? '_dm' : '_dm'}.png`} className='w-8' /></abbr></Link>))}
+            </div>
 
         </div>
     )} else if (user && !user.emailVerified) {
