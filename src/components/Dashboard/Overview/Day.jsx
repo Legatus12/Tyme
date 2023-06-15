@@ -86,7 +86,7 @@ const Day = ({ day, closeDayModal }) => {
         {tymes.map((tyme, index) => (
           <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
             <p className="tyme-sm-title">{tyme.title}</p>
-            <p className="tyme-sm-body">{tyme.body}</p>
+            <p className="tyme-sm-body" dangerouslySetInnerHTML={{__html:tyme.body}}></p>
           </div>
         ))}
       </div>

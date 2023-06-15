@@ -109,14 +109,6 @@ const Charts = () => {
   }, [user])
 
   useEffect(() => {
-    setTimeout(() => {
-      setTitle(t('charts.title') + ' a')
-      console.log(habits)
-      console.log(tymesByDate)
-    }, 1000)
-  }, [])
-
-  useEffect(() => {
     setProjects(projects)
   }, [projects, user])
 
@@ -131,14 +123,18 @@ const Charts = () => {
         <h1>{title}</h1>
       </div>
       <div className="charts-container">
-        <div className="chart bg-white rounded-2xl">
+        <div className="chart w-1/3 bg-white rounded-2xl">
           <h2>{t('charts.tymesByProject')}</h2>
           <TymesByProjectChart tymesByProject={tymesByProject} />
         </div>
-        <div className='chart'>
+
+        <div className="flex flex-col w-2/3 gap-8">
           <div className="w-full flex flex-col bg-white p-4 rounded-2xl gap-4">
             <div className="flex justify-between items-center">
-              <p>Daw</p>
+              <div>
+                <label>Proyecto -</label>
+                <select className="bg-transparent"> <option>Daw</option> </select>
+              </div>
               <p className="w-20">2/3 tymes</p>
             </div>
             <div className="w-full h-8 bg-black p-1 relative rounded-2xl">
@@ -147,21 +143,16 @@ const Charts = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex flex-col bg-white p-4 rounded-2xl gap-4">
-            <div className="flex justify-between items-center">
-              <p>Vacaciones</p>
-              <p className="w-20">0/2 tymes</p>
+            
+          <div className='chart full'>
+            <div className="self-start p-4">
+              <label>Hábito -</label>
+              <select className="bg-transparent"> <option>Entrenar</option> </select>
             </div>
-            <div className="w-full h-8 bg-black p-1 relative rounded-2xl">
-              <div className="hidden bg-sunset h-full justify-end px-1 rounded-xl overflow-hidden" style={{ width: `${0}%` }}>
-                <p className="font-bold">0%</p>
-              </div>
-            </div>
+            <HabitsChart />
           </div>
         </div>
-        <div className='chart'>
-          <HabitsChart />
-        </div>
+
       </div>
     </div>
   )

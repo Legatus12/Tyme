@@ -54,8 +54,8 @@ i18n
             habits: 'Hábitos',
             charts: 'Estadísticas'
           },
-          notifications: {
-            title: 'Notificaciones',
+          charts: {
+            title: 'Estadísticas',
           },
           settings: {
             title: 'Configuración',
