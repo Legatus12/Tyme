@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
-import { add, eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek } from 'date-fns'
+import { add, eachDayOfInterval,startOfDay, isAfter, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek, addWeeks } from 'date-fns'
 import { Fragment, useEffect, useState, useContext } from 'react'
-import { addDateToCompleted, handleDeleteCompleted, getHabitById } from '../../firebase'
+import { handleCompletedHabitDays, getHabitById } from '../../firebase'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from './../AuthProvider'
 
@@ -9,13 +9,14 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export function MiniCalendar({ habit, selectedDay }) {
+export function MiniCalendar({ habit, selectedDay, refreshNext }) {
 
     const user = useContext(AuthContext)
 
     const { t } = useTranslation()
 
     const [habitDates, setHabitDates] = useState([])
+    const [nextDates, setNextDates] = useState([])
     const [date, setDate] = useState(new Date())
     let today = startOfToday()
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
@@ -25,16 +26,52 @@ export function MiniCalendar({ habit, selectedDay }) {
 
     const loadHabit = async () => {
         const updatedHabit = await getHabitById(habit.id);
+        setHabitDates([])
         setHabitDates(updatedHabit.completed);
+        loadSetNextDates();
     }
 
     useEffect(() => {
+        loadSetNextDates();
+      }, [refreshNext]);
+    
+
+    useEffect(() => {
         loadHabit();
+        loadSetNextDates();
     }, [date])
 
     useEffect(() => {
         setHabitDates(habit.completed);
+        loadSetNextDates();
     }, [user])
+
+    useEffect(() => {
+        loadSetNextDates();
+      }, [habit.next]); // Dependencia: habit.next
+      
+
+    const loadSetNextDates = () => {
+        setNextDates([])
+        const currentDate = new Date();
+        let finalNextDates = [];
+        habit.next.map(n => {
+
+            const nextDay = startOfWeek(currentDate, { weekStartsOn: n.day }); // El día 4 corresponde al jueves en date-fns
+
+            const dayOfWeekList = [];
+            for (let i = 0; i < n.termWeeks; i++) {
+                if(isAfter(startOfDay(addWeeks(nextDay, i)), startOfDay(new Date()))){
+                    const day = addWeeks(nextDay, i);
+                    dayOfWeekList.push(format(day, 'dd-MM-yyyy'));
+                }
+            }
+            finalNextDates = finalNextDates.concat(dayOfWeekList)
+        })
+        setNextDates(finalNextDates)
+        console.log(nextDates) 
+    }
+
 
     /**
       const [dayModal, setDayModal] = useState(false)
@@ -63,13 +100,10 @@ export function MiniCalendar({ habit, selectedDay }) {
     }
 
     const handleCompleted = (date) => {
-
-        if (!habit.completed.some(comp => comp == format(date, 'dd-MM-yyyy'))) {
-            addDateToCompleted(user.uid, habit.id, format(date, 'dd-MM-yyyy'))
-        }
-        else {
-            handleDeleteCompleted(user.uid, habit.id, format(date, 'dd-MM-yyyy'));
-        }
+        if(!isAfter(startOfDay(date), startOfDay(new Date())))
+            handleCompletedHabitDays(user.uid, habit.id, format(date, 'dd-MM-yyyy'))
+        else
+            console.log(' no te adelantes, no puedes cumplir habitos sin que haya pasado el dia !!!')
     }
 
 
@@ -99,7 +133,7 @@ export function MiniCalendar({ habit, selectedDay }) {
                 <div className="grid grid-cols-7 text-sm">
                     {days.map((day, dayIdx) => (
                         <div
-                            onClick={()=>setDate(day)}
+                            onClick={() => setDate(day)}
                             key={day.toString()}
                             className={classNames(
                                 dayIdx === 0 && colStartClasses[getDay(day)],
@@ -130,6 +164,11 @@ export function MiniCalendar({ habit, selectedDay }) {
                                     date == format(day, 'dd-MM-yyyy')
                                 ) && (
                                         <div className="w-2 h-2 rounded-full bg-sunset"></div>
+                                    )}
+                                {nextDates.some((date) =>
+                                    date == format(day, 'dd-MM-yyyy')
+                                ) && (
+                                        <div className="w-2 h-2 rounded-full bg-white"></div>
                                     )}
                             </div>
                         </div>

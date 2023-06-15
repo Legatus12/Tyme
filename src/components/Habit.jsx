@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { deleteHabitFB } from "../../firebase"
+import { deleteHabitFB, handleNextHabit } from "../../firebase"
 import { AuthContext } from '../AuthProvider'
 import { useTranslation } from 'react-i18next'
 import { isSameDay } from 'date-fns'
@@ -14,8 +14,9 @@ export const ModalHabit = ({ habit, onClose }) => {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [completed, setCompleted] = useState([])
+    const [refreshNext, setRefreshNext] = useState(false)
     const [msgerror, setmsgerror] = useState('')
+    const [selectedFrec, setSelectedFrec] = useState();
     //
 
     useEffect(() => {
@@ -24,7 +25,6 @@ export const ModalHabit = ({ habit, onClose }) => {
         if (habit !== undefined) {
             setName(habit.name)
             setDescription(habit.description)
-            setCompleted(habit.completed)
         }
         else {
 
@@ -33,9 +33,6 @@ export const ModalHabit = ({ habit, onClose }) => {
 
     //
 
-    const handleCompleted = (event) => {
-
-    }
 
     const deleteHabit = () => {
         deleteHabitFB(habit.id)
@@ -81,7 +78,19 @@ export const ModalHabit = ({ habit, onClose }) => {
         setmsgerror('')
     }
 
-    return  (
+    const addDayOfWeekAndTyme = (numDay) => {
+        const next = { day: numDay, termWeeks: selectedFrec }
+        handleNextHabit(user.uid, habit.id, next)
+        setRefreshNext(!refreshNext);
+        console.log('refresh ' + refreshNext)
+
+    }
+
+    const handleSelectFrec = (event) => {
+        setSelectedFrec(Number(event.target.value));
+      };
+
+    return (
         <div className="modal">
             <div className="modal-content" ref={modalRef}>
                 <form onSubmit={handleSubmit} className='justify-between'>
@@ -98,15 +107,37 @@ export const ModalHabit = ({ habit, onClose }) => {
                     <hr />
 
                     <div className='col-span-2 flex justify-between'>
-                        <input
-                            type="text"
-                            id="description"
-                            className='modal-title'
-                            value={description}
-                            placeholder={t('tyme.withoutDesc')}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                        <MiniCalendar habit={habit} />
+                        <div>
+                            <input
+                                type="text"
+                                id="description"
+                                className='modal-title'
+                                value={description}
+                                placeholder={'Añade los motivos por los que iniciaste este hábito para motivarte!'}
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                            <div>
+                                <p>¿Que frecuencia quieres añadirle?</p>
+                                <select id="selectOption" value={selectedFrec} onChange={handleSelectFrec}>
+                                    <option value="">Añade una frecuencia</option>
+                                    <option value={1}>1 semana</option>
+                                    <option value={4}>1 mes</option>
+                                    <option value={24}>6 meses</option>
+                                    <option value={52}>1 año</option>
+                                </select>
+
+                            </div>
+                            <div>
+                                <button onClick={() => addDayOfWeekAndTyme(1)}>L</button>
+                                <button onClick={() => addDayOfWeekAndTyme(2)}>M</button>
+                                <button onClick={() => addDayOfWeekAndTyme(3)}>X</button>
+                                <button onClick={() => addDayOfWeekAndTyme(4)}>J</button>
+                                <button onClick={() => addDayOfWeekAndTyme(5)}>V</button>
+                                <button onClick={() => addDayOfWeekAndTyme(6)}>S</button>
+                                <button onClick={() => addDayOfWeekAndTyme(0)}>D</button>
+                            </div>
+                        </div>
+                        <MiniCalendar habit={habit} refreshNext={refreshNext}/>
                     </div>
                     <hr />
                     <div className='flex flex-col'>
