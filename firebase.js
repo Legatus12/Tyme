@@ -78,7 +78,7 @@ export const deleteNoteFB = (id) => {
   deleteDoc(doc(db, 'notes', id))
 }
 
-export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: [], next: [] })
+export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: [], next: [], recur: [] })
 
 export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
 
