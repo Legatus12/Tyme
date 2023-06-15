@@ -55,7 +55,7 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
         setNextDates([])
         const currentDate = new Date();
         let finalNextDates = [];
-        if(habit.recur.some(r => r === 7)){
+        if(habit.recur .length !== 0 && habit.recur.some(r => r === 7)){
             const dates = eachDayOfInterval({ start: new Date(), end: addDays(new Date(), 365) });
             finalNextDates = dates;
         }
