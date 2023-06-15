@@ -14,7 +14,6 @@ const Habits = () => {
 
   const [habits, setHabits] = useState([])
   const [showAdd, setShowAdd] = useState(false)
-
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -106,6 +105,8 @@ const Habits = () => {
     setIsHabitOpen(true)
     setSelectedHabit(habit)
   }
+
+ 
   return (
     <div className="habits full">
       <div className="header-flex tool-header">

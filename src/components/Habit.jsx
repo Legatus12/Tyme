@@ -14,7 +14,6 @@ export const ModalHabit = ({ habit, onClose }) => {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [refreshNext, setRefreshNext] = useState(false)
     const [msgerror, setmsgerror] = useState('')
     const [selectedFrec, setSelectedFrec] = useState();
     //
@@ -29,6 +28,7 @@ export const ModalHabit = ({ habit, onClose }) => {
         else {
 
         }
+        //console.log('habit from habit => ' + habit.id)
     }, [])
 
     //
@@ -123,7 +123,7 @@ export const ModalHabit = ({ habit, onClose }) => {
                                 <button onClick={() => addDayOfWeekAndTyme(7)}>Todos</button>
                             </div>
                         </div>
-                        <MiniCalendar habit={habit} refreshNext={refreshNext}/>
+                        <MiniCalendar /** habit={habit}  */ habitId={habit.id}/>
                     </div>
                     <hr />
                     <div className='flex flex-col'>
