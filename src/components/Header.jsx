@@ -1,10 +1,10 @@
-import ThemeSwitcher from './ThemeSwitcher'
-import LanguageSwitcher from './LanguageSwitcher'
+import ThemeSwitcher from './dashboard/settings/ThemeSwitcher'
+import LanguageSwitcher from './dashboard/settings/LanguageSwitcher'
 
 const Header = () => {
 
     return (
-        <div className='flex justify-between items-center p-2'>
+        <div className='hidden md:flex justify-between items-center p-2'>
           <LanguageSwitcher />
           <ThemeSwitcher />
         </div>

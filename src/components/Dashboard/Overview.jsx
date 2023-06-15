@@ -11,6 +11,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../../AuthProvider'
+import Tyme from '../Tyme'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -42,25 +43,44 @@ const Overview = () => {
     setDayModal(true)
   }
 
-  const closeDayModal = () => setDayModal(false)
-
+  const closeDayModal = () => {
+    setDayModal(false)
+    loadTymes()
+  }
   //
 
-  const loadTymes = (uid) => {
+  const loadTymes = () => {
     setTodayTymes([])
-    const todayTymes = []
-    getTymesInDay(uid, format(today, 'dd-MM-yyyy'), docs => docs.forEach(doc => todayTymes.push({id: doc.id, ...doc.data()})))
-    //console.log(today)
-    setTodayTymes(todayTymes)
 
+    getTymesInDay(user.uid, format(today, 'dd-MM-yyyy'), docs => {
+      const todayTymes = []
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        todayTymes.push(aux)
+      })
+      setTodayTymes(todayTymes)
+    })
+   
     setIncomingTymes([])
     const incomingTymes = []
-    getIncomingTymes(uid, docs => docs.forEach(doc => incomingTymes.push(doc.data())))
-    setIncomingTymes(incomingTymes)
+    getIncomingTymes(user.uid, docs => {
+      docs.forEach(doc => {
+        const aux = {
+          ...doc.data(),
+          id: doc.id
+        }
+        incomingTymes.push(aux)
+        setIncomingTymes(incomingTymes)
+      })
+    })
+
   }
 
   useEffect(() => {
-    loadTymes(user.uid);
+    loadTymes()
   }, [user])
 
   const getLocationByIP = async () => {
@@ -98,10 +118,6 @@ const Overview = () => {
 
   //
 
-  useEffect(() => {
-      setInterval(() => setDate(new Date()), 1000)
-  }, [])
-
   //
 
   const getOrdinal = (number) => {
@@ -116,69 +132,109 @@ const Overview = () => {
   }
 
   //
+
+  const [selectedTyme, setSelectedTyme] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openTyme = (tyme) => {
+    console.log(tyme)
+    setSelectedTyme(tyme)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    loadTymes()
+  }
+
+  //
     
   if(!dayModal){return (
       <div className='overview full'>
 
+        <div className='overview-left'>
+
           <div className='day'>
+            {weather.data !== null && 
+              <div className='flex flex-col justify-center items-center py-8 pl-8 pr-8 md:pr-0 gap-4'>
+                <div className='wheather-container'>
+                  <div className='wheather'>
+                    <img className='w-full' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="100" height="100"></img>             
+                  </div>
+                  <div className='temperature'>
+                    <p>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
+                  </div>
+                </div>
+                <p className=''>{pos.city}</p>
+              </div>
+              
+            }
+            <div className='today'>
               <p className='text-3xl self-start'>
                 {t('date.day.' + date.getDay()) + ', '}
                 {i18n.resolvedLanguage == 'es' 
                 ? date.getDate() + ' de ' + t('date.month.' + date.getMonth())
                 : t('date.month.' + date.getMonth()) + ' ' + date.getDate() + getOrdinal(date.getDate())}
               </p>
-              <p className='text-gray self-start'>{date.toLocaleTimeString()}</p>
               <br />
-              <p>{pos.city}</p>
-              {weather.data !== null && 
-                <div className='flex flex-col items-center'>
-                  <img className='' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="120" height="120"></img>
-                  <div className='flex justify-center gap-4'>
-                    <p className='self-center mr-2'>{ Math.round(weather.main.temp_min)}º</p>
-                    <p className='text-8xl font-black'>{Math.round(weather.main.temp)}<span className='font-normal'>º</span></p>
-                    <p className='self-center'>{Math.round(weather.main.temp_max)}º</p>
-                  </div>
-                </div>
-              }
-          </div>
-
-          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal}/>
-          
-          <div className='tymes'>
-            <div className='today'>
-              <h1 className='text-2xl font-black'>{t('overview.today')}</h1>
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
-                <div className='mini-tyme' key={index}>
-                    {tyme.title}
+                <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+                    <p className='text-lg font-semibold'>{tyme.title}</p>
+                    <br />
+                    <p className='text-sm' dangerouslySetInnerHTML={{__html:tyme.body}}></p>
                 </div>
-              ))}
-              </div>
-            </div>
-            <div className='incoming'>
-              <h1 className='text-2xl font-black'>{t('overview.incoming')}</h1>
-              <div className='tyme-container'>
-                {incomingTymes.map((tyme, index) => (
-                  <div className='mini-tyme' key={index}>
-                    <p>dentro de {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} días</p>
-                    <p>{tyme.title}</p>
-                  </div>
                 ))}
+                {todayTymes.length < 1 && (
+                  <button className='tyme-sm-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
+                )}
               </div>
             </div>
           </div>
 
           <div className='tools'>
-              <Link to={'notes'} >notes</Link>
-              <Link to={'projects'} >projects</Link>
-              <Link to={'habits'} >habits</Link>
-              <Link to={'charts'} >charts</Link>
+            <Link to={'notes'} >
+              <img src={`/src/img/notes${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+              <p>{t('overview.notes')}</p>
+            </Link>
+            <Link to={'projects'} >
+              <img src={`/src/img/projects${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+              <p>{t('overview.projects')}</p>
+            </Link>
+            <Link to={'habits'} >
+              <img src={`/src/img/habits${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+              <p>{t('overview.habits')}</p>
+            </Link>
           </div>
 
+        </div>
+
+        <div className='overview-right'>
+
+          <Calendar openDayModal={openDayModal} closeDayModal={closeDayModal}/>
+
+          <div className='incoming'>
+            <h1 className='text-xl font-black'>{t('overview.incoming')}</h1>
+            <div className='tyme-container'>
+              {incomingTymes.map((tyme, index) => (
+                <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+                  <p className='tyme-sm-days'>{t('overview.in')} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24)) == 1 ? t('overview.day') : t('overview.days')}</p>
+                  <p className='tyme-sm-title'>{tyme.title}</p>
+                </div>
+              ))}
+              {incomingTymes.length < 1 && (
+                <p className='my-6'>{t('overview.incomingMsg')}</p>
+              )}
+            </div>
+          </div>
+
+        </div>
+
+        <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal} />
       </div>
   )}
   else{return(
-    <Day day={selectedDay} closeDayModal={closeDayModal} user={user} />
+    <Day day={selectedDay} closeDayModal={closeDayModal} user={user} loadTymesOv={loadTymes}/>
   )}
 }
 

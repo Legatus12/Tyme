@@ -10,7 +10,105 @@ body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
-/*header*/
+/*dashboard*/
+
+.dashboard { @apply flex flex-col md:flex-row-reverse }
+
+.dashboard-menu { @apply bg-black h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-32 font-bold shrink-0 }
+
+.active-link { @apply bg-sunset }
+
+@media (max-width: 768px) {
+  .dashboard-view { height: calc(100% - 3rem); }
+}
+.dashboard-view { @apply w-full h-full flex dark:bg-coal overflow-y-auto }
+
+/*overview*/
+
+.overview { @apply flex flex-col md:flex-row overflow-y-auto }
+
+.tyme-container { @apply full bg-white dark:bg-black flex flex-col gap-4 p-4 rounded-xl overflow-y-auto }
+
+.overview-left, .overview-right { @apply h-full }
+
+/**/
+
+.overview-left { @apply w-full flex flex-col md:w-1/2 lg:w-3/5 xl:w-4/6 h-full }
+
+.day { @apply h-full md:h-3/5 flex flex-col md:flex-row text-center }
+
+.wheather-container { @apply flex flex-row md:flex-col shrink-0 }
+
+.wheather, .temperature { @apply w-1/2 md:w-full aspect-square flex justify-center items-center p-4 }
+
+.wheather { @apply bg-black rounded-l-2xl md:rounded-t-2xl md:rounded-bl-none }
+
+.temperature { @apply bg-white dark:text-black rounded-r-2xl md:rounded-b-2xl md:rounded-tr-none text-4xl font-black }
+
+.today { @apply full flex flex-col pl-8 pr-8 md:pr-0 md:pt-8 }
+
+.tools { @apply h-full md:h-2/5 flex justify-center items-center md:pb-8 pt-8 pl-8 pr-8 md:pr-0 gap-4 md:gap-8 }
+
+.tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
+
+.tools img { @apply w-8 md:w-10 }
+
+/**/
+
+.overview-right { @apply w-full flex flex-col md:w-1/2 lg:w-2/5 xl:w-2/6 h-full p-8 gap-8 }
+
+.calendar { @apply full flex flex-col bg-black dark:bg-darkgray rounded-2xl p-4 text-white }
+
+.incoming { @apply full flex flex-col overflow-y-auto gap-2 }
+
+/*tymes*/
+
+.tyme-sm { @apply w-fit flex flex-col items-start text-left hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
+
+.tyme-sm-days { @apply text-sm text-gray }
+
+.tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
+
+.modal-content { @apply w-full z-10 flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
+
+.modal form { @apply full flex flex-col }
+
+.modal h1 { @apply text-xl md:text-2xl font-bold }
+
+.modal input { @apply bg-transparent p-2 md:p-4 w-fit focus:outline-none }
+
+.modal label { @apply p-2 md:p-4 }
+
+.modal textarea { @apply bg-transparent p-2 md:p-4 w-full h-48 }
+
+.modal-title { @apply text-2xl font-bold }
+
+.modal hr { @apply border-t-2 mx-2 border-solid border-silver }
+
+.modal-footer { @apply flex flex-col md:flex-row gap-4 }
+
+.modal-error { @apply p-2 md:p-4 text-[#f1121f] }
+
+.modal-close {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background-color: #aaa;
+}
+
+.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray duration-200 }
+
+.tyme-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
+
+.tyme-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-ash focus:bg-silver duration-200 }
+
+.tyme-delete { @apply w-full p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
 
 /*login && signup*/
 
@@ -22,7 +120,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-languages { @apply flex gap-2 }
 
-.auth-form { @apply flex flex-col gap-3 lg:gap-4 p-8 w-full sm:w-96 bg-white } 
+.auth-form { @apply h-[32rem] sm:h-[36rem] flex flex-col gap-3 lg:gap-5 p-8 w-full sm:w-96 bg-white } 
 
 .auth-title { @apply text-3xl font-black }
 
@@ -30,67 +128,99 @@ body { font-family: 'Inter', sans-serif; }
 
 .auth-input { @apply w-full p-2 focus:outline-sunset border-solid border-2 border-ash rounded-xl }
 
-.auth-button { @apply bg-black hover:bg-coal focus:bg-coal duration-200 w-full text-white rounded-xl }
+.auth-button { @apply w-full bg-black hover:bg-coal focus:bg-coal duration-200 text-white rounded-xl }
 
 .auth-redirect { @apply hover:underline cursor-pointer }
 
-/*dashboard*/
+.auth-reset { @apply hover:underline cursor-pointer w-fit }
 
-.dashboard { @apply flex flex-col-reverse md:flex-row }
+/*verify*/
 
-.dashboard-menu { @apply h-12 md:w-16 md:h-full flex md:flex-col justify-around md:justify-center items-center md:gap-24 font-bold shrink-0 }
+.verify { @apply flex flex-col justify-center items-center gap-12 p-8 md:p-24 }
 
-.active-link { @apply bg-sunset }
+.verify-message { @apply w-full md:text-lg }
 
-.dashboard-view { @apply w-full h-full bg-white dark:bg-black }
-
-/*overview*/
-
-.overview { @apply flex flex-wrap overflow-y-auto }
-
-.overview > div { @apply md:h-1/2 }
-
-.day { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex flex-col justify-center text-center p-12 }
-
-.calendar { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 bg-sunset }
-
-.tymes { @apply w-full md:w-1/2 lg:w-3/5 xl:w-4/6 flex p-8 lg:p-12 gap-4 md:gap-8 lg:gap-12 }
-
-.today, .incoming { @apply w-1/2 h-full flex flex-col gap-4  }
-
-.today { @apply border-r-2 border-solid border-silver dark:border-gray pr-4 md:pr-8 lg:pr-12 }
-
-.tyme-container { @apply flex flex-col gap-6 }
-
-.mini-tyme { @apply flex flex-col bg-silver rounded-2xl p-4 duration-200 border-2 border-solid border-ash dark:border-gray dark:bg-coal }
-
-.tools { @apply w-full md:w-1/2 lg:w-2/5 xl:w-2/6 bg-silver dark:bg-coal grid grid-cols-2 grid-rows-2 p-8 gap-12 }
-
-.tools > a { @apply bg-white dark:bg-black block full rounded-2xl p-6 shadow-lg hover:shadow-2xl duration-200 }
-
-/*calendar*/
-
-.calendar { @apply p-8 bg-gray text-white }
+.verify-button { @apply w-fit hover:underline text-lightgray dark:text-lightgray }
 
 /*day*/
 
-.day-view { @apply flex flex-col p-6 md:p-12 }
+.day-view { @apply flex flex-col p-4 md:p-8 gap-4 }
 
-.close { @apply mb-8 w-10 rounded-full hover:bg-silver }
-
-/*user*/
-
-.user { @apply p-12 }
+.back { @apply w-12 rounded-full hover:bg-lightgray focus:bg-lightgray dark:hover:bg-darkgray dark:focus:bg-darkgray p-2 duration-200 }
 
 /*settings*/
 
 .settings { @apply flex flex-col p-12 }
 
-.settings h1 { @apply font-black text-3xl underline }
+.settings h1, .user h1 { @apply font-black text-3xl underline }
 
 .settings h2 { @apply font-bold text-2xl mt-8 }
 
-.settings-option { @apply w-full h-16 flex items-center justify-between border-solid border-b-2 border-silver dark:border-gray p-2 }
+.settings-option { @apply w-full h-16 flex justify-between items-center gap-8 border-solid border-b-0 border-silver dark:border-gray p-2 }
+
+.settings hr { @apply hidden md:block w-full }
+
+.settings label { @apply w-fit whitespace-nowrap }
+
+.settings input { @apply bg-transparent w-96 }
+
+.settings button { @apply bg-black text-white dark:bg-coal p-2 w-52 rounded-2xl }
+
+/*Notes*/
+
+.notes { @apply full flex flex-col }
+
+.notes-container { @apply full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6 overflow-y-auto p-6 md:p-12 }
+
+.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-darkgray bg-white dark:bg-black p-2 md:p-4 rounded-2xl }
+
+.notes-submit { @apply self-end p-2 rounded-2xl }
+
+.notes-none { @apply cursor-not-allowed }
+
+.notes-smth { @apply text-black bg-sunset hover:bg-midDay duration-200 }
+
+.notes-delete { @apply hover:bg-silver focus:bg-silver dark:hover:bg-gray dark:focus:bg-gray  duration-200 }
+
+.notes-delete img { @apply w-8 }
+
+.notes textarea { @apply w-full h-full bg-transparent outline-none }
+
+.note { @apply h-64 rounded-2xl flex flex-col gap-4 bg-ash dark:bg-darkgray border-2 border-solid border-silver dark:border-coal p-2 md:p-4 }
+
+.note p { @apply h-full overflow-y-auto break-words }
+
+/*projects*/
+
+.projects { @apply flex flex-col }
+
+.project-container { @apply flex flex-col gap-6 p-6 md:p-12 }
+
+.project-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray dark:hover:bg-darkgray dark:focus:bg-darkgray duration-200 }
+
+.project { @apply flex items-center justify-between p-4 rounded-2xl duration-200 bg-white hover:bg-lightgray focus:bg-lightgray dark:bg-black dark:hover:bg-darkgray dark:focus:bg-darkgray cursor-pointer }
+
+.project-name { @apply text-lg md:text-2xl }
+
+.number-tymes { @apply text-gray dark:text-gray }
+
+/*habits*/
+
+.habits { @apply flex flex-col }
+
+.habits-container { @apply full flex flex-col p-4 md:p-8 overflow-y-auto gap-4 md:gap-8 }
+
+.habit { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-darkgray duration-200 w-full flex justify-between p-3 md:p-6 rounded-2xl }
+
+/*charts*/
+
+.charts { @apply flex flex-col }
+
+.charts-container { @apply full flex p-4 md:p-8 gap-8 }
+
+.charts canvas { width: 100% !important; }
+
+.chart { @apply w-1/3 flex flex-col gap-8 items-center justify-center }
 
 /*selects*/
 
@@ -126,4 +256,55 @@ body { font-family: 'Inter', sans-serif; }
 .my-react-select-container .my-react-select__placeholder,
 .my-react-select-container .my-react-select__single-value {
   @apply dark:text-white;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  @apply p-8 md:p-32
+}
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+  z-index: 0;
+}
+
+
+.header-flex { @apply flex items-center gap-4 }
+
+.tool-header { @apply p-4 md:p-8 border-b-2 border-solid border-silver dark:border-coal }
+
+.tool-header h1 { @apply text-xl md:text-3xl }
+
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
 }

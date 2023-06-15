@@ -14,7 +14,7 @@ const ThemeSwitcher = () => {
         theme == 'dark' ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
     }, [theme])
 
-    const handleThemeSwitch = () => { 
+    const handleThemeSwitch = () => {
         if(theme == 'dark') {
             setTheme('light')
             localStorage.setItem('theme', 'light')
@@ -22,6 +22,7 @@ const ThemeSwitcher = () => {
             setTheme('dark')
             localStorage.setItem('theme', 'dark')
         }
+        //location.reload()
     }
 
     const options = [
@@ -35,7 +36,7 @@ const ThemeSwitcher = () => {
         <Select options={options}
         defaultValue={ localStorage.getItem('theme') == 'light' ? options[0] : options[1] }
         onChange={handleThemeSwitch}
-        className="my-react-select-container"
+        className="my-react-select-container w-52"
         classNamePrefix="my-react-select" />
     )
 
