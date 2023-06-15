@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { deleteHabitFB, handleNextHabit } from "../../firebase"
+import { deleteHabitFB, handleRecurHabitDays } from "../../firebase"
 import { AuthContext } from '../AuthProvider'
 import { useTranslation } from 'react-i18next'
 import { isSameDay } from 'date-fns'
@@ -20,8 +20,8 @@ export const ModalHabit = ({ habit, onClose }) => {
     //
 
     useEffect(() => {
-        console.log('open Habit')
-        console.log(habit)
+        //console.log('open Habit')
+        //console.log(habit)
         if (habit !== undefined) {
             setName(habit.name)
             setDescription(habit.description)
@@ -79,11 +79,7 @@ export const ModalHabit = ({ habit, onClose }) => {
     }
 
     const addDayOfWeekAndTyme = (numDay) => {
-        const next = { day: numDay, termWeeks: selectedFrec }
-        handleNextHabit(user.uid, habit.id, next)
-        setRefreshNext(!refreshNext);
-        console.log('refresh ' + refreshNext)
-
+        handleRecurHabitDays(user.uid, habit.id, numDay)
     }
 
     const handleSelectFrec = (event) => {
@@ -117,17 +113,6 @@ export const ModalHabit = ({ habit, onClose }) => {
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                             <div>
-                                <p>¿Que frecuencia quieres añadirle?</p>
-                                <select id="selectOption" value={selectedFrec} onChange={handleSelectFrec}>
-                                    <option value="">Añade una frecuencia</option>
-                                    <option value={1}>1 semana</option>
-                                    <option value={4}>1 mes</option>
-                                    <option value={24}>6 meses</option>
-                                    <option value={52}>1 año</option>
-                                </select>
-
-                            </div>
-                            <div>
                                 <button onClick={() => addDayOfWeekAndTyme(1)}>L</button>
                                 <button onClick={() => addDayOfWeekAndTyme(2)}>M</button>
                                 <button onClick={() => addDayOfWeekAndTyme(3)}>X</button>
@@ -135,6 +120,7 @@ export const ModalHabit = ({ habit, onClose }) => {
                                 <button onClick={() => addDayOfWeekAndTyme(5)}>V</button>
                                 <button onClick={() => addDayOfWeekAndTyme(6)}>S</button>
                                 <button onClick={() => addDayOfWeekAndTyme(0)}>D</button>
+                                <button onClick={() => addDayOfWeekAndTyme(7)}>Todos</button>
                             </div>
                         </div>
                         <MiniCalendar habit={habit} refreshNext={refreshNext}/>
