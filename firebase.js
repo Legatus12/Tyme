@@ -81,8 +81,28 @@ export const deleteNoteFB = (id) => {
 export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: [], next: [], recur: [] })
 
 export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
+/** 
+export const getHabitById = (habitId, callback) => {
 
-export const getHabitById = (habitId) => getDoc(doc(habitsRef, habitId)).then((habitSnapshot) => habitSnapshot.exists() ? habitSnapshot.data() : null)
+  const habitRef = doc(habitsRef, habitId);
+  console.log('HABITREF _> ')
+  console.log(habitRef)
+  onSnapshot(habitRef, callback);
+};
+*/
+export const getHabitById = (habitId, callback) => {
+  const habitRef = doc(habitsRef, habitId);
+  const unsubscribe = onSnapshot(habitRef, (snapshot) => {
+    if (snapshot.exists()) {
+      callback({ id: snapshot.id, ...snapshot.data() });
+    } else {
+      callback(null); // El hábito no existe
+    }
+  });
+
+  // Devolvemos la función de cancelación de la suscripción
+  return unsubscribe;
+};
 
 export const deleteHabitFB = (id) => {
   deleteDoc(doc(db, 'habits', id))
@@ -132,7 +152,8 @@ export const handleCompletedHabitDays = async (userId, habitId, date) => {
     const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
     if (habitDoc) {
       const completedArray = habitDoc.get('completed') || []
-      if (!completedArray.some(completed => completed === date)){
+      console.log(completedArray)
+      if (completedArray.length > 0 && !completedArray.some(completed => completed === date)){
         await updateDoc(habitRef, { completed: [...completedArray, date] })
         console.log('COMPLETED AÑADIDO')
       }
