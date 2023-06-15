@@ -27,7 +27,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .overview { @apply flex flex-col md:flex-row overflow-y-auto }
 
-.tyme-container { @apply full bg-white dark:text-black flex flex-col gap-4 p-4 rounded-xl overflow-y-auto }
+.tyme-container { @apply full bg-white dark:bg-black flex flex-col gap-4 p-4 rounded-xl overflow-y-auto }
 
 .overview-left, .overview-right { @apply h-full }
 
@@ -45,27 +45,25 @@ body { font-family: 'Inter', sans-serif; }
 
 .temperature { @apply bg-white dark:text-black rounded-r-2xl md:rounded-b-2xl md:rounded-tr-none text-4xl font-black }
 
-.today { @apply full flex flex-col px-8 md:px-0 md:pt-8 }
+.today { @apply full flex flex-col pl-8 pr-8 md:pr-0 md:pt-8 }
 
 .tools { @apply h-full md:h-2/5 flex justify-center items-center md:pb-8 pt-8 pl-8 pr-8 md:pr-0 gap-4 md:gap-8 }
 
-.tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base bg-lightgray text-black rounded-2xl }
+.tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
 
-.tools img { @apply w-8 md:w-12 }
+.tools img { @apply w-8 md:w-10 }
 
 /**/
 
 .overview-right { @apply w-full flex flex-col md:w-1/2 lg:w-2/5 xl:w-2/6 h-full p-8 gap-8 }
 
-.calendar-container { @apply h-[25rem] }
-
 .calendar { @apply full flex flex-col bg-black dark:bg-darkgray rounded-2xl p-4 text-white }
 
-.incoming { @apply flex flex-col overflow-y-auto gap-2 }
+.incoming { @apply full flex flex-col overflow-y-auto gap-2 }
 
 /*tymes*/
 
-.tyme-sm { @apply w-fit flex flex-col hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
+.tyme-sm { @apply w-fit flex flex-col items-start text-left hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
 
 .tyme-sm-days { @apply text-sm text-gray }
 
@@ -104,7 +102,7 @@ body { font-family: 'Inter', sans-serif; }
   background-color: #aaa;
 }
 
-.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-silver dark:hover:bg-darkgray focus:bg-silver dark:focus:bg-darkgray duration-200 }
+.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray duration-200 }
 
 .tyme-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
 
@@ -146,9 +144,9 @@ body { font-family: 'Inter', sans-serif; }
 
 /*day*/
 
-.day-view { @apply flex flex-col p-6 md:p-12 }
+.day-view { @apply flex flex-col p-4 md:p-8 gap-4 }
 
-.back { @apply w-12 rounded-full hover:bg-silver focus:bg-silver dark:hover:bg-darkgray dark:focus:bg-darkgray p-2 duration-200 }
+.back { @apply w-12 rounded-full hover:bg-lightgray focus:bg-lightgray dark:hover:bg-darkgray dark:focus:bg-darkgray p-2 duration-200 }
 
 /*settings*/
 
@@ -164,9 +162,9 @@ body { font-family: 'Inter', sans-serif; }
 
 .settings label { @apply w-fit whitespace-nowrap }
 
-.settings input { @apply bg-transparent p-2 }
+.settings input { @apply bg-transparent w-96 }
 
-.settings button { @apply bg-silver dark:bg-coal p-2 w-52 rounded-2xl }
+.settings button { @apply bg-black text-white dark:bg-coal p-2 w-52 rounded-2xl }
 
 /*Notes*/
 
@@ -174,13 +172,17 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes-container { @apply full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6 overflow-y-auto p-6 md:p-12 }
 
-.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-darkgray dark:bg-coal p-2 md:p-4 rounded-2xl }
+.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-darkgray bg-white dark:bg-black p-2 md:p-4 rounded-2xl }
 
 .notes-submit { @apply self-end p-2 rounded-2xl }
 
 .notes-none { @apply cursor-not-allowed }
 
-.notes-smth { @apply text-black bg-sunset hover:bg-midDay }
+.notes-smth { @apply text-black bg-sunset hover:bg-midDay duration-200 }
+
+.notes-delete { @apply hover:bg-silver focus:bg-silver dark:hover:bg-gray dark:focus:bg-gray  duration-200 }
+
+.notes-delete img { @apply w-8 }
 
 .notes textarea { @apply w-full h-full bg-transparent outline-none }
 
@@ -194,9 +196,9 @@ body { font-family: 'Inter', sans-serif; }
 
 .project-container { @apply flex flex-col gap-6 p-6 md:p-12 }
 
-.project-add { @apply w-full p-2 bg-silver rounded-2xl }
+.project-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray dark:hover:bg-darkgray dark:focus:bg-darkgray duration-200 }
 
-.project { @apply flex items-center justify-between p-4 rounded-2xl duration-200 bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-black dark:hover:bg-darkgray dark:focus:bg-darkgray cursor-pointer }
+.project { @apply flex items-center justify-between p-4 rounded-2xl duration-200 bg-white hover:bg-lightgray focus:bg-lightgray dark:bg-black dark:hover:bg-darkgray dark:focus:bg-darkgray cursor-pointer }
 
 .project-name { @apply text-lg md:text-2xl }
 
@@ -214,11 +216,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .charts { @apply flex flex-col }
 
-.charts-container { @apply full flex flex-col p-4 md:p-8 }
+.charts-container { @apply full flex p-4 md:p-8 gap-8 }
 
-.charts canvas { height: 28rem !important; width: 28rem !important; }
+.charts canvas { width: 100% !important; }
 
-.chart { @apply w-1/2 h-full flex flex-col items-center justify-center }
+.chart { @apply w-1/3 flex flex-col gap-8 items-center justify-center }
 
 /*selects*/
 
@@ -267,7 +269,7 @@ body { font-family: 'Inter', sans-serif; }
   justify-content: center;
   align-items: center;
   z-index: 1;
-  @apply p-8 md:p-20
+  @apply p-8 md:p-32
 }
 
 input[type=checkbox]

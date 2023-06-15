@@ -20,7 +20,7 @@ useEffect(() => {
           {
             label: 'tymes',
             data: Object.values(tymesByProject),
-            backgroundColor: ['#fad6a5', '#fcddb4']
+            backgroundColor: ['#000', '#424242', '#646464', '#808080']
           }
         ]
     }

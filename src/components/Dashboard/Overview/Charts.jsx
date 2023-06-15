@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../../AuthProvider"
 import { TymesByProjectChart } from "./Charts/TymesByProjectChart"
-import { getProjects, getTymes } from "../../../../firebase"
+import { HabitsChart } from "./Charts/HabitsChart"
+import { getProjects, getTymes, getTymesByProject, getHabits } from "../../../../firebase"
 
 const Charts = () => {
 
@@ -11,15 +12,18 @@ const Charts = () => {
 
   const { t } = useTranslation()
 
+  const [title, setTitle] = useState(t('charts.title'))
   const [projects, setProjects] = useState([])
   const [tymes, setTymes] = useState([])
+  const [habits, setHabits] = useState([])
   const [tymesByProject, setTymesByProject] = useState({})
+  const [tymesByDate, setTymesByDate] = useState({})
+  const [refresh, setRefresh] = useState(0)
   
   //
 
-  useEffect(() => {
-
-    getTymes(user.uid, (docs) => {
+  const loadTymes = (uid) => {
+    getTymes(uid, (docs) => {
       const arr = []
       docs.forEach(doc => {
         const aux = { id: doc.id, ...doc.data() }
@@ -27,15 +31,94 @@ const Charts = () => {
       })
       setTymes(arr)
     })
+  }
+
+  const loadProjects = (uid) => {
+    if (uid) {
+      getProjects(uid, (projects) => {
+        const arr = []
+        projects.forEach((project) => {
+          //getTymesByProject(uid, project.data().name, (docs) => docs.forEach(() => number ++))
+          const aux = {
+            ...project.data(), 
+            number: 0,
+            done: 0,
+            id: project.id
+          }
+          arr.push(aux)
+        })
+        setProjects(arr)
+      })
+    }
+  }
+
+  const loadHabits = async (uid) => {
+    if (uid) {
+      getHabits(uid, (habits) => {
+        const arr = []
+        habits.forEach((habit) => {
+          const aux = {
+            ...habit.data(),
+            id: habit.id,
+          }
+          arr.push(aux)
+        })
+        setHabits(arr)
+      })
+    }
+  }
+
+  const loadNumbers = () => {
+    const aux = [] 
+    projects.map(project => {
+      let number = 0
+      let done = 0
+      tymes.map(tyme => {
+        tyme.project == project.name ? number++ : 0
+        tyme.project == project.name && tyme.done ? done ++ : 0
+      })
+      console.log(number)
+      console.log(done)
+      project.number = number
+      project.done = done
+      aux.push(project)
+    })
+    setProjects(aux)
+    console.log(projects)
+  }
+
+  useEffect(() => {
+
+    loadTymes(user.uid)
+    loadProjects(user.uid)
+    loadHabits(user.uid)
+    loadNumbers()
 
     setTymesByProject(tymes.reduce((acc, tyme) => {
       const { project } = tyme
-      acc[project == undefined ? t('tyme.withoutProj') : project] = (acc[project] || 0) + 1
+      acc[project] = (acc[project] || 0) + 1
       return acc
     }, {}))
-    
-    console.log(tymesByProject)
+
+    setTymesByDate(tymes.reduce((acc, tyme) => {
+      const { date } = tyme
+      acc[date] = (acc[date] || 0) + 1
+      return acc
+    }, {}))
+
   }, [user])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTitle(t('charts.title') + ' a')
+      console.log(habits)
+      console.log(tymesByDate)
+    }, 1000)
+  }, [])
+
+  useEffect(() => {
+    setProjects(projects)
+  }, [projects, user])
 
   //
 
@@ -45,14 +128,40 @@ const Charts = () => {
         <Link className="back" to={'/dashboard/overview'} replace>
           <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
-        <h1>{t('charts.title')}</h1>
+        <h1>{title}</h1>
       </div>
       <div className="charts-container">
-        <div className="chart">
+        <div className="chart bg-white rounded-2xl">
           <h2>{t('charts.tymesByProject')}</h2>
           <TymesByProjectChart tymesByProject={tymesByProject} />
         </div>
-        
+        <div className='chart'>
+          <div className="w-full flex flex-col bg-white p-4 rounded-2xl gap-4">
+            <div className="flex justify-between items-center">
+              <p>Daw</p>
+              <p className="w-20">2/3 tymes</p>
+            </div>
+            <div className="w-full h-8 bg-black p-1 relative rounded-2xl">
+              <div className="bg-sunset h-full flex justify-end px-1 rounded-xl" style={{ width: `${66}%` }}>
+                <p className="font-bold">66%</p>
+              </div>
+            </div>
+          </div>
+          <div className="w-full flex flex-col bg-white p-4 rounded-2xl gap-4">
+            <div className="flex justify-between items-center">
+              <p>Vacaciones</p>
+              <p className="w-20">0/2 tymes</p>
+            </div>
+            <div className="w-full h-8 bg-black p-1 relative rounded-2xl">
+              <div className="hidden bg-sunset h-full justify-end px-1 rounded-xl overflow-hidden" style={{ width: `${0}%` }}>
+                <p className="font-bold">0%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='chart'>
+          <HabitsChart />
+        </div>
       </div>
     </div>
   )
