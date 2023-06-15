@@ -28,8 +28,6 @@ const Settings = () => {
         <hr />
         <LanguageSwitcher />
       </div>
-      
-      <h2>{t('settings.notifications')}</h2>
 
       <h2>{t('settings.account')}</h2>
       <div>
@@ -48,9 +46,12 @@ const Settings = () => {
       </div>
       <div className='settings-option'>
         <hr />
+        <button>cambiar contraseña</button>
+      </div>
+      <div className='settings-option'>
+        <hr />
         <button onClick={() => auth.signOut()}>cerrar sesion</button>
       </div>
-      
     </div>
   )
 }

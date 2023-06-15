@@ -81,7 +81,7 @@ const Day = ({ day, closeDayModal }) => {
             : t('date.month.' + day.getMonth()) + ' ' + day.getDate() + getOrdinal(day.getDate())}
         </h1>
       </div>
-      <button className="self-end tyme-sm-add" onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
+      <button className="self-end project-add" onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
       <div className="tyme-container">
         {tymes.map((tyme, index) => (
           <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>

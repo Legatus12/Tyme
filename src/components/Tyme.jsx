@@ -14,12 +14,10 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [date, setDate] = useState(day)
-  const [timestamp, setTimestamp] = useState('')
-  const [hora, setHora] = useState('')
   const [done, setDone] = useState('')
-  const [projects, setProjects] = useState([]);
-  //const [selectedProject, setSelectedProject] = useState('');
-  const [selectedProject, setSelectedProject] = useState(tyme ? tyme.project : '');
+  const [projects, setProjects] = useState([])
+  //const [selectedProject, setSelectedProject] = useState('')
+  const [selectedProject, setSelectedProject] = useState('')
   const [msgerror, setmsgerror] = useState('')
 
   //
@@ -32,11 +30,11 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       const auxDate = new Date(tyme.timestamp)
       setDate(auxDate)
       setDone(tyme.done)
-      setHora(new Date(tyme.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
     }
     else {
       setTitle('')
       setBody('')
+      setSelectedProject('')
       setDate(day)
       setDone(false)
     }
@@ -46,37 +44,37 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   const loadProjects = async (uid) => {
     if (uid) {
-      const arr = [];
+      const arr = []
       getProjects(uid, (projects) => {
         projects.forEach((project) => {
           const aux = {
             ...project.data(),
             id: project.id,
-          };
-          arr.push(aux);
-        });
+          }
+          arr.push(aux)
+        })
 
-        setProjects(arr);
-      });
+        setProjects(arr)
+      })
     }
-  };
+  }
 
   useEffect(() => {
-    loadProjects(user.uid);
-  }, [user]);
+    loadProjects(user.uid)
+  }, [user])
 
 
   const handleProjectChange = (newProject) => {
     console.log(newProject)
     if (tyme != null) {
       setProjectInTyme(tyme.id, newProject)
-      setSelectedProject(newProject);
     }
-  };
+    setSelectedProject(newProject)
+  }
 
   const handleDone = (event) => {
-    const isChecked = event.target.checked;
-    setDone(isChecked);
+    const isChecked = event.target.checked
+    setDone(isChecked)
   }
 
   //TODO: Implementar el proyecto OPCIONALMENTE
@@ -84,27 +82,17 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
     event.preventDefault()
     if(title !== ''){
       if (tyme !== null) {
-        const [hour, minute] = hora.split(':');
-        let newDate = date;
-        newDate.setHours(hour);
-        newDate.setMinutes(minute);
-        let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: newDate.getTime(), done: done }
+        let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime(), done: done }
         typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
         updateTyme(tyme.id, aux)
         console.log(aux)
       }
       else {
-        const [hour, minute] = hora.split(':');
-        let newDate = date;
-        newDate.setHours(hour);
-        newDate.setMinutes(minute);
-        addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), newDate.getTime())
+        addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
       }
       onClose()
       setTitle('')
       setBody('')
-      //setDate('')
-      setTimestamp('')
       setmsgerror('')
     }
     else{
@@ -154,7 +142,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
             />
           </div>
           <hr />
-          <div className='flex flex-col md:flex-row md:justify-between flex-wrap py-2 gap-2 md:gap-0'>
+          <div className='flex flex-col md:flex-row md:justify-between xl:justify-normal xl:gap-8 flex-wrap py-2 gap-2 md:gap-0'>
             <div className='flex items-center'>
               <label className='p-4' htmlFor="date">{t('tyme.date')}</label>
               <input
@@ -162,16 +150,6 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
                 id="date"
                 value={format(date, 'yyyy-MM-dd')}
                 onChange={(e) => onChangeDate(e.target.value)}
-              />
-            </div>
-            <div className='flex items-center'>
-              <label htmlFor="hora">Hora:</label>
-              <input
-                type="time"
-                id="hora"
-                value={hora}
-                onChange={(e) => setHora(e.target.value)}
-                required
               />
             </div>
             <div className='flex items-center'>
@@ -203,7 +181,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
               id="body"
               value={body}
               placeholder={t('tyme.withoutDesc')}
-              onChange={(e) => setBody(e.target.value)}
+              onChange={(e) => setBody(e.target.value.replace(/\n/g, '<br>'))}
             />
           </div>
           <div className='flex flex-col'>

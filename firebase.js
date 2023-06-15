@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app"
 import { getAnalytics } from "firebase/analytics"
 import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, deleteDoc, updateDoc, orderBy, limit, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { getAuth } from "firebase/auth"
-//import { getMessaging, getToken } from "firebase/messaging";
+//import { getMessaging, getToken } from "firebase/messaging"
 //import { requestPermission } from "./firebase-messaging-sw"
 import { isSameDay, format } from 'date-fns'
  
@@ -20,7 +20,7 @@ const analytics = getAnalytics(app)
 
 export const auth = getAuth(app)
 
-export const db = getFirestore(app);
+export const db = getFirestore(app)
 
 
 //
@@ -43,21 +43,21 @@ export const getTymesInMonth = (uid, month, year, callback) => onSnapshot(query(
 
 export const getTymesInDay = (uid, date, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("date", "==", date)), callback)
 
-export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp')), callback)
+export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("timestamp", ">=", tomorrow.getTime()), orderBy('timestamp'), limit(3)), callback)
 
-export const getTymesByProject = (uid, project, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("project", "==", project)), callback)
+export const getTymesByProject = (uid, project, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("project", "==", project), orderBy('timestamp')), callback)
 
 export const getTymesInNext24Hours = (uid, callback) => {
-  const now = new Date();
-  const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-  onSnapshot(query(tymesRef, where("uid", "==", uid),  where("timestamp", "<", next24Hours.getTime(), where("done", "==", false)), orderBy('timestamp')), callback);
-};
+  const now = new Date()
+  const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000)
+  onSnapshot(query(tymesRef, where("uid", "==", uid),  where("timestamp", "<", next24Hours.getTime(), where("done", "==", false)), orderBy('timestamp')), callback)
+}
 
 export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp, done: false })
 
 export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 
-export const deleteTymeByProject = async (uid, project) => (await getDocs(query(tymesRef, where("uid", "==", uid), where('project', '==', project)))).forEach((doc) => deleteDoc(doc.ref));
+export const deleteTymeByProject = async (uid, project) => (await getDocs(query(tymesRef, where("uid", "==", uid), where('project', '==', project)))).forEach((doc) => deleteDoc(doc.ref))
 
 export const updateTyme = (id, tyme) => {
   console.log(tyme)
@@ -67,8 +67,8 @@ export const updateTyme = (id, tyme) => {
 export const updateTymeField = (id, field, value) => {
   updateDoc(doc(db, 'tymes', id), { [field]: value })
     .then(() => console.log('Campo actualizado exitosamente'))
-    .catch((error) => console.error('Error al actualizar el campo:', error));
-};
+    .catch((error) => console.error('Error al actualizar el campo:', error))
+}
 
 export const addNote = (uid, text, timestamp) => addDoc(notesRef, { uid: uid, text: text, timestamp: timestamp })
 
@@ -82,7 +82,7 @@ export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid
 
 export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
 
-export const getHabitById = (habitId) => getDoc(doc(habitsRef, habitId)).then((habitSnapshot) => habitSnapshot.exists() ? habitSnapshot.data() : null);
+export const getHabitById = (habitId) => getDoc(doc(habitsRef, habitId)).then((habitSnapshot) => habitSnapshot.exists() ? habitSnapshot.data() : null)
 
 export const deleteHabitFB = (id) => {
   deleteDoc(doc(db, 'habits', id))
@@ -96,133 +96,132 @@ export const deleteProjectFB = (id) => {
 }
 
 export const setProjectInTyme = async (tymeId, projectId) => {
-  console.log('HOLAAA')
-  const tymeRef = doc(db, 'tymes', tymeId);
-  const tymeDoc = await getDoc(tymeRef);
+  //console.log('HOLAAA')
+  const tymeRef = doc(db, 'tymes', tymeId)
+  const tymeDoc = await getDoc(tymeRef)
   if (!tymeDoc.exists()) {
-    await setDoc(tymeRef, { project: projectId });
+    await setDoc(tymeRef, { project: projectId })
   } else {
-    await updateDoc(tymeRef, { project: projectId });
+    await updateDoc(tymeRef, { project: projectId })
   }
-  console.log('Campo "project" añadido o actualizado correctamente en el documento "tyme"');
-};
+}
 
 export const addTymeFb = async (userId, tyme) => {
-  const userRef = doc(db, "users", userId);
-  const tymesRef = collection(userRef, "tymes");
+  const userRef = doc(db, "users", userId)
+  const tymesRef = collection(userRef, "tymes")
 
   // Comprueba si la colección ya existe
-  const docSnapshot = await getDoc(userRef);
+  const docSnapshot = await getDoc(userRef)
   if (!docSnapshot.exists()) {
-    await setDoc(tymesRef.parent, { tymes: [] }); // Crea la colección si no existe
+    await setDoc(tymesRef.parent, { tymes: [] }) // Crea la colección si no existe
   }
 
   // Agrega el nuevo documento a la colección tymes
   await addDoc(tymesRef, {
     title: tyme.title,
     body: tyme.body,
-  });
+  })
 }
 
 export const handleCompletedHabitDays = async (userId, habitId, date) => {
-  const queryRef = query(habitsRef, where('uid', '==', userId));
-  const querySnapshot = await getDocs(queryRef);
+  const queryRef = query(habitsRef, where('uid', '==', userId))
+  const querySnapshot = await getDocs(queryRef)
 
   if (!querySnapshot.empty) {
-    const habitRef = doc(db, 'habits', habitId);
-    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+    const habitRef = doc(db, 'habits', habitId)
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
     if (habitDoc) {
-      const completedArray = habitDoc.get('completed') || [];
+      const completedArray = habitDoc.get('completed') || []
       if (!completedArray.some(completed => completed === date)){
-        await updateDoc(habitRef, { completed: [...completedArray, date] });
+        await updateDoc(habitRef, { completed: [...completedArray, date] })
         console.log('DIA AÑADIDO')
       }
       else{
-        const updatedArray = completedArray.filter(completed => completed !== date);
-        await updateDoc(habitRef, { completed: updatedArray });
+        const updatedArray = completedArray.filter(completed => completed !== date)
+        await updateDoc(habitRef, { completed: updatedArray })
       }
-      console.log('Fecha agregada con éxito al campo "completed".');
+      console.log('Fecha agregada con éxito al campo "completed".')
     } else {
-      console.log('El documento no existe en la colección "habits".');
+      console.log('El documento no existe en la colección "habits".')
     }
   } else {
-    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
   }
-};
+}
 
 export const handleNextHabit = async (userId, habitId, next) => {
-  const queryRef = query(habitsRef, where('uid', '==', userId));
-  const querySnapshot = await getDocs(queryRef);
+  const queryRef = query(habitsRef, where('uid', '==', userId))
+  const querySnapshot = await getDocs(queryRef)
 
   if (!querySnapshot.empty) {
-    const habitRef = doc(db, 'habits', habitId);
-    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+    const habitRef = doc(db, 'habits', habitId)
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
     if (habitDoc) {
-      const nextArray = habitDoc.get('next') || [];
+      const nextArray = habitDoc.get('next') || []
 
       // Verificar si el objeto ya existe en el array 'next'
-      const existingNextIndex = nextArray.findIndex(obj => obj.day === next.day);
+      const existingNextIndex = nextArray.findIndex(obj => obj.day === next.day)
 
       if (existingNextIndex !== -1) {
         // El objeto ya existe en el array
         if (nextArray[existingNextIndex].termWeeks !== next.termWeeks) {
           // El valor de 'termWeeks' es diferente, actualizarlo
-          nextArray[existingNextIndex].termWeeks = next.termWeeks;
-          console.log('Campo "termWeeks" actualizado en el objeto existente.');
+          nextArray[existingNextIndex].termWeeks = next.termWeeks
+          console.log('Campo "termWeeks" actualizado en el objeto existente.')
         } else {
-          console.log('El objeto ya existe en el campo "next".');
-          nextArray.splice(existingNextIndex, 1); // Eliminar el objeto del array
-          console.log('Objeto eliminado del campo "next".');
+          console.log('El objeto ya existe en el campo "next".')
+          nextArray.splice(existingNextIndex, 1) // Eliminar el objeto del array
+          console.log('Objeto eliminado del campo "next".')
         }
       } else {
         // El objeto no existe, agregarlo al array
-        nextArray.push(next);
-        console.log('Objeto agregado al campo "next".');
+        nextArray.push(next)
+        console.log('Objeto agregado al campo "next".')
       }
 
-      await updateDoc(habitRef, { next: nextArray });
+      await updateDoc(habitRef, { next: nextArray })
     } else {
-      console.log('El documento no existe en la colección "habits".');
+      console.log('El documento no existe en la colección "habits".')
     }
   } else {
-    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
   }
-};
+}
 
 
 
 /** 
 export const addNextListToHabits = async (userId, habitId, dates) => {
-  const queryRef = query(habitsRef, where('uid', '==', userId));
-  const querySnapshot = await getDocs(queryRef);
+  const queryRef = query(habitsRef, where('uid', '==', userId))
+  const querySnapshot = await getDocs(queryRef)
 
   if (!querySnapshot.empty) {
-    const habitRef = doc(db, 'habits', habitId);
-    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+    const habitRef = doc(db, 'habits', habitId)
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
     if (habitDoc) {
-      const completedArray = habitDoc.get('completed') || [];
+      const completedArray = habitDoc.get('completed') || []
 
       // Utilizar un Set para evitar duplicados en las fechas
-      const updatedSet = new Set([...completedArray, ...dates]);
+      const updatedSet = new Set([...completedArray, ...dates])
 
-      const updatedArray = [...updatedSet];
+      const updatedArray = [...updatedSet]
 
-      await updateDoc(habitRef, { completed: updatedArray });
-      console.log('Fechas agregadas con éxito al campo "completed".');
+      await updateDoc(habitRef, { completed: updatedArray })
+      console.log('Fechas agregadas con éxito al campo "completed".')
     } else {
-      console.log('El documento no existe en la colección "habits".');
+      console.log('El documento no existe en la colección "habits".')
     }
   } else {
-    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
   }
-};
+}
 */
 /////notis
 
-//import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+//import { getMessaging, getToken, onMessage } from "firebase/messaging"
+import { getMessaging, getToken, onMessage } from "firebase/messaging"
 
-const messaging = getMessaging(app);
+const messaging = getMessaging(app)
 
 getToken(messaging, {
   vapidKey:
@@ -230,54 +229,54 @@ getToken(messaging, {
 })
   .then((currentToken) => {
     if (currentToken) {
-      console.log("Firebase Token", currentToken);
+      console.log("Firebase Token", currentToken)
       
     } else {
       // Show permission request UI
       console.log(
         "No registration token available. Request permission to generate one."
-      );
+      )
       // ...
     }
   })
   .catch((err) => {
-    console.log("An error occurred while retrieving token. ", err);
+    console.log("An error occurred while retrieving token. ", err)
     // ...
-  });
+  })
 
 onMessage(messaging, (payload) => {
-  console.log("Message received. ", payload);
+  console.log("Message received. ", payload)
   // ...
-});
+})
 
 
 
 
 /** 
 export function requestPermission() {
-    console.log('Requesting permission...');
+    console.log('Requesting permission...')
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
-        console.log('Notification permission granted.');
-        const messaging = getMessaging(app);
+        console.log('Notification permission granted.')
+        const messaging = getMessaging(app)
         getToken(messaging, { vapidKey: 'BFINyNd5txECFKM1HvwLYMwYMt0eBksMXfnREE_UbWKKIBQYa7kTU46b1rwU31NvIf1W7LZ02cZp66NIaxbSwOs' }).then((currentToken) => {
           if (currentToken) {
             // Send the token to your server and update the UI if necessary
             console.log('currentToken: ' + currentToken)
           } else {
             // Show permission request UI
-            console.log('No registration token available. Request permission to generate one.');
+            console.log('No registration token available. Request permission to generate one.')
             // ...
           }
         }).catch((err) => {
-          console.log('An error occurred while retrieving token. ', err);
+          console.log('An error occurred while retrieving token. ', err)
           // ...
-        });
+        })
       }
       else {
         console.log('no hay permisos')
       }
-    });
+    })
 }
 
-requestPermission();*/
+requestPermission()*/

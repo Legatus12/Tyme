@@ -156,7 +156,7 @@ const Overview = () => {
 
           <div className='day'>
             {weather.data !== null && 
-              <div className='flex flex-col justify-center items-center p-8 gap-4'>
+              <div className='flex flex-col justify-center items-center py-8 pl-8 pr-8 md:pr-0 gap-4'>
                 <div className='wheather-container'>
                   <div className='wheather'>
                     <img className='w-full' src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}  width="100" height="100"></img>             
@@ -180,7 +180,9 @@ const Overview = () => {
               <div className='tyme-container'>
                 {todayTymes.map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-                    {tyme.title}
+                    <p className='text-lg font-semibold'>{tyme.title}</p>
+                    <br />
+                    <p className='text-sm' dangerouslySetInnerHTML={{__html:tyme.body}}></p>
                 </div>
                 ))}
                 {todayTymes.length < 1 && (
@@ -192,15 +194,15 @@ const Overview = () => {
 
           <div className='tools'>
             <Link to={'notes'} >
-              <img src={`/src/img/notes.png`} />
+              <img src={`/src/img/notes${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
               <p>{t('overview.notes')}</p>
             </Link>
             <Link to={'projects'} >
-              <img src={`/src/img/projects.png`} />
+              <img src={`/src/img/projects${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
               <p>{t('overview.projects')}</p>
             </Link>
             <Link to={'habits'} >
-              <img src={`/src/img/habits.png`} />
+              <img src={`/src/img/habits${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
               <p>{t('overview.habits')}</p>
             </Link>
           </div>

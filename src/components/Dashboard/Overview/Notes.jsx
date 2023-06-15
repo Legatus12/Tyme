@@ -24,6 +24,7 @@ const Notes = () => {
       addNote(user.uid, text, date.getTime())
       setText('')
       loadNotes(user.uid)
+      setSmth(false)
     }
     
   }
@@ -93,7 +94,9 @@ const Notes = () => {
               notes.map(note =>
                 <div className="note" key={note.id}>
                   <p>{note.text}</p>
-                  <button className="notes-submit" onClick={()=> deleteNote(note.id)}>delete</button>
+                  <button className="notes-submit notes-delete" onClick={()=> deleteNote(note.id)}>
+                    <img src={`/src/img/delete${document.documentElement.classList.contains("dark") ? '' : ''}.png`} />  
+                  </button>
                 </div>
               )
               : null

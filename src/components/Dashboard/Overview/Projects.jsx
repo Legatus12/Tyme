@@ -22,12 +22,10 @@ function Projects() {
       getProjects(uid, (projects) => {
         const arr = []
         projects.forEach((project) => {
-          let number = 0
-          getTymesByProject(uid, project.data().name, (docs) => docs.forEach(() => number ++))
+          //getTymesByProject(uid, project.data().name, (docs) => docs.forEach(() => number ++))
           const aux = {
             ...project.data(),
-            id: project.id,
-            number: number
+            id: project.id
           }
           arr.push(aux)
         })
@@ -167,7 +165,7 @@ function Projects() {
             <p className='number-tymes'>{project.number} tymes</p>
           </div>
         ))}
-        <button className='tyme-sm-add w-full' onClick={() => setShowAdd(true)}>{t('projects.add')}</button>
+        <button className='project-add' onClick={() => setShowAdd(true)}>{t('projects.add')}</button>
       </div>
       
 
@@ -193,8 +191,9 @@ function Projects() {
                   onChange={handleChange}
                   placeholder={t('tyme.withoutDesc')}
                 ></textarea>
+                <br />
                 <p>{msgerror}</p>
-                <button type="submit">{t('tyme.save')}</button>
+                <button className='tyme-sm-add' type="submit">{t('tyme.save')}</button>
               </form>
             </div>
           </div>
@@ -208,29 +207,32 @@ function Projects() {
           <button onClick={() => setSelectedProject(null)} className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
           <h1>{selectedProject.name}</h1>
         </div>
-        <div className="tyme-container p-4 md:p-8 full">
-          <button className='tyme-delete md:w-fit ml-auto' onClick={() => setShowAdd(true)}>{t('projects.deleteThis')}</button>
-          {
-            showAdd ? 
-            <div className="modal">
-              <div className="modal-content" ref={modalRef}>
-                <p>{t('projects.deleteMsg')}</p>
-                <div className='modal-footer mt-auto'>
-                  <button className='tyme-delete' onClick={() => deleteProject(false)}>{t('projects.delete')}</button>
-                  <button className='tyme-save' onClick={() => deleteProject(true)}>{t('projects.deleteAll')}</button>
+        <div className='full flex p-4 md:p-8'>
+          <div className="tyme-container">
+            <button className='tyme-delete md:w-fit ml-auto' onClick={() => setShowAdd(true)}>{t('projects.deleteThis')}</button>
+            {
+              showAdd ? 
+              <div className="modal">
+                <div className="modal-content" ref={modalRef}>
+                  <p>{t('projects.deleteMsg')}</p>
+                  <div className='modal-footer mt-auto'>
+                    <button className='tyme-delete' onClick={() => deleteProject(false)}>{t('projects.delete')}</button>
+                    <button className='tyme-save' onClick={() => deleteProject(true)}>{t('projects.deleteAll')}</button>
+                  </div>
+                  <button className='tyme-cancel' onClick={() => setShowAdd(false)}>{t('tyme.cancel')}</button>
                 </div>
-                <button className='tyme-cancel' onClick={() => setShowAdd(false)}>{t('tyme.cancel')}</button>
               </div>
-            </div>
-            : null
-          }
-          {tymes.map((tyme, index) => (
-            <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-              <p className="tyme-sm-days">{tyme.date}</p>
-              <p className="tyme-sm-body">{tyme.title}</p>
-            </div>
-          ))}
+              : null
+            }
+            {tymes.map((tyme, index) => (
+              <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
+                <p className="tyme-sm-days">{tyme.date}</p>
+                <p className="tyme-sm-body">{tyme.title}</p>
+              </div>
+            ))}
+          </div>
         </div>
+        
         <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal} />
       </div>
     )

@@ -1,30 +1,30 @@
 import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom'
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
 import { AuthContext } from '../../../AuthProvider'
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"
 import { ModalHabit } from '../../Habit'
 import { isSameDay } from 'date-fns'
 
 const Habits = () => {
-  const currentDate = new Date();
+  const currentDate = new Date()
   const user = useContext(AuthContext)
 
   const { t } = useTranslation()
 
-  const [habits, setHabits] = useState([]);
-  const [showAdd, setShowAdd] = useState(false);
+  const [habits, setHabits] = useState([])
+  const [showAdd, setShowAdd] = useState(false)
 
   const [values, setValues] = useState({
     name: "",
     description: "",
     completed: [],
 
-  });
+  })
 
   const deleteHabit = (id) => {
     console.log(id)
-    deleteHabitFB(id);
+    deleteHabitFB(id)
     loadHabits(user.uid)
   }
 
@@ -37,8 +37,8 @@ const Habits = () => {
           const aux = {
             ...habit.data(),
             id: habit.id,
-          };
-          arr.push(aux);
+          }
+          arr.push(aux)
         })
         setHabits(arr)
       })
@@ -54,29 +54,29 @@ const Habits = () => {
   }, [user])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    addHabit(user.uid, values.name, values.description);
+    event.preventDefault()
+    addHabit(user.uid, values.name, values.description)
     setValues({
       name: "",
       description: "",
       completed: [],
-    });
+    })
     loadHabits(user.uid)
     setShowAdd(false)
-  };
+  }
 
 
   const handleChange = (evt) => {
 
-    const { target } = evt;
-    const { name, value } = target;
+    const { target } = evt
+    const { name, value } = target
 
     const newValues = {
       ...values,
       [name]: value,
-    };
+    }
 
-    setValues(newValues);
+    setValues(newValues)
   }
 
   const modalRef = useRef(null)
@@ -137,16 +137,13 @@ const Habits = () => {
         {
           habits.length > 0 ?
             habits.map(habit =>
-              <div className="habit" key={habit.id} tabIndex={0} onClick={()=>onOpen(habit)}>
-                <div className="flex gap-4">
-                  <p>{habit.name}</p>
-                </div>
-                <button onClick={() => deleteHabit(habit.id)}>delete</button>
+              <div className="project" key={habit.id} tabIndex={0} onClick={()=>onOpen(habit)}>
+                <p className="project-name">{habit.name}</p>
               </div>
             )
             : null
         }
-        <button className="tyme-sm-add w-full" onClick={() => setShowAdd(true)}>{t('habits.add')}</button>
+        <button className="project-add" onClick={() => setShowAdd(true)}>{t('habits.add')}</button>
         {
           isHabitOpen ? 
             <ModalHabit habit={selectedHabit} onClose={onClose} />
