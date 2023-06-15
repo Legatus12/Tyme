@@ -134,13 +134,13 @@ export const handleCompletedHabitDays = async (userId, habitId, date) => {
       const completedArray = habitDoc.get('completed') || []
       if (!completedArray.some(completed => completed === date)){
         await updateDoc(habitRef, { completed: [...completedArray, date] })
-        console.log('DIA AÑADIDO')
+        console.log('COMPLETED AÑADIDO')
       }
       else{
         const updatedArray = completedArray.filter(completed => completed !== date)
         await updateDoc(habitRef, { completed: updatedArray })
       }
-      console.log('Fecha agregada con éxito al campo "completed".')
+      console.log('COMPLETED agregada con éxito al campo "completed".')
     } else {
       console.log('El documento no existe en la colección "habits".')
     }
@@ -148,6 +148,99 @@ export const handleCompletedHabitDays = async (userId, habitId, date) => {
     console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
   }
 }
+
+export const handleNextHabitDays = async (userId, habitId, date) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId))
+  const querySnapshot = await getDocs(queryRef)
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId)
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
+    if (habitDoc) {
+      const nextArray = habitDoc.get('next') || []
+      if (!nextArray.some(next => next === date)){
+        await updateDoc(habitRef, { next: [...nextArray, date] })
+        console.log('DIA AÑADIDO A NEXT')
+      }
+      else{
+        const updatedArray = nextArray.filter(next => next !== date)
+        await updateDoc(habitRef, { next: updatedArray })
+      }
+      console.log('NEXT agregada con éxito al campo "completed".')
+    } else {
+      console.log('El documento no existe en la colección "habits".')
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
+  }
+
+}
+export const handleRecurHabitDays = async (userId, habitId, num) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId))
+  const querySnapshot = await getDocs(queryRef)
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId)
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
+    if (habitDoc) {
+      const recurArray = habitDoc.get('recur') || []
+      if (!recurArray.some(recur => recur === num)){
+        await updateDoc(habitRef, { recur: [...recurArray, num] })
+        console.log('DIA AÑADIDO A RECUR')
+      }
+      else{
+        const updatedArray = recurArray.filter(recur => recur !== num)
+        await updateDoc(habitRef, { recur: updatedArray })
+      }
+      console.log('RECUR agregada con éxito al campo "RECUR".')
+    } else {
+      console.log('El documento no existe en la colección "habits".')
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
+  }
+
+}
+
+
+
+/** 
+export const addNextListToHabits = async (userId, habitId, dates) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId))
+  const querySnapshot = await getDocs(queryRef)
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId)
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
+    if (habitDoc) {
+      const completedArray = habitDoc.get('completed') || []
+
+      // Utilizar un Set para evitar duplicados en las fechas
+      const updatedSet = new Set([...completedArray, ...dates])
+
+      const updatedArray = [...updatedSet]
+
+      await updateDoc(habitRef, { completed: updatedArray })
+      console.log('Fechas agregadas con éxito al campo "completed".')
+    } else {
+      console.log('El documento no existe en la colección "habits".')
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const handleNextHabit = async (userId, habitId, next) => {
   const queryRef = query(habitsRef, where('uid', '==', userId))
@@ -187,35 +280,13 @@ export const handleNextHabit = async (userId, habitId, next) => {
     console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
   }
 }
-
-
-
-/** 
-export const addNextListToHabits = async (userId, habitId, dates) => {
-  const queryRef = query(habitsRef, where('uid', '==', userId))
-  const querySnapshot = await getDocs(queryRef)
-
-  if (!querySnapshot.empty) {
-    const habitRef = doc(db, 'habits', habitId)
-    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId)
-    if (habitDoc) {
-      const completedArray = habitDoc.get('completed') || []
-
-      // Utilizar un Set para evitar duplicados en las fechas
-      const updatedSet = new Set([...completedArray, ...dates])
-
-      const updatedArray = [...updatedSet]
-
-      await updateDoc(habitRef, { completed: updatedArray })
-      console.log('Fechas agregadas con éxito al campo "completed".')
-    } else {
-      console.log('El documento no existe en la colección "habits".')
-    }
-  } else {
-    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.')
-  }
-}
 */
+
+
+
+
+
+/**
 /////notis
 
 //import { getMessaging, getToken, onMessage } from "firebase/messaging"
@@ -252,7 +323,7 @@ onMessage(messaging, (payload) => {
 
 
 
-/** 
+ 
 export function requestPermission() {
     console.log('Requesting permission...')
     Notification.requestPermission().then((permission) => {

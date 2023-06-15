@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
-import { add, eachDayOfInterval,startOfDay, isAfter, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek, addWeeks } from 'date-fns'
+import { add, addDays, eachDayOfInterval,startOfDay, isAfter, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek, addWeeks } from 'date-fns'
 import { Fragment, useEffect, useState, useContext } from 'react'
-import { handleCompletedHabitDays, getHabitById } from '../../firebase'
+import { handleCompletedHabitDays, getHabitById, handleNextHabitDays } from '../../firebase'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from './../AuthProvider'
 
@@ -55,19 +55,24 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
         setNextDates([])
         const currentDate = new Date();
         let finalNextDates = [];
-        habit.next.map(n => {
-
-            const nextDay = startOfWeek(currentDate, { weekStartsOn: n.day }); // El día 4 corresponde al jueves en date-fns
-
-            const dayOfWeekList = [];
-            for (let i = 0; i < n.termWeeks; i++) {
-                if(isAfter(startOfDay(addWeeks(nextDay, i)), startOfDay(new Date()))){
-                    const day = addWeeks(nextDay, i);
-                    dayOfWeekList.push(format(day, 'dd-MM-yyyy'));
+        if(habit.recur.some(r => r === 7)){
+            const dates = eachDayOfInterval({ start: new Date(), end: addDays(new Date(), 365) });
+            finalNextDates = dates;
+        }
+        else{
+            finalNextDates = habit.next;
+            habit.recur.map(n => {
+                const nextDay = startOfWeek(currentDate, { weekStartsOn: n.day }); // El día 4 corresponde al jueves en date-fns
+                const dayOfWeekList = [];
+                for (let i = 0; i < 52; i++) {
+                    if(isAfter(startOfDay(addWeeks(nextDay, i)), startOfDay(new Date()))){
+                        const day = addWeeks(nextDay, i);
+                        dayOfWeekList.push(format(day, 'dd-MM-yyyy'));
+                    }
                 }
-            }
-            finalNextDates = finalNextDates.concat(dayOfWeekList)
-        })
+                finalNextDates = finalNextDates.concat(dayOfWeekList);
+            })
+        }
         setNextDates(finalNextDates)
         console.log(nextDates) 
     }
@@ -100,10 +105,14 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
     }
 
     const handleCompleted = (date) => {
-        if(!isAfter(startOfDay(date), startOfDay(new Date())))
+        if(!isAfter(startOfDay(date), startOfDay(new Date()))){
             handleCompletedHabitDays(user.uid, habit.id, format(date, 'dd-MM-yyyy'))
-        else
-            console.log(' no te adelantes, no puedes cumplir habitos sin que haya pasado el dia !!!')
+            console.log('handleCHeck')
+        }
+        else{
+            handleNextHabitDays(user.uid, habit.id, format(date, 'dd-MM-yyyy'))
+            console.log('handleNEXT')
+        }
     }
 
 
