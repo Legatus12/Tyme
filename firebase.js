@@ -4,6 +4,7 @@ import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, delete
 import { getAuth } from "firebase/auth"
 //import { getMessaging, getToken } from "firebase/messaging";
 //import { requestPermission } from "./firebase-messaging-sw"
+import { isSameDay, format } from 'date-fns'
  
 export const app = initializeApp({
   apiKey: "AIzaSyCneoCJoAptrrMHjfZRqZerfY3Py1nLSpk",
@@ -77,9 +78,11 @@ export const deleteNoteFB = (id) => {
   deleteDoc(doc(db, 'notes', id))
 }
 
-export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: [] })
+export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: [], next: [] })
 
 export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
+
+export const getHabitById = (habitId) => getDoc(doc(habitsRef, habitId)).then((habitSnapshot) => habitSnapshot.exists() ? habitSnapshot.data() : null);
 
 export const deleteHabitFB = (id) => {
   deleteDoc(doc(db, 'habits', id))
@@ -121,8 +124,99 @@ export const addTymeFb = async (userId, tyme) => {
   });
 }
 
+export const handleCompletedHabitDays = async (userId, habitId, date) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId));
+  const querySnapshot = await getDocs(queryRef);
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId);
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+    if (habitDoc) {
+      const completedArray = habitDoc.get('completed') || [];
+      if (!completedArray.some(completed => completed === date)){
+        await updateDoc(habitRef, { completed: [...completedArray, date] });
+        console.log('DIA AÑADIDO')
+      }
+      else{
+        const updatedArray = completedArray.filter(completed => completed !== date);
+        await updateDoc(habitRef, { completed: updatedArray });
+      }
+      console.log('Fecha agregada con éxito al campo "completed".');
+    } else {
+      console.log('El documento no existe en la colección "habits".');
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+  }
+};
+
+export const handleNextHabit = async (userId, habitId, next) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId));
+  const querySnapshot = await getDocs(queryRef);
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId);
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+    if (habitDoc) {
+      const nextArray = habitDoc.get('next') || [];
+
+      // Verificar si el objeto ya existe en el array 'next'
+      const existingNextIndex = nextArray.findIndex(obj => obj.day === next.day);
+
+      if (existingNextIndex !== -1) {
+        // El objeto ya existe en el array
+        if (nextArray[existingNextIndex].termWeeks !== next.termWeeks) {
+          // El valor de 'termWeeks' es diferente, actualizarlo
+          nextArray[existingNextIndex].termWeeks = next.termWeeks;
+          console.log('Campo "termWeeks" actualizado en el objeto existente.');
+        } else {
+          console.log('El objeto ya existe en el campo "next".');
+          nextArray.splice(existingNextIndex, 1); // Eliminar el objeto del array
+          console.log('Objeto eliminado del campo "next".');
+        }
+      } else {
+        // El objeto no existe, agregarlo al array
+        nextArray.push(next);
+        console.log('Objeto agregado al campo "next".');
+      }
+
+      await updateDoc(habitRef, { next: nextArray });
+    } else {
+      console.log('El documento no existe en la colección "habits".');
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+  }
+};
 
 
+
+/** 
+export const addNextListToHabits = async (userId, habitId, dates) => {
+  const queryRef = query(habitsRef, where('uid', '==', userId));
+  const querySnapshot = await getDocs(queryRef);
+
+  if (!querySnapshot.empty) {
+    const habitRef = doc(db, 'habits', habitId);
+    const habitDoc = querySnapshot.docs.find(doc => doc.id === habitId);
+    if (habitDoc) {
+      const completedArray = habitDoc.get('completed') || [];
+
+      // Utilizar un Set para evitar duplicados en las fechas
+      const updatedSet = new Set([...completedArray, ...dates]);
+
+      const updatedArray = [...updatedSet];
+
+      await updateDoc(habitRef, { completed: updatedArray });
+      console.log('Fechas agregadas con éxito al campo "completed".');
+    } else {
+      console.log('El documento no existe en la colección "habits".');
+    }
+  } else {
+    console.log('No se encontraron documentos en la colección "habits" para el usuario especificado.');
+  }
+};
+*/
 /////notis
 
 //import { getMessaging, getToken, onMessage } from "firebase/messaging";
