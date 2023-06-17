@@ -37,7 +37,7 @@ const Projects = () => {
   //
 
   const [showAdd, setShowAdd] = useState(false)
-  const [title, setTitle] = useState('')
+  const [name, setName] = useState('')
   const [msgerror, setmsgerror] = useState('')
   const modalRef = useRef(null)
 
@@ -58,21 +58,18 @@ const Projects = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if(projects.some(project => project.name === values.name)){
+    if(projects.some(project => project.name === name)){
       setmsgerror('No puedes añadir dos proyectos con el mismo nombre')
     }
     else{
-      addProject(user.uid, values.name, values.description)
-      setValues({
-        name: "",
-        description: "",
-      })
+      addProject(user.uid, name)
+      setName('')
       setShowAdd(false)
     }
 
   }
 
-  const handleChange = (event) => setTitle(event.target.value)
+  const handleChange = (event) => setName(event.target.value)
 
   const deleteProject = (deleteTymes) => {
     if(!deleteTymes){
@@ -84,6 +81,8 @@ const Projects = () => {
     }
     setSelectedProject(null)
   }
+
+  //
 
   return selectedProject === null ? (
     <div className='projects full'>
@@ -113,13 +112,13 @@ const Projects = () => {
                   id="name"
                   name="name"
                   type="name"
-                  value={title}
+                  value={name}
                   onChange={handleChange}
                   placeholder={t('tyme.withoutTitle')}
                 />
                 <br />
-                <p>{msgerror}</p>
-                <button className='tyme-sm-add' type="submit">{t('tyme.save')}</button>
+                <p className='modal-error'>{msgerror}</p>
+                <button className='tyme-sm-add' type="submit">{t('projects.save')}</button>
               </form>
             </div>
           </div>

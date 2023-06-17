@@ -10,12 +10,11 @@ export const ModalHabit = ({ habit, onClose }) => {
 
     const { user } = useContext(GlobalContext)
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
     const [msgerror, setmsgerror] = useState('')
-    const [selectedFrec, setSelectedFrec] = useState();
+    const [selectedFrec, setSelectedFrec] = useState()
     //
 
     useEffect(() => {
@@ -23,7 +22,6 @@ export const ModalHabit = ({ habit, onClose }) => {
         //console.log(habit)
         if (habit !== undefined) {
             setName(habit.name)
-            setDescription(habit.description)
         }
         else {
 
@@ -32,7 +30,6 @@ export const ModalHabit = ({ habit, onClose }) => {
     }, [])
 
     //
-
 
     const deleteHabit = () => {
         deleteHabitFB(habit.id)
@@ -83,8 +80,8 @@ export const ModalHabit = ({ habit, onClose }) => {
     }
 
     const handleSelectFrec = (event) => {
-        setSelectedFrec(Number(event.target.value));
-      };
+        setSelectedFrec(Number(event.target.value))
+    }
 
     return (
         <div className="modal">
@@ -104,26 +101,16 @@ export const ModalHabit = ({ habit, onClose }) => {
 
                     <div className='col-span-2 flex justify-between'>
                         <div>
-                            <input
-                                type="text"
-                                id="description"
-                                className='modal-title'
-                                value={description}
-                                placeholder={'Añade los motivos por los que iniciaste este hábito para motivarte!'}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                            <div>
-                                <button onClick={() => addDayOfWeekAndTyme(1)}>L</button>
-                                <button onClick={() => addDayOfWeekAndTyme(2)}>M</button>
-                                <button onClick={() => addDayOfWeekAndTyme(3)}>X</button>
-                                <button onClick={() => addDayOfWeekAndTyme(4)}>J</button>
-                                <button onClick={() => addDayOfWeekAndTyme(5)}>V</button>
-                                <button onClick={() => addDayOfWeekAndTyme(6)}>S</button>
-                                <button onClick={() => addDayOfWeekAndTyme(0)}>D</button>
-                                <button onClick={() => addDayOfWeekAndTyme(7)}>Todos</button>
-                            </div>
+                            <button onClick={() => addDayOfWeekAndTyme(1)}>L</button>
+                            <button onClick={() => addDayOfWeekAndTyme(2)}>M</button>
+                            <button onClick={() => addDayOfWeekAndTyme(3)}>X</button>
+                            <button onClick={() => addDayOfWeekAndTyme(4)}>J</button>
+                            <button onClick={() => addDayOfWeekAndTyme(5)}>V</button>
+                            <button onClick={() => addDayOfWeekAndTyme(6)}>S</button>
+                            <button onClick={() => addDayOfWeekAndTyme(0)}>D</button>
+                            <button onClick={() => addDayOfWeekAndTyme(7)}>Todos</button>
                         </div>
-                        <MiniCalendar /** habit={habit}  */ habitId={habit.id}/>
+                        <MiniCalendar habitId={habit.id}/>
                     </div>
                     <hr />
                     <div className='flex flex-col'>

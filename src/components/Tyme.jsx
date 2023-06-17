@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme, getProjects, setProjectInTyme, deleteTyme, updateTymeField } from "../../firebase"
+import { addTyme, updateTyme, getProjects, deleteTyme, updateTymeField } from "../../firebase"
 import { GlobalContext } from '../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
@@ -40,12 +40,12 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   //
 
-  const handleProjectChange = (newProject) => {
-    console.log(newProject)
+  const handleProjectChange = (project) => {
+    console.log(project)
     if (tyme != null) {
-      setProjectInTyme(tyme.id, newProject)
-    }
-    setSelectedProject(newProject)
+      updateTyme(tyme.id, { ...tyme, project })
+    } 
+    setSelectedProject(project)
   }
 
   const handleDone = (event) => {

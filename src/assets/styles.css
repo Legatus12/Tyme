@@ -113,7 +113,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .modal-footer { @apply flex flex-col md:flex-row gap-4 }
 
-.modal-error { @apply p-2 md:p-4 text-[#f1121f] }
+.modal-error { @apply h-10 p-2 text-[#f1121f] }
 
 .modal-close {
   margin-top: 10px;

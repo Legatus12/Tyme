@@ -22,7 +22,7 @@ const Login = () => {
 
   const actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
+    // URL must be in the authorized domains list iner the Firebase Console.
     url: 'http://localhost:5173/dashboard/overview',
     // This must be true.
     handleCodeInApp: true,
@@ -226,7 +226,7 @@ const Login = () => {
             <button onClick={signUp} className='auth-button p-2'>{t('auth.signup')}</button>
           )}
 
-          <p className='h-6 text-[#f1121f]'>{msg}</p>
+          <p className='modal-error'>{msg}</p>
 
           { !reset ? (
             <div className='flex flex-col items-center gap-6'>

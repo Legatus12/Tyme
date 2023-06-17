@@ -21,6 +21,7 @@ const GlobalProvider = ({ children }) => {
   const [loadingProjects, setLoadingProjects] = useState(true)
   const [loadingHabits, setLoadingHabits] = useState(true)
   const [loadingNotes, setLoadingNotes] = useState(true)
+
   //
 
   const loadTymes = async(uid) => {
@@ -52,14 +53,15 @@ const GlobalProvider = ({ children }) => {
         return new Promise((resolve, reject) => {
           const unsubscribe = onSnapshot(query(collection(db, 'projects'), where("uid", "==", uid)), (docs) => {
             const data = []
+            console.log('snap proj')
             docs.forEach(async(doc) => {
-              console.log(doc.data())
               let number = 0
               let done = 0
               const fetchNumbers = () => {
                 try {
                   return new Promise((resolve, reject) => {
                     const unsubscribe = onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("project", "==", doc.data().name)), (docs) => {
+                      console.log('snap tyme')
                       docs.forEach((doc) => {
                         number ++
                         doc.data().done ? done ++ : 0

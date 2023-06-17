@@ -79,12 +79,14 @@ i18n
             delete: 'eliminar solo el proyecto',
             deleteAll: 'eliminar proyecto y tymes',
             deleteThis: 'eliminar proyecto',
-            add: '+ crear un proyecto'
+            add: '+ crear un proyecto',
+            save: 'crear proyecto'
           },
           habits: {
             title: 'Hábitos',
             add: '+ crear un hábito',
             write: 'Escribe el nombre del hábito',
+            save: 'crear hábito'
           },
           lightMode: 'claro',
           darkMode: 'oscuro',
