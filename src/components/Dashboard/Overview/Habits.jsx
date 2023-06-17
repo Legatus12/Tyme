@@ -3,7 +3,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
 import { GlobalContext } from '../../../GlobalProvider'
 import { useTranslation } from "react-i18next"
-import { ModalHabit } from '../../Habit'
+import { ModalHabit } from './Habits/Habit'
 import { isSameDay } from 'date-fns'
 
 const Habits = () => {

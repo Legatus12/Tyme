@@ -174,7 +174,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes-container { @apply full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6 overflow-y-auto p-6 md:p-12 }
 
-.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-darkgray bg-white dark:bg-black p-2 md:p-4 rounded-2xl }
+.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-gray bg-ash dark:bg-darkgray p-2 md:p-4 rounded-2xl }
 
 .notes-submit { @apply self-end p-2 rounded-2xl }
 
@@ -188,7 +188,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes textarea { @apply w-full h-full bg-transparent outline-none }
 
-.note { @apply h-64 rounded-2xl flex flex-col gap-4 bg-ash dark:bg-darkgray border-2 border-solid border-silver dark:border-coal p-2 md:p-4 }
+.note { @apply h-64 rounded-2xl flex flex-col gap-4 bg-white dark:bg-black border-2 border-solid border-silver dark:border-coal p-2 md:p-4 }
 
 .note p { @apply h-full overflow-y-auto break-words }
 

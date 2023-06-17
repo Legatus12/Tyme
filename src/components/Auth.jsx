@@ -1,7 +1,6 @@
-import { useState, useContext, useEffect } from 'react'
-import Header from './Header'
+import { useState, useContext } from 'react'
 import { auth } from '../../firebase'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification  } from 'firebase/auth'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification  } from 'firebase/auth'
 import { useTranslation } from 'react-i18next'
 import { Navigate } from 'react-router-dom'
 import { GlobalContext } from '../GlobalProvider'
@@ -174,7 +173,6 @@ const Login = () => {
 
   if(!user) {return (
     <div className='flex flex-col full'>
-      <Header />
       <div className={`auth ${login ? 'flex-col lg:flex-row' : 'flex-col-reverse lg:flex-row-reverse'}`}>
         <div className='auth-img-container'>
           <img src="../src/assets/img/tyme.png" alt="TYME" className='auth-img'/>

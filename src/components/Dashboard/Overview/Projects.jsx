@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
-import { addProject, getProjects, getTymesByProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
+import { addProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
 import { GlobalContext } from '../../../GlobalProvider'
 import Tyme from '../../Tyme'
 import { startOfToday } from 'date-fns'
@@ -8,90 +8,37 @@ import { useTranslation } from 'react-i18next'
 
 const Projects = () => {
 
-  const { user } = useContext(GlobalContext)
+  const { user, projects, tymes } = useContext(GlobalContext)
 
   const { t } = useTranslation()
 
-  const [projects, setProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState(null)
-  const [tymes, setTymes] = useState([])
+  const [selectedTyme, setSelectedTyme] = useState(null)
 
-
-  const loadProjects = async (uid) => {
-    if (uid) {
-      getProjects(uid, (projects) => {
-        const arr = []
-        projects.forEach((project) => {
-          //getTymesByProject(uid, project.data().name, (docs) => docs.forEach(() => number ++))
-          const aux = {
-            ...project.data(),
-            id: project.id
-          }
-          arr.push(aux)
-        })
-        setProjects(arr)
-      })
-    }
-  }
-
-  const loadTymesByProject = async (uid, project) => {
-    //console.log(project)
-    setTymes([])
-    getTymesByProject(uid, project, docs => { 
-      const arr = []
-      docs.forEach(async(doc) => {
-        const aux = {
-          ...doc.data(),
-          id: doc.id
-        }
-        arr.push(aux)
-      })
-      setTymes(arr)
-    })
-
-    console.log(tymes)
-  }
-
-  useEffect(() => {
-    if (selectedProject != null) {
-      //console.log(selectedProject)
-      loadTymesByProject(user.uid, selectedProject.name)
-      console.log('RenderTymes')
-    }
-  }, [selectedProject])
-
-  useEffect(() => {
-    loadProjects(user.uid)
-    //console.log(projects)
-  }, [user, selectedProject])
+  //
 
   const handleSelectProject = (project) => {
     setSelectedProject(project)
   }
 
   //
-  const [selectedTyme, setSelectedTyme] = useState(null)
+
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openTyme = (tyme) => {
-    //console.log(tyme)
     setSelectedTyme(tyme)
     setIsModalOpen(true)
   }
 
   const closeModal = () => {
     setIsModalOpen(false)
-    loadTymesByProject(user.uid, selectedProject.name)
   }
 
   //
+
   const [showAdd, setShowAdd] = useState(false)
-  const [values, setValues] = useState({
-    name: "",
-    description: "",
-  })
+  const [title, setTitle] = useState('')
   const [msgerror, setmsgerror] = useState('')
-  const [showDelete, setShowDelete] = useState(false)
   const modalRef = useRef(null)
 
   const handleClickOutside = (event) => {
@@ -100,6 +47,7 @@ const Projects = () => {
       setShowAdd(false)
     }
   }
+
   useEffect(() => {
     const handleMouseDown = (event) => handleClickOutside(event)
     document.addEventListener('mousedown', handleMouseDown)
@@ -119,24 +67,12 @@ const Projects = () => {
         name: "",
         description: "",
       })
-      loadProjects(user.uid)
       setShowAdd(false)
     }
 
   }
 
-  const handleChange = (evt) => {
-
-    const { target } = evt
-    const { name, value } = target
-
-    const newValues = {
-      ...values,
-      [name]: value,
-    }
-
-    setValues(newValues)
-  }
+  const handleChange = (event) => setTitle(event.target.value)
 
   const deleteProject = (deleteTymes) => {
     if(!deleteTymes){
@@ -146,7 +82,6 @@ const Projects = () => {
       deleteProjectFB(selectedProject.id)
       deleteTymeByProject(user.uid, selectedProject.name)
     }
-    loadProjects(user.uid)
     setSelectedProject(null)
   }
 
@@ -178,19 +113,10 @@ const Projects = () => {
                   id="name"
                   name="name"
                   type="name"
-                  value={values.name}
+                  value={title}
                   onChange={handleChange}
                   placeholder={t('tyme.withoutTitle')}
                 />
-                <hr />
-                <textarea
-                  id="description"
-                  name="description"
-                  type="textarea"
-                  value={values.description}
-                  onChange={handleChange}
-                  placeholder={t('tyme.withoutDesc')}
-                ></textarea>
                 <br />
                 <p>{msgerror}</p>
                 <button className='tyme-sm-add' type="submit">{t('tyme.save')}</button>
@@ -224,7 +150,7 @@ const Projects = () => {
               </div>
               : null
             }
-            {tymes.map((tyme, index) => (
+            {tymes.filter(x => x.project == selectedProject.name).map((tyme, index) => (
               <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
                 <p className="tyme-sm-days">{tyme.date}</p>
                 <p className="tyme-sm-body">{tyme.title}</p>

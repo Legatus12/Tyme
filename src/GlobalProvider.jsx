@@ -52,8 +52,29 @@ const GlobalProvider = ({ children }) => {
         return new Promise((resolve, reject) => {
           const unsubscribe = onSnapshot(query(collection(db, 'projects'), where("uid", "==", uid)), (docs) => {
             const data = []
-            docs.forEach((doc) => {
-              data.push({ id: doc.id, ...doc.data() })
+            docs.forEach(async(doc) => {
+              console.log(doc.data())
+              let number = 0
+              let done = 0
+              const fetchNumbers = () => {
+                try {
+                  return new Promise((resolve, reject) => {
+                    const unsubscribe = onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("project", "==", doc.data().name)), (docs) => {
+                      docs.forEach((doc) => {
+                        number ++
+                        doc.data().done ? done ++ : 0
+                      })
+                      resolve()
+                    })
+              
+                    return () => {
+                      unsubscribe()
+                    }
+                  })
+                } catch (error) { console.log(error) }
+              }
+              await fetchNumbers()
+              data.push({ id: doc.id, ...doc.data(), number, done })
             })
             resolve(setProjects(data))
           })

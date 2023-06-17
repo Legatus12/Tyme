@@ -1,6 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
-import { getTymes, getTymesInDay, getIncomingTymes } from "../../../firebase"
 import axios from 'axios'
 import Day from './Overview/Day'
 import Calendar from './Overview/Calendar'
@@ -41,6 +40,7 @@ const Overview = () => {
   const closeDayModal = () => {
     setDayModal(false)
   }
+
   //
 
   const getLocationByIP = async () => {
@@ -78,8 +78,6 @@ const Overview = () => {
 
   //
 
-  //
-
   const getOrdinal = (number) => {
     if(number == 1)
       return 'st'
@@ -97,7 +95,6 @@ const Overview = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openTyme = (tyme) => {
-    //console.log(tyme)
     setSelectedTyme(tyme)
     setIsModalOpen(true)
   }
