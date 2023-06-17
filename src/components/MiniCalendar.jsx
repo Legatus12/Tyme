@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
-import { add, addDays, eachDayOfInterval,startOfDay, isAfter, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek, addWeeks } from 'date-fns'
-import { Fragment, useEffect, useState, useContext } from 'react'
+import { add, addDays, eachDayOfInterval, startOfDay, isAfter, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek, addWeeks } from 'date-fns'
+import { useCallback, useEffect, useState, useContext, } from 'react'
 import { handleCompletedHabitDays, getHabitById, handleNextHabitDays } from '../../firebase'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from './../AuthProvider'
@@ -9,12 +9,13 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export function MiniCalendar({ habit, selectedDay, refreshNext }) {
+export function MiniCalendar({ selectedDay, habitId }) {
 
     const user = useContext(AuthContext)
 
     const { t } = useTranslation()
 
+    const [habit1, setHabit1] = useState({})
     const [habitDates, setHabitDates] = useState([])
     const [nextDates, setNextDates] = useState([])
     const [date, setDate] = useState(new Date())
@@ -22,50 +23,40 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
-    //
 
+    //
     const loadHabit = async () => {
-        const updatedHabit = await getHabitById(habit.id);
-        setHabitDates([])
-        setHabitDates(updatedHabit.completed);
-        loadSetNextDates();
+        getHabitById(habitId, (res) => {
+            //console.log(res.completed)
+            loadSetNextDates(res.recur, res.next)
+            setHabitDates(res.completed)
+            setHabit1(res)
+        })
     }
 
-    useEffect(() => {
-        loadSetNextDates();
-      }, [refreshNext]);
-    
 
     useEffect(() => {
-        loadHabit();
-        loadSetNextDates();
-    }, [date])
+        loadHabit().catch(console.error);
+    }, []);
 
-    useEffect(() => {
-        setHabitDates(habit.completed);
-        loadSetNextDates();
-    }, [user])
-
-    useEffect(() => {
-        loadSetNextDates();
-      }, [habit.next]); // Dependencia: habit.next
-      
-
-    const loadSetNextDates = () => {
+    const loadSetNextDates = (recur, next) => {
         setNextDates([])
         const currentDate = new Date();
         let finalNextDates = [];
-        if(habit.recur .length !== 0 && habit.recur.some(r => r === 7)){
+        if (recur.length > 0 && recur.some(r => r === 7)) {
             const dates = eachDayOfInterval({ start: new Date(), end: addDays(new Date(), 365) });
-            finalNextDates = dates;
+            finalNextDates = dates.map(x => format(x, 'dd-MM-yyyy'));
+            console.log(finalNextDates)
         }
-        else{
-            finalNextDates = habit.next;
-            habit.recur.map(n => {
-                const nextDay = startOfWeek(currentDate, { weekStartsOn: n.day }); // El día 4 corresponde al jueves en date-fns
+        else {
+            finalNextDates = next;
+
+            recur.map(n => {
+                const nextDay = startOfWeek(currentDate, { weekStartsOn: n }); // El día 4 corresponde al jueves en date-fns
+                console.log(nextDay)
                 const dayOfWeekList = [];
                 for (let i = 0; i < 52; i++) {
-                    if(isAfter(startOfDay(addWeeks(nextDay, i)), startOfDay(new Date()))){
+                    if (isAfter(startOfDay(addWeeks(nextDay, i)), startOfDay(new Date()))) {
                         const day = addWeeks(nextDay, i);
                         dayOfWeekList.push(format(day, 'dd-MM-yyyy'));
                     }
@@ -74,7 +65,6 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
             })
         }
         setNextDates(finalNextDates)
-        console.log(nextDates) 
     }
 
 
@@ -105,18 +95,18 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
     }
 
     const handleCompleted = (date) => {
-        if(!isAfter(startOfDay(date), startOfDay(new Date()))){
-            handleCompletedHabitDays(user.uid, habit.id, format(date, 'dd-MM-yyyy'))
-            console.log('handleCHeck')
+        if (!isAfter(startOfDay(date), startOfDay(new Date()))) {
+            handleCompletedHabitDays(user.uid, habit1.id, format(date, 'dd-MM-yyyy'))
+            //console.log('handleCHeck')
         }
-        else{
-            handleNextHabitDays(user.uid, habit.id, format(date, 'dd-MM-yyyy'))
-            console.log('handleNEXT')
+        else {
+            handleNextHabitDays(user.uid, habit1.id, format(date, 'dd-MM-yyyy'))
+            //console.log('handleNEXT')
         }
     }
 
 
-    return (
+    return habit1 !== null ? (
         <div className='calendar-container'>
             <div className="calendar">
                 <div className="flex items-center">
@@ -185,7 +175,7 @@ export function MiniCalendar({ habit, selectedDay, refreshNext }) {
                 </div>
             </div>
         </div>
-    )
+    ) : null;
     /**
     else{return(
       <div>
