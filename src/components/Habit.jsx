@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
 import { deleteHabitFB, handleRecurHabitDays } from "../../firebase"
-import { AuthContext } from '../AuthProvider'
+import { GlobalContext } from '../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { isSameDay } from 'date-fns'
 import { MiniCalendar } from './MiniCalendar'
 
 export const ModalHabit = ({ habit, onClose }) => {
 
-    const user = useContext(AuthContext)
+    const { user } = useContext(GlobalContext)
 
     const { t, i18n } = useTranslation()
 

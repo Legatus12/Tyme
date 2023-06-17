@@ -2,12 +2,12 @@ import { useTranslation } from 'react-i18next'
 import ThemeSwitcher from './settings/ThemeSwitcher'
 import LanguageSwitcher from './settings/LanguageSwitcher'
 import { useContext } from 'react'
-import { AuthContext } from '../../AuthProvider'
+import { GlobalContext } from '../../GlobalProvider'
 import { auth } from '../../../firebase'
 
 const Settings = () => {
 
-  const user = useContext(AuthContext)
+  const { user } = useContext(GlobalContext)
 
   const { t } = useTranslation()
 

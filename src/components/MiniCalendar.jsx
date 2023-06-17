@@ -3,7 +3,7 @@ import { add, addDays, eachDayOfInterval, startOfDay, isAfter, endOfMonth, endOf
 import { useCallback, useEffect, useState, useContext, } from 'react'
 import { handleCompletedHabitDays, getHabitById, handleNextHabitDays } from '../../firebase'
 import { useTranslation } from 'react-i18next'
-import { AuthContext } from './../AuthProvider'
+import { GlobalContext } from '../GlobalProvider'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -11,7 +11,7 @@ function classNames(...classes) {
 
 export function MiniCalendar({ selectedDay, habitId }) {
 
-    const user = useContext(AuthContext)
+    const { user } = useContext(GlobalContext)
 
     const { t } = useTranslation()
 

@@ -5,7 +5,7 @@ import { Link, Route } from 'react-router-dom'
 import { getTymes } from '../../../../firebase'
 import Day from './Day'
 import { useTranslation } from 'react-i18next'
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -13,7 +13,7 @@ function classNames(...classes) {
 
 export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
 
-  const user = useContext(AuthContext)
+  const { user } = useContext(GlobalContext)
   
   const { t } = useTranslation()
 
@@ -75,10 +75,10 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
             {t('date.month.' + firstDayCurrentMonth.getMonth())} {format(firstDayCurrentMonth, 'yyyy')}
           </h2>
           <button type="button" onClick={previousMonth} className="hover:bg-gray duration-200 rounded-full w-10 h-10 p-1 flex justify-center items-center">
-            <img src="/src/img/left.png" alt="" />
+            <img src="/src/assets/img/left.png" alt="" />
           </button>
           <button onClick={nextMonth} type="button" className="hover:bg-gray duration-200 rounded-full w-10 h-10 p-1 flex justify-center items-center">
-            <img src="/src/img/right.png" alt="" />
+            <img src="/src/assets/img/right.png" alt="" />
           </button>
         </div>
         <div className="grid grid-cols-7 text-xs my-2 leading-6 text-center text-silver">

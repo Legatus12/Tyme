@@ -1,16 +1,18 @@
 import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
 import { Link, Route, Routes } from 'react-router-dom'
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 import { useTranslation } from "react-i18next"
 import { ModalHabit } from '../../Habit'
 import { isSameDay } from 'date-fns'
 
 const Habits = () => {
-  const currentDate = new Date()
-  const user = useContext(AuthContext)
+
+  const { user } = useContext(GlobalContext)
 
   const { t } = useTranslation()
+  
+  const currentDate = new Date()
 
   const [habits, setHabits] = useState([])
   const [showAdd, setShowAdd] = useState(false)
@@ -18,7 +20,6 @@ const Habits = () => {
     name: "",
     description: "",
     completed: [],
-
   })
 
   const deleteHabit = (id) => {

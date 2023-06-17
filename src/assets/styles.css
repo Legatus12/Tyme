@@ -10,6 +10,32 @@ body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
+/*login && signup*/
+
+.loading { @apply full flex justify-center items-center text-lg font-bold }
+
+.auth { @apply full flex lg:flex-row justify-around lg:justify-center items-center sm:shadow-2xl text-black }
+
+.auth-img-container { @apply w-full md:h-full bg-sunset flex flex-col gap-8 justify-center items-center p-8 }
+
+.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 hidden lg:block }
+
+.auth-languages { @apply flex gap-2 }
+
+.auth-form { @apply full flex flex-col justify-center gap-4 lg:gap-5 p-12 md:p-24 bg-white } 
+
+.auth-title { @apply text-3xl font-black mb-4 }
+
+.auth-text { @apply text-lg h-16 }
+
+.auth-input { @apply w-full p-2 focus:outline-sunset border-solid border-2 border-ash rounded-xl }
+
+.auth-button { @apply w-full bg-black hover:bg-coal focus:bg-coal duration-200 text-white rounded-xl }
+
+.auth-redirect { @apply hover:underline cursor-pointer }
+
+.auth-reset { @apply hover:underline cursor-pointer w-fit }
+
 /*dashboard*/
 
 .dashboard { @apply flex flex-col md:flex-row-reverse }
@@ -109,30 +135,6 @@ body { font-family: 'Inter', sans-serif; }
 .tyme-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-ash focus:bg-silver duration-200 }
 
 .tyme-delete { @apply w-full p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
-
-/*login && signup*/
-
-.auth { @apply w-full sm:w-fit flex lg:flex-row justify-around lg:justify-center items-center bg-sunset sm:shadow-2xl text-black }
-
-.auth-img-container { @apply w-96 h-full flex flex-col gap-8 justify-center items-center p-8 }
-
-.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 hidden lg:block }
-
-.auth-languages { @apply flex gap-2 }
-
-.auth-form { @apply h-[32rem] sm:h-[36rem] flex flex-col gap-3 lg:gap-5 p-8 w-full sm:w-96 bg-white } 
-
-.auth-title { @apply text-3xl font-black }
-
-.auth-text { @apply text-lg h-16 }
-
-.auth-input { @apply w-full p-2 focus:outline-sunset border-solid border-2 border-ash rounded-xl }
-
-.auth-button { @apply w-full bg-black hover:bg-coal focus:bg-coal duration-200 text-white rounded-xl }
-
-.auth-redirect { @apply hover:underline cursor-pointer }
-
-.auth-reset { @apply hover:underline cursor-pointer w-fit }
 
 /*verify*/
 

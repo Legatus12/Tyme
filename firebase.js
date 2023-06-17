@@ -59,10 +59,8 @@ export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 
 export const deleteTymeByProject = async (uid, project) => (await getDocs(query(tymesRef, where("uid", "==", uid), where('project', '==', project)))).forEach((doc) => deleteDoc(doc.ref))
 
-export const updateTyme = (id, tyme) => {
-  console.log(tyme)
-  updateDoc(doc(db, 'tymes', id), tyme)
-}
+export const updateTyme = (id, tyme) => updateDoc(doc(db, 'tymes', id), tyme)
+
 
 export const updateTymeField = (id, field, value) => {
   updateDoc(doc(db, 'tymes', id), { [field]: value })

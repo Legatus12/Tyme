@@ -2,12 +2,12 @@ import { useState, useEffect, useContext, useRef } from "react"
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { getTymesInDay, addTymeFb, deleteTyme, addTyme } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 import Tyme from '../../Tyme'
 
 const Day = ({ day, closeDayModal }) => {
 
-  const user = useContext(AuthContext)
+  const { user } = useContext(GlobalContext)
 
   const { t, i18n } = useTranslation()
 
@@ -73,7 +73,7 @@ const Day = ({ day, closeDayModal }) => {
   return (
     <div className="day-view full">
       <div className="header-flex">
-        <button className="back" onClick={() => closeDayModal()}><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+        <button className="back" onClick={() => closeDayModal()}><img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
         <h1 className='text-3xl'>
           {t('date.day.' + day.getDay()) + ', '}
           {i18n.resolvedLanguage == 'es'

@@ -1,21 +1,19 @@
 import { useState, useEffect,useContext } from "react"
 import { Link, Route, Routes } from 'react-router-dom'
 import { addNote, getNotes, deleteNoteFB } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 import useMountEffect from '@restart/hooks/useMountEffect'
 import { useTranslation } from "react-i18next"
 
 const Notes = () => {
 
+  const { user } = useContext(GlobalContext)
+
   const { t } = useTranslation()
 
   const [notes, setNotes] = useState([])
-
   const [smth, setSmth] = useState(false)
-
   const [text, setText] = useState('')
-
-  const user = useContext(AuthContext)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -72,7 +70,7 @@ const Notes = () => {
       <div className="notes full">
         <div className="header-flex tool-header">
           <Link className="back" to={'/dashboard/overview'} replace>
-            <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+            <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
           </Link>
           <h1>{t('notes.title')}</h1>
         </div>

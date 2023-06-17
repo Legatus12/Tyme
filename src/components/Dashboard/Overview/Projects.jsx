@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import { addProject, getProjects, getTymesByProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 import Tyme from '../../Tyme'
 import { startOfToday } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 
-function Projects() {
+const Projects = () => {
 
-  const user = useContext(AuthContext)
+  const { user } = useContext(GlobalContext)
 
   const { t } = useTranslation()
 
@@ -154,7 +154,7 @@ function Projects() {
     <div className='projects full'>
       <div className="header-flex tool-header">
         <Link className='back' to={'/dashboard/overview'} replace>
-          <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+          <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
         <h1>{t('projects.title')}</h1>
       </div>
@@ -204,7 +204,7 @@ function Projects() {
     : (
       <div className='projects full'>
         <div className="header-flex tool-header">
-          <button onClick={() => setSelectedProject(null)} className="back" ><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+          <button onClick={() => setSelectedProject(null)} className="back" ><img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
           <h1>{selectedProject.name}</h1>
         </div>
         <div className='full flex p-4 md:p-8'>

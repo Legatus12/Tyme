@@ -19,6 +19,7 @@ i18n
     resources: {
       es: {
         translation: {
+          loading: 'cargando...',
           mail: 'correo electrónico',
           pass: 'contraseña',
           cancel: 'cancelar',
