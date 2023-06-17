@@ -1,6 +1,5 @@
-import { Link, Route, Routes } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
-import { getTymes, getTymesInDay, getIncomingTymes } from "../../../firebase"
+import { Link, Route, Routes } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Day from './Overview/Day'
 import Calendar from './Overview/Calendar'
@@ -8,9 +7,9 @@ import Habits from './Overview/Habits'
 import Notes from './Overview/Notes'
 import Projects from './Overview/Projects'
 import { Menu, Transition } from '@headlessui/react'
-import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
+import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfTomorrow } from 'date-fns'
 import { useTranslation } from 'react-i18next'
-import { AuthContext } from '../../AuthProvider'
+import { GlobalContext } from '../../GlobalProvider'
 import Tyme from '../Tyme'
 
 function classNames(...classes) {
@@ -21,20 +20,15 @@ const key = import.meta.env.VITE_API_KEY
 
 const Overview = () => {
 
-  const user = useContext(AuthContext)
+  const { user, tymes } = useContext(GlobalContext)
 
   const { t, i18n } = useTranslation()
 
-  let today = startOfToday()
-  const [todayTymes, setTodayTymes] = useState([])
-  const [incomingTymes, setIncomingTymes] = useState([])
-  const [date, setDate] = useState(new Date())
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
+  const date = new Date()
   const [pos, setPos] = useState({ data: null })
   const [weather, setWeather] = useState({ data: null })
   const [dayModal, setDayModal] = useState(false)
-  let [selectedDay, setSelectedDay] = useState(today)
+  let [selectedDay, setSelectedDay] = useState(startOfToday())
 
   //  
 
@@ -45,48 +39,14 @@ const Overview = () => {
 
   const closeDayModal = () => {
     setDayModal(false)
-    loadTymes()
   }
+
   //
-
-  const loadTymes = () => {
-    setTodayTymes([])
-
-    getTymesInDay(user.uid, format(today, 'dd-MM-yyyy'), docs => {
-      const todayTymes = []
-      docs.forEach(doc => {
-        const aux = {
-          ...doc.data(),
-          id: doc.id
-        }
-        todayTymes.push(aux)
-      })
-      setTodayTymes(todayTymes)
-    })
-   
-    setIncomingTymes([])
-    const incomingTymes = []
-    getIncomingTymes(user.uid, docs => {
-      docs.forEach(doc => {
-        const aux = {
-          ...doc.data(),
-          id: doc.id
-        }
-        incomingTymes.push(aux)
-        setIncomingTymes(incomingTymes)
-      })
-    })
-
-  }
-
-  useEffect(() => {
-    loadTymes()
-  }, [user])
 
   const getLocationByIP = async () => {
       try {
         const response = await axios.get('http://ip-api.com/json')
-        setPos(response.data);
+        setPos(response.data)
         //console.log(pos)
       } catch (error) {
         console.error('Error retrieving location:', error)
@@ -118,8 +78,6 @@ const Overview = () => {
 
   //
 
-  //
-
   const getOrdinal = (number) => {
     if(number == 1)
       return 'st'
@@ -137,14 +95,12 @@ const Overview = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openTyme = (tyme) => {
-    console.log(tyme)
     setSelectedTyme(tyme)
     setIsModalOpen(true)
   }
 
   const closeModal = () => {
     setIsModalOpen(false)
-    loadTymes()
   }
 
   //
@@ -178,14 +134,12 @@ const Overview = () => {
               </p>
               <br />
               <div className='tyme-container'>
-                {todayTymes.map((tyme, index) => (
+                {tymes.filter(x => x.date == format(date, 'dd-MM-yyyy')).map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-                    <p className='text-lg font-semibold'>{tyme.title}</p>
-                    <br />
-                    <p className='text-sm' dangerouslySetInnerHTML={{__html:tyme.body}}></p>
+                    <p>{tyme.title}</p>
                 </div>
                 ))}
-                {todayTymes.length < 1 && (
+                {tymes.length < 1 && (
                   <button className='tyme-sm-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
                 )}
               </div>
@@ -194,15 +148,15 @@ const Overview = () => {
 
           <div className='tools'>
             <Link to={'notes'} >
-              <img src={`/src/img/notes${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+              <img src={`/src/assets/img/notes${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
               <p>{t('overview.notes')}</p>
             </Link>
             <Link to={'projects'} >
-              <img src={`/src/img/projects${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+              <img src={`/src/assets/img/projects${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
               <p>{t('overview.projects')}</p>
             </Link>
             <Link to={'habits'} >
-              <img src={`/src/img/habits${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+              <img src={`/src/assets/img/habits${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
               <p>{t('overview.habits')}</p>
             </Link>
           </div>
@@ -216,13 +170,13 @@ const Overview = () => {
           <div className='incoming'>
             <h1 className='text-xl font-black'>{t('overview.incoming')}</h1>
             <div className='tyme-container'>
-              {incomingTymes.map((tyme, index) => (
+              {tymes.filter(x => x.timestamp >= startOfTomorrow().getTime()).sort((a, b) => a.timestamp < b.timestamp ? -1 : 1).map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-                  <p className='tyme-sm-days'>{t('overview.in')} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24))} {Math.floor((tyme.timestamp - today.getTime()) / (1000 * 60 * 60 * 24)) == 1 ? t('overview.day') : t('overview.days')}</p>
+                  <p className='tyme-sm-days'>{t('overview.in')} {Math.floor((tyme.timestamp - startOfToday().getTime()) / (1000 * 60 * 60 * 24))} {Math.floor((tyme.timestamp - startOfToday().getTime()) / (1000 * 60 * 60 * 24)) == 1 ? t('overview.day') : t('overview.days')}</p>
                   <p className='tyme-sm-title'>{tyme.title}</p>
                 </div>
               ))}
-              {incomingTymes.length < 1 && (
+              {tymes.length < 1 && (
                 <p className='my-6'>{t('overview.incomingMsg')}</p>
               )}
             </div>
@@ -230,11 +184,11 @@ const Overview = () => {
 
         </div>
 
-        <Tyme tyme={selectedTyme} day={startOfToday()} isOpen={isModalOpen} onClose={closeModal} />
+        <Tyme tyme={selectedTyme} day={date} isOpen={isModalOpen} onClose={closeModal} />
       </div>
   )}
   else{return(
-    <Day day={selectedDay} closeDayModal={closeDayModal} user={user} loadTymesOv={loadTymes}/>
+    <Day day={selectedDay} closeDayModal={closeDayModal} user={user} />
   )}
 }
 

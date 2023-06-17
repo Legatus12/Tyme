@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme, getProjects, setProjectInTyme, deleteTyme, updateTymeField } from "../../firebase"
-import { AuthContext } from '../AuthProvider'
+import { addTyme, updateTyme, getProjects, deleteTyme, updateTymeField } from "../../firebase"
+import { GlobalContext } from '../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
 
 const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
-  const user = useContext(AuthContext)
+  const { user, projects } = useContext(GlobalContext)
 
   const { t, i18n } = useTranslation()
 
@@ -15,8 +15,6 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
   const [body, setBody] = useState('')
   const [date, setDate] = useState(day)
   const [done, setDone] = useState('')
-  const [projects, setProjects] = useState([])
-  //const [selectedProject, setSelectedProject] = useState('')
   const [selectedProject, setSelectedProject] = useState('')
   const [msgerror, setmsgerror] = useState('')
 
@@ -42,34 +40,12 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   //
 
-  const loadProjects = async (uid) => {
-    if (uid) {
-      const arr = []
-      getProjects(uid, (projects) => {
-        projects.forEach((project) => {
-          const aux = {
-            ...project.data(),
-            id: project.id,
-          }
-          arr.push(aux)
-        })
-
-        setProjects(arr)
-      })
-    }
-  }
-
-  useEffect(() => {
-    loadProjects(user.uid)
-  }, [user])
-
-
-  const handleProjectChange = (newProject) => {
-    console.log(newProject)
+  const handleProjectChange = (project) => {
+    console.log(project)
     if (tyme != null) {
-      setProjectInTyme(tyme.id, newProject)
-    }
-    setSelectedProject(newProject)
+      updateTyme(tyme.id, { ...tyme, project })
+    } 
+    setSelectedProject(project)
   }
 
   const handleDone = (event) => {
@@ -77,7 +53,6 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
     setDone(isChecked)
   }
 
-  //TODO: Implementar el proyecto OPCIONALMENTE
   const handleSubmit = (event) => {
     event.preventDefault()
     if(title !== ''){
@@ -85,7 +60,6 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
         let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime(), done: done }
         typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
         updateTyme(tyme.id, aux)
-        console.log(aux)
       }
       else {
         addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
@@ -99,6 +73,14 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       setmsgerror(t('tyme.noTitle'))
     }
   }
+
+  const onChangeDate = (date) => {
+    const dateArray = date.split("-")
+    const dateObject = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
+    setDate(dateObject)
+  }
+
+  //
 
   const modalRef = useRef(null)
 
@@ -115,12 +97,6 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       document.removeEventListener('mousedown', handleMouseDown)
     }
   }, [])
-
-  const onChangeDate = (date) => {
-    const dateArray = date.split("-")
-    const dateObject = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
-    setDate(dateObject)
-  }
 
   const close = () => {
     onClose()

@@ -59,10 +59,8 @@ export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 
 export const deleteTymeByProject = async (uid, project) => (await getDocs(query(tymesRef, where("uid", "==", uid), where('project', '==', project)))).forEach((doc) => deleteDoc(doc.ref))
 
-export const updateTyme = (id, tyme) => {
-  console.log(tyme)
-  updateDoc(doc(db, 'tymes', id), tyme)
-}
+export const updateTyme = (id, tyme) => updateDoc(doc(db, 'tymes', id), tyme)
+
 
 export const updateTymeField = (id, field, value) => {
   updateDoc(doc(db, 'tymes', id), { [field]: value })
@@ -78,7 +76,7 @@ export const deleteNoteFB = (id) => {
   deleteDoc(doc(db, 'notes', id))
 }
 
-export const addHabit = (uid, name, description) => addDoc(habitsRef, { uid: uid, name: name, description: description, completed: [], next: [], recur: [] })
+export const addHabit = (uid, name) => addDoc(habitsRef, { uid: uid, name, completed: [], next: [], recur: [] })
 
 export const getHabits = (uid, callback) => onSnapshot(query(habitsRef, where("uid", "==", uid)), callback)
 /** 
@@ -107,23 +105,12 @@ export const getHabitById = (habitId, callback) => {
 export const deleteHabitFB = (id) => {
   deleteDoc(doc(db, 'habits', id))
 }
-export const addProject = (uid, name, description) => addDoc(projectsRef, { uid: uid, name: name, description: description })
+export const addProject = (uid, name) => addDoc(projectsRef, { uid: uid, name })
 
 export const getProjects = (uid, callback) => onSnapshot(query(projectsRef, where("uid", "==", uid)), callback)
 
 export const deleteProjectFB = (id) => {
   deleteDoc(doc(db, 'projects', id))
-}
-
-export const setProjectInTyme = async (tymeId, projectId) => {
-  //console.log('HOLAAA')
-  const tymeRef = doc(db, 'tymes', tymeId)
-  const tymeDoc = await getDoc(tymeRef)
-  if (!tymeDoc.exists()) {
-    await setDoc(tymeRef, { project: projectId })
-  } else {
-    await updateDoc(tymeRef, { project: projectId })
-  }
 }
 
 export const addTymeFb = async (userId, tyme) => {

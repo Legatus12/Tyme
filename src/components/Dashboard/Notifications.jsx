@@ -1,17 +1,18 @@
 import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
 import { Link, Route, Routes } from 'react-router-dom';
 import { getTymesInNext24Hours } from "../../../firebase"
-import { AuthContext } from '../../AuthProvider'
+import { GlobalContext } from '../../GlobalProvider'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import Tyme from '../Tyme'
 
 
 const Notifications = () => {
 
-  const user = useContext(AuthContext)
+  const { user } = useContext(GlobalContext)
 
   const [tymes, setTymes] = useState([])
 
+  //
 
   const loadTymes = async () => {
     setTymes([])

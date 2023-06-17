@@ -1,4 +1,3 @@
-import './styles.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Auth from './components/Auth'
 import { auth } from '../firebase'

@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate } from 'react-router-dom'
-import { AuthContext } from '../AuthProvider'
+import { GlobalContext } from '../GlobalProvider'
 import { auth } from '../../firebase'
 
 const Verify = () => {
 
-    const user = useContext(AuthContext)
+    const { user } = useContext(GlobalContext)
 
     const { t } = useTranslation()
 

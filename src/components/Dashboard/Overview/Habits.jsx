@@ -1,66 +1,41 @@
 import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
 import { Link, Route, Routes } from 'react-router-dom'
 import { addHabit, getHabits, deleteHabitFB } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 import { useTranslation } from "react-i18next"
-import { ModalHabit } from '../../Habit'
+import { ModalHabit } from './Habits/Habit'
 import { isSameDay } from 'date-fns'
 
 const Habits = () => {
-  const currentDate = new Date()
-  const user = useContext(AuthContext)
+
+  const { user, habits } = useContext(GlobalContext)
 
   const { t } = useTranslation()
+  
+  const currentDate = new Date()
 
-  const [habits, setHabits] = useState([])
   const [showAdd, setShowAdd] = useState(false)
   const [values, setValues] = useState({
     name: "",
-    description: "",
     completed: [],
-
   })
 
   const deleteHabit = (id) => {
     console.log(id)
     deleteHabitFB(id)
-    loadHabits(user.uid)
-  }
-
-  const loadHabits = async (uid) => {
-    if (uid) {
-
-      getHabits(uid, (habits) => {
-        const arr = []
-        habits.forEach((habit) => {
-          const aux = {
-            ...habit.data(),
-            id: habit.id,
-          }
-          arr.push(aux)
-        })
-        setHabits(arr)
-      })
-    }
   }
 
   const checkedHabit = (habit) => {
     return habit.completed.some(comp => !isSameDay(comp, new Date()))
   }
 
-  useEffect(() => {
-    loadHabits(user.uid)
-  }, [user])
-
   const handleSubmit = (event) => {
     event.preventDefault()
-    addHabit(user.uid, values.name, values.description)
+    addHabit(user.uid, values.name)
     setValues({
       name: "",
-      description: "",
       completed: [],
     })
-    loadHabits(user.uid)
     setShowAdd(false)
   }
 
@@ -111,7 +86,7 @@ const Habits = () => {
     <div className="habits full">
       <div className="header-flex tool-header">
         <Link className="back" to={'/dashboard/overview'} replace>
-          <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+          <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
         <h1>{t('habits.title')}</h1>
       </div>
@@ -128,7 +103,7 @@ const Habits = () => {
                   onChange={handleChange}
                   placeholder={t('habits.write')}
                 />
-                <button className="tyme-sm-add" type="submit">{t('notes.save')}</button>
+                <button className="tyme-sm-add" type="submit">{t('habits.save')}</button>
               </form>
             </div>
           </div>
@@ -157,7 +132,3 @@ const Habits = () => {
 }
 
 export default Habits
-
-/**
- * onClick={()=>onOpen(habit)}
- */

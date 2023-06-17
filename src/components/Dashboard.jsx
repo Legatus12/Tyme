@@ -1,7 +1,6 @@
 import { Link, Route, Routes, Navigate } from 'react-router-dom'
 import Overview from './Dashboard/Overview'
 import Notifications from './Dashboard/Notifications'
-import User from './Dashboard/User'
 import Settings from './Dashboard/Settings'
 import Day from './Dashboard/Overview/Day'
 import Habits from './Dashboard/Overview/Habits'
@@ -9,12 +8,12 @@ import Notes from './Dashboard/Overview/Notes'
 import Projects from './Dashboard/Overview/Projects'
 import Charts from './Dashboard/Overview/Charts'
 import { useContext } from 'react'
-import { AuthContext } from '../AuthProvider'
+import { GlobalContext } from '../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 
 const Dashboard = () => {
 
-    const user = useContext(AuthContext)
+    const { user } = useContext(GlobalContext)
 
     const { t } = useTranslation()
 
@@ -46,7 +45,7 @@ const Dashboard = () => {
             </div>
             
             <div className='dashboard-menu'>
-                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/img/${item.path}${document.documentElement.classList.contains("dark") ? '_dm' : '_dm'}.png`} className='w-8' /></abbr></Link>))}
+                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/assets/img/${item.path}${document.documentElement.classList.contains("dark") ? '_dm' : '_dm'}.png`} className='w-8' /></abbr></Link>))}
             </div>
 
         </div>
