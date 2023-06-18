@@ -1,15 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { auth, getTymes } from '../firebase'
-import startOfToday from 'date-fns/startOfToday'
-import { getDocs, query, collection, where, onSnapshot } from 'firebase/firestore'
+import { auth } from '../firebase'
+import { query, collection, where, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
-import { useTranslation } from 'react-i18next'
 
 const GlobalContext = createContext()
 
 const GlobalProvider = ({ children }) => {
-
-  const { t } = useTranslation()
 
   const [user, setUser] = useState(null)
   const [tymes, setTymes] = useState([])
@@ -53,7 +49,6 @@ const GlobalProvider = ({ children }) => {
         return new Promise((resolve, reject) => {
           const unsubscribe = onSnapshot(query(collection(db, 'projects'), where("uid", "==", uid)), (docs) => {
             const data = []
-            console.log('snap proj')
             docs.forEach(async(doc) => {
               let number = 0
               let done = 0
@@ -61,7 +56,6 @@ const GlobalProvider = ({ children }) => {
                 try {
                   return new Promise((resolve, reject) => {
                     const unsubscribe = onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid), where("project", "==", doc.data().name)), (docs) => {
-                      console.log('snap tyme')
                       docs.forEach((doc) => {
                         number ++
                         doc.data().done ? done ++ : 0

@@ -1,6 +1,5 @@
 import { Link, Route, Routes, Navigate } from 'react-router-dom'
 import Overview from './Dashboard/Overview'
-import Notifications from './Dashboard/Notifications'
 import Settings from './Dashboard/Settings'
 import Day from './Dashboard/Overview/Day'
 import Habits from './Dashboard/Overview/Habits'
@@ -34,7 +33,6 @@ const Dashboard = () => {
                 <Routes>
                     <Route path='/overview' element={<Overview />} />
                     <Route path='/charts' element={<Charts />} />
-                    <Route path='/notifications' element={<Notifications />} />
                     <Route path='/settings' element={<Settings />} />
                     <Route path='/day' element={<Day />} />
                     <Route path='/overview/habits' element={<Habits />} />

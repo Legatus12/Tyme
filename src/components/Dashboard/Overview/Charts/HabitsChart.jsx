@@ -36,7 +36,6 @@ export const HabitsChart = () => {
             tension: 1,
             cubicInterpolationMode: 'monotone',
             pointBackgroundColor: '#fad6a5',
-            pointBackgroundColor: '#fad6a5',
             borderColor: '#000'
           }
         ]

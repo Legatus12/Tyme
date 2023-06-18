@@ -47,11 +47,6 @@ export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, wh
 
 export const getTymesByProject = (uid, project, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("project", "==", project), orderBy('timestamp')), callback)
 
-export const getTymesInNext24Hours = (uid, callback) => {
-  const now = new Date()
-  const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000)
-  onSnapshot(query(tymesRef, where("uid", "==", uid),  where("timestamp", "<", next24Hours.getTime(), where("done", "==", false)), orderBy('timestamp')), callback)
-}
 
 export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp, done: false })
 

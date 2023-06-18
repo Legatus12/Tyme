@@ -73,6 +73,14 @@ body { font-family: 'Inter', sans-serif; }
 
 .today { @apply full flex flex-col pl-8 pr-8 md:pr-0 md:pt-8 }
 
+.tyme-sm { @apply w-fit flex flex-col items-start gap-2 text-left hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
+
+.tyme-sm-days { @apply text-sm text-gray }
+
+.tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
+
+.tyme-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray dark:hover:bg-coal dark:focus:bg-coal duration-200 }
+
 .tools { @apply h-full md:h-2/5 flex justify-center items-center md:pb-8 pt-8 pl-8 pr-8 md:pr-0 gap-4 md:gap-8 }
 
 .tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
@@ -87,21 +95,26 @@ body { font-family: 'Inter', sans-serif; }
 
 .incoming { @apply full flex flex-col overflow-y-auto gap-2 }
 
-/*tymes*/
+/*modal*/
 
-.tyme-sm { @apply w-fit flex flex-col items-start text-left hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
+.modal {
+  background-color: rgba(120, 120, 120, 0.6);
+  @apply p-8 md:p-32 fixed top-0 left-0 full flex justify-center items-center z-10
+}
 
-.tyme-sm-days { @apply text-sm text-gray }
-
-.tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
-
-.modal-content { @apply w-full z-10 flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
+.modal-content { @apply w-full z-10 flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white dark:bg-black p-6 md:p-12 rounded-2xl overflow-hidden }
 
 .modal form { @apply full flex flex-col }
 
 .modal h1 { @apply text-xl md:text-2xl font-bold }
 
 .modal input { @apply bg-transparent p-2 md:p-4 w-fit focus:outline-none }
+
+.modal input[type="date"] { @apply bg-white p-2 text-black rounded-2xl }
+
+.modal select { @apply bg-transparent}
+
+.modal option { @apply bg-transparent }
 
 .modal label { @apply p-2 md:p-4 }
 
@@ -128,13 +141,11 @@ body { font-family: 'Inter', sans-serif; }
   background-color: #aaa;
 }
 
-.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray duration-200 }
+.modal-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
 
-.tyme-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
+.modal-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-coal focus:bg-silver dark:focus:bg-coal duration-200 }
 
-.tyme-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-ash focus:bg-silver duration-200 }
-
-.tyme-delete { @apply w-full p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
+.modal-delete { @apply w-full p-2 rounded-xl bg-black dark:bg-white hover:bg-coal dark:hover:bg-lightgray focus:bg-coal dark:focus:bg-lightgray text-white dark:text-black duration-200 }
 
 /*verify*/
 
@@ -214,6 +225,12 @@ body { font-family: 'Inter', sans-serif; }
 
 .habit { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-darkgray duration-200 w-full flex justify-between p-3 md:p-6 rounded-2xl }
 
+.habit-day { @apply w-8 }
+
+.habit-all, .habit-day { @apply h-8 border-2 border-solid rounded-full }
+
+.habit-all { @apply px-2 }
+
 /*charts*/
 
 .charts { @apply flex flex-col }
@@ -258,20 +275,6 @@ body { font-family: 'Inter', sans-serif; }
 .my-react-select-container .my-react-select__placeholder,
 .my-react-select-container .my-react-select__single-value {
   @apply dark:text-white;
-}
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  @apply p-8 md:p-32
 }
 
 input[type=checkbox]

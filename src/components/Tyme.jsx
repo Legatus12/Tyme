@@ -9,7 +9,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   const { user, projects } = useContext(GlobalContext)
 
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
@@ -21,7 +21,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
   //
 
   useEffect(() => {
-    if (tyme !== null) {
+    if (tyme != null) {
       setTitle(tyme.title)
       setBody(tyme.body)
       setSelectedProject(tyme.project)
@@ -36,12 +36,11 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
       setDate(day)
       setDone(false)
     }
-  }, [tyme, day])
+  }, [tyme])
 
   //
 
   const handleProjectChange = (project) => {
-    console.log(project)
     if (tyme != null) {
       updateTyme(tyme.id, { ...tyme, project })
     } 
@@ -103,6 +102,8 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
     setmsgerror('')
   }
 
+  //
+
   return isOpen ? (
     <div className="modal">
       <div className="modal-content" ref={modalRef}>
@@ -163,9 +164,9 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
           <div className='flex flex-col'>
             <p className='modal-error'>{msgerror}</p>
             <div className="modal-footer">
-              <button className='tyme-cancel' onClick={() => close()}>{tyme != null ? t('tyme.close') : t('tyme.cancel')}</button>
-              <button className='tyme-save' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
-              <button className={`${tyme != null ? 'block' : 'hidden'} tyme-delete md:w-fit`} onClick={() => deleteTyme(tyme.id)}>{t('tyme.delete')}</button>
+              <button className='modal-cancel' onClick={() => close()}>{tyme != null ? t('tyme.close') : t('tyme.cancel')}</button>
+              <button className='modal-save' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
+              <button className={`${tyme != null ? 'block' : 'hidden'} modal-delete md:w-fit`} onClick={() => deleteTyme(tyme.id)}>{t('tyme.delete')}</button>
             </div>
           </div>
         </form>
