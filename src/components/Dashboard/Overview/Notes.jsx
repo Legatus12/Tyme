@@ -35,6 +35,12 @@ const Notes = () => {
       setSmth(false)
   }
 
+  const deleteNote = (id) =>{
+    if(confirm(t('confirmDelete'))) {
+      deleteNoteFB(id)
+    }
+  }
+
   //
 
   return (
@@ -63,7 +69,7 @@ const Notes = () => {
               notes.map(note =>
                 <div className="note" key={note.id}>
                   <p>{note.text}</p>
-                  <button className="notes-submit notes-delete" onClick={()=> deleteNoteFB(note.id)}>
+                  <button className="notes-submit notes-delete" onClick={()=> deleteNote(note.id)}>
                     <img src={`/src/assets/img/delete${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />  
                   </button>
                 </div>

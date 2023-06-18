@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { deleteHabitFB, handleRecurHabitDays } from "../../../../../firebase"
+import { deleteHabitFB, handleRecurHabitDays, updateHabit } from "../../../../../firebase"
 import { GlobalContext } from '../../../../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { isSameDay } from 'date-fns'
@@ -32,8 +32,10 @@ export const ModalHabit = ({ habit, onClose }) => {
     //
 
     const deleteHabit = () => {
-        deleteHabitFB(habit.id)
-        onClose()
+        if(confirm(t('confirmDelete'))) {
+            deleteHabitFB(habit.id)
+            onClose()
+        }
     }
 
     //TODO: Implementar el proyecto OPCIONALMENTE
@@ -41,12 +43,11 @@ export const ModalHabit = ({ habit, onClose }) => {
         event.preventDefault()
         if (name !== '') {
             if (habit !== null) {
-
+                const aux = { name: name, completed: habit.completed, next: habit.next, recur: habit.recur, uid: habit.uid }
+                updateHabit(habit.id, aux)
+                setName('')
+                onClose()
             }
-            else {
-
-            }
-
         }
         else {
             setmsgerror(t('tyme.noTitle'))
