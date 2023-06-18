@@ -22,7 +22,6 @@ const ThemeSwitcher = () => {
             setTheme('dark')
             localStorage.setItem('theme', 'dark')
         }
-        //location.reload()
     }
 
     const options = [

@@ -126,7 +126,7 @@ const Overview = () => {
               
             }
             <div className='today'>
-              <p className='text-3xl self-start'>
+              <p className='text-2xl self-start'>
                 {t('date.day.' + date.getDay()) + ', '}
                 {i18n.resolvedLanguage == 'es' 
                 ? date.getDate() + ' de ' + t('date.month.' + date.getMonth())
@@ -136,12 +136,11 @@ const Overview = () => {
               <div className='tyme-container'>
                 {tymes.filter(x => x.date == format(date, 'dd-MM-yyyy')).map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
-                    <p>{tyme.title}</p>
+                    <p className='tyme-sm-title'>{tyme.title}</p>
+                    <p className='tyme-sm-body'>{tyme.body}</p>
                 </div>
                 ))}
-                {tymes.length < 1 && (
-                  <button className='tyme-sm-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
-                )}
+                <button className='tyme-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
               </div>
             </div>
           </div>

@@ -99,16 +99,16 @@ export const ModalHabit = ({ habit, onClose }) => {
                     </div>
                     <hr />
 
-                    <div className='col-span-2 flex justify-between'>
-                        <div>
-                            <button onClick={() => addDayOfWeekAndTyme(1)}>L</button>
-                            <button onClick={() => addDayOfWeekAndTyme(2)}>M</button>
-                            <button onClick={() => addDayOfWeekAndTyme(3)}>X</button>
-                            <button onClick={() => addDayOfWeekAndTyme(4)}>J</button>
-                            <button onClick={() => addDayOfWeekAndTyme(5)}>V</button>
-                            <button onClick={() => addDayOfWeekAndTyme(6)}>S</button>
-                            <button onClick={() => addDayOfWeekAndTyme(0)}>D</button>
-                            <button onClick={() => addDayOfWeekAndTyme(7)}>Todos</button>
+                    <div className='full col-span-2 flex flex-col md:flex-row justify-between items-center'>
+                        <div className='w-full flex flex-wrap justify-center items-center gap-2 p-4'>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(1)}>L</button>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(2)}>M</button>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(3)}>X</button>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(4)}>J</button>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(5)}>V</button>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(6)}>S</button>
+                            <button className='habit-day' onClick={() => addDayOfWeekAndTyme(0)}>D</button>
+                            <button className='habit-all' onClick={() => addDayOfWeekAndTyme(7)}>Todos</button>
                         </div>
                         <MiniCalendar habitId={habit.id}/>
                     </div>
@@ -116,9 +116,9 @@ export const ModalHabit = ({ habit, onClose }) => {
                     <div className='flex flex-col'>
                         <p className='modal-error'>{msgerror}</p>
                         <div className="modal-footer">
-                            <button className='tyme-cancel' onClick={() => close()}>{habit != null ? t('tyme.close') : t('tyme.cancel')}</button>
-                            <button className='tyme-save' type="submit">{habit != null ? t('tyme.save') : t('tyme.add')}</button>
-                            <button className={`${habit != null ? 'block' : 'hidden'} tyme-delete md:w-fit`} onClick={() => deleteHabit()}>{t('tyme.delete')}</button>
+                            <button className='modal-cancel' onClick={() => close()}>{habit != null ? t('tyme.close') : t('tyme.cancel')}</button>
+                            <button className='modal-save' type="submit">{habit != null ? t('tyme.save') : t('tyme.add')}</button>
+                            <button className={`${habit != null ? 'block' : 'hidden'} modal-delete md:w-fit`} onClick={() => deleteHabit()}>{t('tyme.delete')}</button>
                         </div>
                     </div>
                 </form>

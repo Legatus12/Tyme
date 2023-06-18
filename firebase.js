@@ -47,20 +47,25 @@ export const getIncomingTymes = (uid, callback) => onSnapshot(query(tymesRef, wh
 
 export const getTymesByProject = (uid, project, callback) => onSnapshot(query(tymesRef, where("uid", "==", uid), where("project", "==", project), orderBy('timestamp')), callback)
 
-export const getTymesInNext24Hours = (uid, callback) => {
-  const now = new Date()
-  const next24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000)
-  onSnapshot(query(tymesRef, where("uid", "==", uid),  where("timestamp", "<", next24Hours.getTime(), where("done", "==", false)), orderBy('timestamp')), callback)
-}
 
-export const addTyme = (uid, title, body, date, timestamp) => addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp, done: false })
+export const addTyme = (uid, title, body, date, timestamp, project) =>{
+  if(project !== '')
+    addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp, done: false, project: project })
+  else  
+    addDoc(tymesRef, { uid: uid, title: title, body: body, date: date, timestamp: timestamp, done: false })
+}
 
 export const deleteTyme = (id) => deleteDoc(doc(db, 'tymes', id))
 
 export const deleteTymeByProject = async (uid, project) => (await getDocs(query(tymesRef, where("uid", "==", uid), where('project', '==', project)))).forEach((doc) => deleteDoc(doc.ref))
 
-export const updateTyme = (id, tyme) => updateDoc(doc(db, 'tymes', id), tyme)
+export const updateTyme = (id, tyme) => {
+  console.log(tyme)
+  if(tyme.project === '')
+    delete tyme.project
 
+  updateDoc(doc(db, 'tymes', id), tyme)
+} 
 
 export const updateTymeField = (id, field, value) => {
   updateDoc(doc(db, 'tymes', id), { [field]: value })
@@ -140,7 +145,7 @@ export const handleCompletedHabitDays = async (userId, habitId, date) => {
     if (habitDoc) {
       const completedArray = habitDoc.get('completed') || []
       console.log(completedArray)
-      if (completedArray.length > 0 && !completedArray.some(completed => completed === date)){
+      if (!completedArray.some(completed => completed === date)){
         await updateDoc(habitRef, { completed: [...completedArray, date] })
         console.log('COMPLETED AÑADIDO')
       }
