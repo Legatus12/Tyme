@@ -104,6 +104,12 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
 
   //
 
+  const deleteTymeMod = (id) =>{
+    if(confirm(t('confirmDelete'))) {
+      deleteTyme(id)
+    }
+  }
+
   return isOpen ? (
     <div className="modal">
       <div className="modal-content" ref={modalRef}>
@@ -166,7 +172,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
             <div className="modal-footer">
               <button className='modal-cancel' onClick={() => close()}>{tyme != null ? t('tyme.close') : t('tyme.cancel')}</button>
               <button className='modal-save' type="submit">{tyme != null ? t('tyme.save') : t('tyme.add')}</button>
-              <button className={`${tyme != null ? 'block' : 'hidden'} modal-delete md:w-fit`} onClick={() => deleteTyme(tyme.id)}>{t('tyme.delete')}</button>
+              <button className={`${tyme != null ? 'block' : 'hidden'} modal-delete md:w-fit`} onClick={() => deleteTymeMod(tyme.id)}>{t('tyme.delete')}</button>
             </div>
           </div>
         </form>
