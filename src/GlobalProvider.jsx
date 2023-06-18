@@ -2,10 +2,13 @@ import React, { createContext, useState, useEffect } from 'react'
 import { auth } from '../firebase'
 import { query, collection, where, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase'
+import { useTranslation } from 'react-i18next'
 
 const GlobalContext = createContext()
 
 const GlobalProvider = ({ children }) => {
+
+  const { t } = useTranslation()
 
   const [user, setUser] = useState(null)
   const [tymes, setTymes] = useState([])
@@ -70,7 +73,7 @@ const GlobalProvider = ({ children }) => {
                 } catch (error) { console.log(error) }
               }
               await fetchNumbers()
-              data.push({ id: doc.id, ...doc.data(), number, done })
+              data.push({ id: doc.id, ...doc.data(), number, done, percentage: '' + ((done*100)/number) })
             })
             resolve(setProjects(data))
           })
@@ -162,7 +165,9 @@ const GlobalProvider = ({ children }) => {
     loadingNotes
   }
 
-  return (
+  if(loadingTymes || loadingProjects || loadingHabits || loadingNotes)
+    return <div className='full flex justify-center items-center'>{t('loading')}</div>
+  else return (
     <GlobalContext.Provider value={values}>
       {children}
     </GlobalContext.Provider>

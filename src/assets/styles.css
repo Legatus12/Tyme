@@ -6,7 +6,7 @@
 
 html, body, #root, .full { @apply w-full h-full }
 
-body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
+html, body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
 
 body { font-family: 'Inter', sans-serif; }
 
@@ -79,11 +79,11 @@ body { font-family: 'Inter', sans-serif; }
 
 .tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
 
-.tyme-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray dark:hover:bg-coal dark:focus:bg-coal duration-200 }
+.tyme-add { @apply p-2 rounded-2xl hover:bg-silver focus:bg-silver dark:hover:bg-coal dark:focus:bg-coal duration-200 }
 
 .tools { @apply h-full md:h-2/5 flex justify-center items-center md:pb-8 pt-8 pl-8 pr-8 md:pr-0 gap-4 md:gap-8 }
 
-.tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
+.tools > a { @apply full flex flex-col justify-center items-center p-4 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
 
 .tools img { @apply w-8 md:w-10 }
 
@@ -126,7 +126,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .modal-footer { @apply flex flex-col md:flex-row gap-4 }
 
-.modal-error { @apply h-10 p-2 text-[#f1121f] }
+.modal-error { @apply min-h-[2.5rem] p-2 text-[#f1121f] }
 
 .modal-close {
   margin-top: 10px;
@@ -163,21 +163,31 @@ body { font-family: 'Inter', sans-serif; }
 
 /*settings*/
 
-.settings { @apply flex flex-col p-12 }
+.settings { @apply flex flex-col p-8 md:p-12 overflow-y-auto }
+
+.settings > * { @apply shrink-0 }
 
 .settings h1, .user h1 { @apply font-black text-3xl underline }
 
-.settings h2 { @apply font-bold text-2xl mt-8 }
+.settings h2 { @apply font-bold text-2xl mt-8 mb-2 }
 
-.settings-option { @apply w-full h-16 flex justify-between items-center gap-8 border-solid border-b-0 border-silver dark:border-gray p-2 }
+.settings-option { @apply w-full h-16 flex justify-between items-center gap-8 p-2 }
+
+.account-option { @apply w-full min-h-[4rem] flex flex-col md:flex-row md:items-center gap-2 md:gap-8 p-2 }
+
+.account-option p { @apply p-2 bg-white border-2 border-solid border-lightgray rounded-2xl }
 
 .settings hr { @apply hidden md:block w-full }
 
 .settings label { @apply w-fit whitespace-nowrap }
 
-.settings input { @apply bg-transparent w-96 }
+.settings input { @apply p-2 bg-white border-2 border-solid border-lightgray rounded-2xl }
 
-.settings button { @apply bg-black text-white dark:bg-coal p-2 w-52 rounded-2xl }
+.drop { @apply flex flex-col p-4 mt-2 gap-2 md:gap-3  }
+
+.drop-flex { @apply flex flex-col md:flex-row gap-2 md:gap-3 bg-white dark:bg-black p-2 md:p-3 rounded-2xl }
+
+.drop-flex > div { @apply w-full flex flex-col justify-between gap-2 md:gap-3 }
 
 /*Notes*/
 
@@ -235,11 +245,17 @@ body { font-family: 'Inter', sans-serif; }
 
 .charts { @apply flex flex-col }
 
-.charts-container { @apply full flex p-4 md:p-8 gap-8 }
+.charts input { @apply bg-transparent }
+
+.charts-container { @apply full flex flex-wrap justify-center overflow-y-auto p-4 md:p-12 gap-12 }
 
 .charts canvas { width: 100% !important; }
 
-.chart { @apply bg-white rounded-2xl flex flex-col gap-8 items-center justify-center }
+.chart { @apply bg-white rounded-2xl flex flex-col gap-8 p-4 items-center shrink-0 }
+
+.charts-subcontainer { @apply w-fit flex flex-col gap-8 }
+
+.tracking { @apply text-gray self-start text-sm }
 
 /*selects*/
 

@@ -133,7 +133,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
               <label className='p-4' htmlFor="date">{t('tyme.tag')}</label>
               <span className='mr-4'>-</span>
               <select id="project" className='bg-white' value={selectedProject} onChange={(e) => handleProjectChange(e.target.value)}>
-              <option value="">{t('tyme.withoutProj')}</option> {/* Agrega esta opción */}
+                <option value="">{t('tyme.withoutProj')}</option>
                 {projects.map((project, index) => (
                   <option key={index} value={project.name}>
                     {project.name}

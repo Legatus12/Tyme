@@ -23,6 +23,7 @@ i18n
           mail: 'correo electrónico',
           pass: 'contraseña',
           cancel: 'cancelar',
+          confirmDelete: '¿Desea continuar con el borrado?',
           auth: {
             loginTitle: '¡Bienvenido!',
             loginIntro: 'Llegas justo a tiempo.',
@@ -50,13 +51,13 @@ i18n
             in: 'dentro de',
             day: 'día',
             days: 'días',
-            notes: 'Notas',
-            projects: 'Proyectos',
-            habits: 'Hábitos',
-            charts: 'Estadísticas'
           },
           charts: {
             title: 'Estadísticas',
+            tracking: 'Seguimiento de las úlimas 2 semanas',
+            project: 'proyecto',
+            habit: 'hábito',
+            tbp: 'tymes clasificados por proyectos'
           },
           settings: {
             title: 'Configuración',
@@ -67,6 +68,15 @@ i18n
             username: 'Nombre de usuario',
             mail: 'Correo electrónico',
             notifications: 'Notificaciones',
+            reset: 'cambiar contraseña',
+            newPassword: 'escribe la nueva contraseña...',
+            confirmPassword: 'confirma la nueva contraseña...',
+            signOut: 'cerrar sesión',
+            noMatch: 'La confirmación no coincide.',
+            oldPassword: 'contraseña actual...',
+            delete: 'eliminar cuenta',
+            resetSuccess: 'Contraseña actualizada con éxito.',
+            confirmDelete: '¿Está seguro de que desea borrar su cuenta?'
           },
           notes : {
             title: 'Notas',
@@ -130,7 +140,8 @@ i18n
             invalidEmail: 'Correo electrónico inválido.',
             userDisabled: 'El usuario ha sido deshabilitado.',
             default: 'Ocurrió un error al iniciar sesión.',
-            alreadyInUse: 'Correo electrónico en uso.'
+            alreadyInUse: 'Correo electrónico en uso.',
+            weak: 'La nueva contraseña es demasiado corta.'
           },
           tyme: {
             withoutTitle: 'Sin título',

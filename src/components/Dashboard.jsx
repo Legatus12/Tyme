@@ -19,7 +19,7 @@ const Dashboard = () => {
     //
 
     const menu = [
-        { path: 'overview', name: t('ovewview.title') },
+        { path: 'overview', name: t('overview.title') },
         { path: 'charts', name: t('charts.title') },
         { path: 'settings', name: t('settings.title') },
     ]
