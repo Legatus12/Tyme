@@ -61,7 +61,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
         updateTyme(tyme.id, aux)
       }
       else {
-        addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime())
+        addTyme(user.uid, title, body, format(date, 'dd-MM-yyyy'), date.getTime(), selectedProject)
       }
       onClose()
       setTitle('')
