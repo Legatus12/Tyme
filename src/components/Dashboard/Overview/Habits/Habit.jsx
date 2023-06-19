@@ -39,8 +39,7 @@ export const ModalHabit = ({ habit, onClose }) => {
     }
 
     //TODO: Implementar el proyecto OPCIONALMENTE
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = () => {
         if (name !== '') {
             if (habit !== null) {
                 const aux = { name: name, completed: habit.completed, next: habit.next, recur: habit.recur, uid: habit.uid }
@@ -87,7 +86,7 @@ export const ModalHabit = ({ habit, onClose }) => {
     return (
         <div className="modal">
             <div className="modal-content" ref={modalRef}>
-                <form onSubmit={handleSubmit} className='justify-between'>
+                <div className='justify-between'>
                     <div className=''>
                         <input
                             type="text"
@@ -118,11 +117,11 @@ export const ModalHabit = ({ habit, onClose }) => {
                         <p className='modal-error'>{msgerror}</p>
                         <div className="modal-footer">
                             <button className='modal-cancel' onClick={() => close()}>{habit != null ? t('tyme.close') : t('tyme.cancel')}</button>
-                            <button className='modal-save' type="submit">{habit != null ? t('tyme.save') : t('tyme.add')}</button>
+                            <button onClick={handleSubmit} className='modal-save' type="submit">{habit != null ? t('tyme.save') : t('tyme.add')}</button>
                             <button className={`${habit != null ? 'block' : 'hidden'} modal-delete md:w-fit`} onClick={() => deleteHabit()}>{t('tyme.delete')}</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     )

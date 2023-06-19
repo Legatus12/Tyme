@@ -66,6 +66,7 @@ const Projects = () => {
       addProject(user.uid, name)
       setName('')
       setShowAdd(false)
+      setSelectedProject({ uid: user.uid, name: name })
     }
 
   }
