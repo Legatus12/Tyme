@@ -6,9 +6,35 @@
 
 html, body, #root, .full { @apply w-full h-full }
 
-body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
+html, body { @apply bg-silver dark:bg-coal text-black dark:text-silver }
 
 body { font-family: 'Inter', sans-serif; }
+
+/*login && signup*/
+
+.loading { @apply full flex justify-center items-center text-lg font-bold }
+
+.auth { @apply full flex lg:flex-row justify-around lg:justify-center items-center sm:shadow-2xl text-black }
+
+.auth-img-container { @apply w-full md:h-full bg-sunset flex flex-col gap-8 justify-center items-center p-8 }
+
+.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 hidden lg:block }
+
+.auth-languages { @apply flex gap-2 }
+
+.auth-form { @apply full flex flex-col justify-center gap-4 lg:gap-5 p-12 md:p-24 bg-white } 
+
+.auth-title { @apply text-3xl font-black mb-4 }
+
+.auth-text { @apply text-lg h-16 }
+
+.auth-input { @apply w-full p-2 focus:outline-sunset border-solid border-2 border-ash rounded-xl }
+
+.auth-button { @apply w-full bg-black hover:bg-coal focus:bg-coal duration-200 text-white rounded-xl }
+
+.auth-redirect { @apply hover:underline cursor-pointer }
+
+.auth-reset { @apply hover:underline cursor-pointer w-fit }
 
 /*dashboard*/
 
@@ -47,9 +73,17 @@ body { font-family: 'Inter', sans-serif; }
 
 .today { @apply full flex flex-col pl-8 pr-8 md:pr-0 md:pt-8 }
 
+.tyme-sm { @apply w-fit flex flex-col items-start gap-2 text-left hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
+
+.tyme-sm-days { @apply text-sm text-gray }
+
+.tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
+
+.tyme-add { @apply p-2 rounded-2xl hover:bg-silver focus:bg-silver dark:hover:bg-coal dark:focus:bg-coal duration-200 }
+
 .tools { @apply h-full md:h-2/5 flex justify-center items-center md:pb-8 pt-8 pl-8 pr-8 md:pr-0 gap-4 md:gap-8 }
 
-.tools > a { @apply full flex flex-col justify-center items-center gap-2 p-2 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
+.tools > a { @apply full flex flex-col justify-center items-center p-4 text-sm md:text-base duration-200 bg-black hover:bg-coal focus:bg-coal dark:bg-white dark:hover:bg-lightgray dark:focus:bg-lightgray text-white dark:text-black rounded-2xl }
 
 .tools img { @apply w-8 md:w-10 }
 
@@ -61,21 +95,26 @@ body { font-family: 'Inter', sans-serif; }
 
 .incoming { @apply full flex flex-col overflow-y-auto gap-2 }
 
-/*tymes*/
+/*modal*/
 
-.tyme-sm { @apply w-fit flex flex-col items-start text-left hover:border-sunset focus:border-sunset py-2 px-4 duration-200 border-l-[6px] cursor-pointer border-solid border-lightgray }
+.modal {
+  background-color: rgba(120, 120, 120, 0.6);
+  @apply p-8 md:p-32 fixed top-0 left-0 full flex justify-center items-center z-10
+}
 
-.tyme-sm-days { @apply text-sm text-gray }
-
-.tyme-sm-title { @apply font-bold whitespace-nowrap text-ellipsis }
-
-.modal-content { @apply w-full z-10 flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white text-black p-6 md:p-12 rounded-2xl overflow-hidden }
+.modal-content { @apply w-full z-10 flex flex-col text-sm md:text-base gap-8 shadow-2xl bg-white dark:bg-black p-6 md:p-12 rounded-2xl overflow-hidden }
 
 .modal form { @apply full flex flex-col }
 
 .modal h1 { @apply text-xl md:text-2xl font-bold }
 
 .modal input { @apply bg-transparent p-2 md:p-4 w-fit focus:outline-none }
+
+.modal input[type="date"] { @apply bg-white p-2 text-black rounded-2xl }
+
+.modal select { @apply bg-transparent}
+
+.modal option { @apply bg-transparent }
 
 .modal label { @apply p-2 md:p-4 }
 
@@ -87,7 +126,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .modal-footer { @apply flex flex-col md:flex-row gap-4 }
 
-.modal-error { @apply p-2 md:p-4 text-[#f1121f] }
+.modal-error { @apply min-h-[2.5rem] p-2 text-[#f1121f] }
 
 .modal-close {
   margin-top: 10px;
@@ -102,37 +141,11 @@ body { font-family: 'Inter', sans-serif; }
   background-color: #aaa;
 }
 
-.tyme-sm-add { @apply p-2 rounded-2xl hover:bg-lightgray focus:bg-lightgray duration-200 }
+.modal-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
 
-.tyme-save { @apply w-full p-2 font-bold bg-sunset hover:bg-midDay focus:bg-midDay duration-200 text-black rounded-xl }
+.modal-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-coal focus:bg-silver dark:focus:bg-coal duration-200 }
 
-.tyme-cancel { @apply w-full p-2 rounded-xl hover:bg-silver dark:hover:bg-ash focus:bg-silver duration-200 }
-
-.tyme-delete { @apply w-full p-2 rounded-xl bg-black hover:bg-coal focus:bg-coal text-white }
-
-/*login && signup*/
-
-.auth { @apply w-full sm:w-fit flex lg:flex-row justify-around lg:justify-center items-center bg-sunset sm:shadow-2xl text-black }
-
-.auth-img-container { @apply w-96 h-full flex flex-col gap-8 justify-center items-center p-8 }
-
-.auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 hidden lg:block }
-
-.auth-languages { @apply flex gap-2 }
-
-.auth-form { @apply h-[32rem] sm:h-[36rem] flex flex-col gap-3 lg:gap-5 p-8 w-full sm:w-96 bg-white } 
-
-.auth-title { @apply text-3xl font-black }
-
-.auth-text { @apply text-lg h-16 }
-
-.auth-input { @apply w-full p-2 focus:outline-sunset border-solid border-2 border-ash rounded-xl }
-
-.auth-button { @apply w-full bg-black hover:bg-coal focus:bg-coal duration-200 text-white rounded-xl }
-
-.auth-redirect { @apply hover:underline cursor-pointer }
-
-.auth-reset { @apply hover:underline cursor-pointer w-fit }
+.modal-delete { @apply w-full p-2 rounded-xl bg-black dark:bg-white hover:bg-coal dark:hover:bg-lightgray focus:bg-coal dark:focus:bg-lightgray text-white dark:text-black duration-200 }
 
 /*verify*/
 
@@ -150,21 +163,31 @@ body { font-family: 'Inter', sans-serif; }
 
 /*settings*/
 
-.settings { @apply flex flex-col p-12 }
+.settings { @apply flex flex-col p-8 md:p-12 overflow-y-auto }
+
+.settings > * { @apply shrink-0 }
 
 .settings h1, .user h1 { @apply font-black text-3xl underline }
 
-.settings h2 { @apply font-bold text-2xl mt-8 }
+.settings h2 { @apply font-bold text-2xl mt-8 mb-2 }
 
-.settings-option { @apply w-full h-16 flex justify-between items-center gap-8 border-solid border-b-0 border-silver dark:border-gray p-2 }
+.settings-option { @apply w-full h-16 flex justify-between items-center gap-8 p-2 }
+
+.account-option { @apply w-full min-h-[4rem] flex flex-col md:flex-row md:items-center gap-2 md:gap-8 p-2 }
+
+.account-option p { @apply p-2 bg-white text-black border-2 border-solid border-lightgray rounded-2xl }
 
 .settings hr { @apply hidden md:block w-full }
 
 .settings label { @apply w-fit whitespace-nowrap }
 
-.settings input { @apply bg-transparent w-96 }
+.settings input { @apply p-2 bg-white border-2 border-solid border-lightgray rounded-2xl }
 
-.settings button { @apply bg-black text-white dark:bg-coal p-2 w-52 rounded-2xl }
+.drop { @apply flex flex-col p-4 mt-2 gap-2 md:gap-3  }
+
+.drop-flex { @apply flex flex-col md:flex-row gap-2 md:gap-3 bg-white dark:bg-black p-2 md:p-3 rounded-2xl }
+
+.drop-flex > div { @apply w-full flex flex-col justify-between gap-2 md:gap-3 }
 
 /*Notes*/
 
@@ -172,7 +195,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes-container { @apply full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-wrap gap-6 overflow-y-auto p-6 md:p-12 }
 
-.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-darkgray bg-white dark:bg-black p-2 md:p-4 rounded-2xl }
+.notes form { @apply h-64 flex flex-col gap-2 border-solid border-2 border-lightgray dark:border-gray bg-ash dark:bg-darkgray p-2 md:p-4 rounded-2xl }
 
 .notes-submit { @apply self-end p-2 rounded-2xl }
 
@@ -186,7 +209,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .notes textarea { @apply w-full h-full bg-transparent outline-none }
 
-.note { @apply h-64 rounded-2xl flex flex-col gap-4 bg-ash dark:bg-darkgray border-2 border-solid border-silver dark:border-coal p-2 md:p-4 }
+.note { @apply h-64 rounded-2xl flex flex-col gap-4 bg-white dark:bg-black border-2 border-solid border-silver dark:border-coal p-2 md:p-4 }
 
 .note p { @apply h-full overflow-y-auto break-words }
 
@@ -212,15 +235,27 @@ body { font-family: 'Inter', sans-serif; }
 
 .habit { @apply bg-silver hover:bg-lightgray focus:bg-lightgray dark:bg-darkgray duration-200 w-full flex justify-between p-3 md:p-6 rounded-2xl }
 
+.habit-day { @apply w-8 }
+
+.habit-all, .habit-day { @apply h-8 border-2 border-solid rounded-full }
+
+.habit-all { @apply px-2 }
+
 /*charts*/
 
 .charts { @apply flex flex-col }
 
-.charts-container { @apply full flex p-4 md:p-8 gap-8 }
+.charts input { @apply bg-transparent }
+
+.charts-container { @apply full flex flex-wrap justify-center text-black overflow-y-auto p-4 md:p-12 gap-12 }
 
 .charts canvas { width: 100% !important; }
 
-.chart { @apply w-1/3 flex flex-col gap-8 items-center justify-center }
+.chart { @apply bg-white rounded-2xl flex flex-col gap-8 p-4 items-center shrink-0 }
+
+.charts-subcontainer { @apply w-fit flex flex-col gap-8 }
+
+.tracking { @apply text-gray self-start text-sm }
 
 /*selects*/
 
@@ -258,20 +293,6 @@ body { font-family: 'Inter', sans-serif; }
   @apply dark:text-white;
 }
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  @apply p-8 md:p-32
-}
-
 input[type=checkbox]
 {
   /* Double-sized Checkboxes */
@@ -287,7 +308,7 @@ input[type=checkbox]
 
 .header-flex { @apply flex items-center gap-4 }
 
-.tool-header { @apply p-4 md:p-8 border-b-2 border-solid border-silver dark:border-coal }
+.tool-header { @apply p-4 md:p-8 border-b-2 border-solid border-lightgray dark:border-darkgray }
 
 .tool-header h1 { @apply text-xl md:text-3xl }
 
@@ -300,7 +321,7 @@ input[type=checkbox]
 
 ::-webkit-scrollbar
 {
-	width: 6px;
+	width: 8px;
 	background-color: #F5F5F5;
 }
 

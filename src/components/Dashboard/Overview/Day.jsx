@@ -1,38 +1,14 @@
 import { useState, useEffect, useContext, useRef } from "react"
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday } from 'date-fns'
 import { useTranslation } from 'react-i18next'
-import { getTymesInDay, addTymeFb, deleteTyme, addTyme } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { GlobalContext } from '../../../GlobalProvider'
 import Tyme from '../../Tyme'
 
 const Day = ({ day, closeDayModal }) => {
 
-  const user = useContext(AuthContext)
+  const { user, tymes } = useContext(GlobalContext)
 
   const { t, i18n } = useTranslation()
-
-  const [tymes, setTymes] = useState([])
-
-  //
-
-  const loadTymes = async (uid) => {
-    setTymes([])
-    const arr = []
-    getTymesInDay(uid, format(day, 'dd-MM-yyyy'), docs => {
-      docs.forEach(doc => {
-        const aux = {
-          ...doc.data(),
-          id: doc.id
-        }
-        arr.push(aux)
-      })
-      setTymes(arr)
-    })
-  }
-
-  useEffect(() => {
-    loadTymes(user.uid)
-  }, [user])
 
   //
 
@@ -45,11 +21,6 @@ const Day = ({ day, closeDayModal }) => {
       return 'rd'
     else
       return 'th'
-  }
-
-  const deleteThisTyme = (id) => {
-    deleteTyme(id)
-    loadTymes(user.uid)
   }
 
   //
@@ -65,7 +36,6 @@ const Day = ({ day, closeDayModal }) => {
 
   const closeModal = () => {
     setIsModalOpen(false)
-    loadTymes(user.uid)
   }
 
   //
@@ -73,7 +43,7 @@ const Day = ({ day, closeDayModal }) => {
   return (
     <div className="day-view full">
       <div className="header-flex">
-        <button className="back" onClick={() => closeDayModal()}><img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+        <button className="back" onClick={() => closeDayModal()}><img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
         <h1 className='text-3xl'>
           {t('date.day.' + day.getDay()) + ', '}
           {i18n.resolvedLanguage == 'es'
@@ -83,10 +53,10 @@ const Day = ({ day, closeDayModal }) => {
       </div>
       <button className="self-end project-add" onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
       <div className="tyme-container">
-        {tymes.map((tyme, index) => (
+        {tymes.filter(x => x.date == format(day, 'dd-MM-yyyy')).map((tyme, index) => (
           <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
             <p className="tyme-sm-title">{tyme.title}</p>
-            <p className="tyme-sm-body">{tyme.body}</p>
+            <p className="tyme-sm-body" dangerouslySetInnerHTML={{__html:tyme.body}}></p>
           </div>
         ))}
       </div>

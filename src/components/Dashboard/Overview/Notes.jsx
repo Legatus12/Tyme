@@ -1,21 +1,20 @@
 import { useState, useEffect,useContext } from "react"
 import { Link, Route, Routes } from 'react-router-dom'
-import { addNote, getNotes, deleteNoteFB } from "../../../../firebase"
-import { AuthContext } from '../../../AuthProvider'
+import { addNote, deleteNoteFB } from "../../../../firebase"
+import { GlobalContext } from '../../../GlobalProvider'
 import useMountEffect from '@restart/hooks/useMountEffect'
 import { useTranslation } from "react-i18next"
 
 const Notes = () => {
 
+  const { user, notes } = useContext(GlobalContext)
+
   const { t } = useTranslation()
 
-  const [notes, setNotes] = useState([])
-
   const [smth, setSmth] = useState(false)
-
   const [text, setText] = useState('')
 
-  const user = useContext(AuthContext)
+  //
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -23,38 +22,10 @@ const Notes = () => {
       const date = new Date()
       addNote(user.uid, text, date.getTime())
       setText('')
-      loadNotes(user.uid)
       setSmth(false)
     }
     
   }
-
-  const loadNotes = async (uid) => {
-    if (uid) {
-      const arr = []
-      getNotes(uid, (notes) => {
-        notes.forEach((note) => {
-          console.log(note.data())
-          const aux = {
-            text: note.data().text,
-            id: note.id,
-          }
-          arr.push(aux)
-        })
-        setNotes(arr) // Actualizar el estado de las notas aquí
-      })
-    }
-  }
-
-  const deleteNote = (id) => {
-    deleteNoteFB(id)
-    loadNotes(user.uid)
-  }
-  
-  useEffect(() => {
-    loadNotes(user.uid)
-  }, [user])
-
 
   const handleChange = (event) => {
     setText(event.target.value)
@@ -64,15 +35,19 @@ const Notes = () => {
       setSmth(false)
   }
 
-  useMountEffect(() => {
-    loadNotes()
-  })
+  const deleteNote = (id) =>{
+    if(confirm(t('confirmDelete'))) {
+      deleteNoteFB(id)
+    }
+  }
+
+  //
 
   return (
       <div className="notes full">
         <div className="header-flex tool-header">
           <Link className="back" to={'/dashboard/overview'} replace>
-            <img src={`/src/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+            <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
           </Link>
           <h1>{t('notes.title')}</h1>
         </div>
@@ -95,7 +70,7 @@ const Notes = () => {
                 <div className="note" key={note.id}>
                   <p>{note.text}</p>
                   <button className="notes-submit notes-delete" onClick={()=> deleteNote(note.id)}>
-                    <img src={`/src/img/delete${document.documentElement.classList.contains("dark") ? '' : ''}.png`} />  
+                    <img src={`/src/assets/img/delete${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />  
                   </button>
                 </div>
               )
@@ -107,56 +82,5 @@ const Notes = () => {
 
   )
 }
-/*
-function Form() {
-  //const [notes, setNotes] = ([])
-  const [values, setValues] = useState({
-    title: "",
-    text: "",
-  })
 
-  const  handleSubmit = async (evt) => {
-    evt.preventDefault()
-
-    await onSubmit(values)
-    
-  }
-
-  function handleChange(evt) {
-
-    const { target } = evt
-    const { name, value } = target
-
-    const newValues = {
-      ...values,
-      [name]: value,
-    }
-
-    // Sincroniza el estado de nuevo
-    setValues(newValues)
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="title">Title</label>
-      <input
-        id="title"
-        name="title"
-        type="title"
-        value={values.title}
-        onChange={handleChange}
-      />
-      <label htmlFor="text">Note</label>
-      <input
-        id="text"
-        name="text"
-        type="textarea"
-        value={values.text}
-        onChange={handleChange}
-      />
-      <button type="submit">Sign Up</button>
-    </form>
-  )
-}
-*/
 export default Notes

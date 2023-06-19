@@ -19,9 +19,11 @@ i18n
     resources: {
       es: {
         translation: {
+          loading: 'cargando...',
           mail: 'correo electrónico',
           pass: 'contraseña',
           cancel: 'cancelar',
+          confirmDelete: '¿Desea continuar con el borrado?',
           auth: {
             loginTitle: '¡Bienvenido!',
             loginIntro: 'Llegas justo a tiempo.',
@@ -49,13 +51,13 @@ i18n
             in: 'dentro de',
             day: 'día',
             days: 'días',
-            notes: 'Notas',
-            projects: 'Proyectos',
-            habits: 'Hábitos',
-            charts: 'Estadísticas'
           },
-          notifications: {
-            title: 'Notificaciones',
+          charts: {
+            title: 'Estadísticas',
+            tracking: 'Seguimiento de las úlimas 2 semanas',
+            project: 'proyecto',
+            habit: 'hábito',
+            tbp: 'tymes clasificados por proyectos'
           },
           settings: {
             title: 'Configuración',
@@ -66,6 +68,15 @@ i18n
             username: 'Nombre de usuario',
             mail: 'Correo electrónico',
             notifications: 'Notificaciones',
+            reset: 'cambiar contraseña',
+            newPassword: 'escribe la nueva contraseña...',
+            confirmPassword: 'confirma la nueva contraseña...',
+            signOut: 'cerrar sesión',
+            noMatch: 'La confirmación no coincide.',
+            oldPassword: 'contraseña actual...',
+            delete: 'eliminar cuenta',
+            resetSuccess: 'Contraseña actualizada con éxito.',
+            confirmDelete: '¿Está seguro de que desea borrar su cuenta?'
           },
           notes : {
             title: 'Notas',
@@ -78,12 +89,14 @@ i18n
             delete: 'eliminar solo el proyecto',
             deleteAll: 'eliminar proyecto y tymes',
             deleteThis: 'eliminar proyecto',
-            add: '+ crear un proyecto'
+            add: '+ crear un proyecto',
+            save: 'crear proyecto'
           },
           habits: {
             title: 'Hábitos',
             add: '+ crear un hábito',
             write: 'Escribe el nombre del hábito',
+            save: 'crear hábito'
           },
           lightMode: 'claro',
           darkMode: 'oscuro',
@@ -127,7 +140,8 @@ i18n
             invalidEmail: 'Correo electrónico inválido.',
             userDisabled: 'El usuario ha sido deshabilitado.',
             default: 'Ocurrió un error al iniciar sesión.',
-            alreadyInUse: 'Correo electrónico en uso.'
+            alreadyInUse: 'Correo electrónico en uso.',
+            weak: 'La nueva contraseña es demasiado corta.'
           },
           tyme: {
             withoutTitle: 'Sin título',
@@ -147,13 +161,144 @@ i18n
       },
       en: {
         translation: {
+          loading: 'loading...',
           mail: 'email',
           pass: 'password',
+          cancel: 'cancel',
+          confirmDelete: 'Do you wish to proceed with the deletion?',
           auth: {
-            welcome: 'Welcome!',
-            login: 'log in',
-            signup: 'sign up',
-          }
+            loginTitle: '¡Welcome!',
+            loginIntro: 'Just in time.',
+            login: 'Log in',
+            signupTitle: 'Register now',
+            signupIntro: "It's TYME to start!",
+            signup: 'create an account',
+            signupRedirect: "You still don't have an account?",
+            loginRedirect: 'You already have an account?',
+            google: 'continue with Google',
+            reset: '¿Have you forgotten your password?',
+            continue: 'send a recovery mail',
+            sent: 'the recovery mail has been sent'
+          },
+          verify: {
+            message: "To finish registration, click on the link we sent to your email. Once you verify your account, you will be able to access all the functions in our platform. If you don't recieve the recovery mail in a few minutes, check your spam folder and/or refresh.",
+            cancel: 'cancel process'
+          },
+          overview:{
+            title: 'General',
+            today: 'Today',
+            incoming: 'Coming soon',
+            todayMsg: '+ add a tyme',
+            incomingMsg: 'nothing on the horizon',
+            in: 'in',
+            day: 'a day',
+            days: 'days',
+          },
+          charts: {
+            title: 'Stats',
+            tracking: 'Last 2 weeks follow up',
+            project: 'project',
+            habit: 'habit',
+            tbp: 'tymes classified by projects'
+          },
+          settings: {
+            title: 'Settings',
+            preferences: 'Preferences',
+            theme: 'Theme',
+            language: 'Language',
+            account: 'Account',
+            username: 'Username',
+            mail: 'Email',
+            notifications: 'Notifications',
+            reset: 'change password',
+            newPassword: 'write your new password...',
+            confirmPassword: 'confirm your new password...',
+            signOut: 'log out',
+            noMatch: 'The confirmation does not match.',
+            oldPassword: 'current password...',
+            delete: 'delete account',
+            resetSuccess: 'Password updated successfully.',
+            confirmDelete: 'Are you sure you want to delete your account?'
+          },
+          notes : {
+            title: 'Notes',
+            write: 'Write something...',
+            save: 'save'
+          },
+          projects: {
+            title: 'Projects',
+            deleteMsg: 'Do you wish to delete the tymes associated with this project?',
+            delete: 'delete just the protect',
+            deleteAll: 'delete project and tymes',
+            deleteThis: 'delete project',
+            add: '+ create a project',
+            save: 'create project'
+          },
+          habits: {
+            title: 'Habits',
+            add: '+ create a habit',
+            write: 'Write the name of the habit',
+            save: 'create habit'
+          },
+          lightMode: 'light',
+          darkMode: 'dark',
+          date: {
+            day: {
+              0: 'Sunday',
+              1: 'Monday',
+              2: 'Tuesday',
+              3: 'Wednesday',
+              4: 'Thursday',
+              5: 'Friday',
+              6: 'Saturday'
+            },
+            d: {
+              0: 'D',
+              1: 'L',
+              2: 'M',
+              3: 'X',
+              4: 'J',
+              5: 'V',
+              6: 'S'
+            },
+            month: {
+              0: 'January',
+              1: 'February',
+              2: 'March',
+              3: 'April',
+              4: 'May',
+              5: 'June',
+              6: 'July',
+              7: 'August',
+              8: 'September',
+              9: 'October',
+              10: 'November',
+              11: 'December'
+            }
+          },
+          error: {
+            userNotFound: 'User not found.',
+            wrongPassword: 'Wrong password.',
+            invalidEmail: 'Invalid Email.',
+            userDisabled: 'The user has been disabled.',
+            default: 'An error has ocurred during log in.',
+            alreadyInUse: 'This email has already been used.',
+            weak: 'The new password is too short.'
+          },
+          tyme: {
+            withoutTitle: 'Without title',
+            withoutDesc: 'Add a description',
+            date: 'Date',
+            save: 'save changes',
+            add: 'create a tyme',
+            tag: 'project',
+            withoutProj: 'none',
+            close: 'close',
+            cancel: 'cancel',
+            delete: 'delete',
+            done: 'completed',
+            noTitle: 'It is necessary to add a title.'
+          },
         }
       }
     }
