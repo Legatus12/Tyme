@@ -15,6 +15,7 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null)
   const [selectedTyme, setSelectedTyme] = useState(null)
 
+  console.log(projects)
   //
 
   const handleSelectProject = (project) => {
@@ -73,13 +74,21 @@ const Projects = () => {
 
   const deleteProject = (deleteTymes) => {
     if(!deleteTymes){
-      deleteProjectFB(selectedProject.id)
+      if(confirm(t('confirmDelete'))) {
+        deleteProjectFB(selectedProject.id)
+        setShowAdd(false)
+
+      }
     }
     else{
-      deleteProjectFB(selectedProject.id)
-      deleteTymeByProject(user.uid, selectedProject.name)
+      if(confirm(t('confirmDelete'))) {
+        deleteProjectFB(selectedProject.id)
+        deleteTymeByProject(user.uid, selectedProject.name)
+        setShowAdd(false)
+      }
     }
     setSelectedProject(null)
+    console.log(selectedProject)
   }
 
   //
