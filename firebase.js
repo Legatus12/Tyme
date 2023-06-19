@@ -63,11 +63,24 @@ export const deleteNoteFB = (id) => {
 }
 
 export const addHabit = (uid, name) => addDoc(habitsRef, { uid: uid, name, completed: [], next: [], recur: [] })
-
+/**
 export const updateHabit = (id, habit) => {
   console.log(habit)
-  updateDoc(doc(db, 'habits', id), habit)
+  updateDoc(doc(db, 'habits', id))
 } 
+ */
+export const updateHabit = (id, habit) => {
+  const habitRef = doc(db, 'habits', id);
+  const updatedData = { name: habit.name }; // Nuevos datos con el campo "name" actualizado
+
+  return updateDoc(habitRef, updatedData)
+    .then(() => {
+      console.log('Documento actualizado correctamente');
+    })
+    .catch((error) => {
+      console.error('Error al actualizar el documento:', error);
+    });
+};
 
 export const getHabitById = (habitId, callback) => {
   const habitRef = doc(habitsRef, habitId)
