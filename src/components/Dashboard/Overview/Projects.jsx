@@ -15,11 +15,11 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null)
   const [selectedTyme, setSelectedTyme] = useState(null)
 
-  console.log(projects)
   //
 
   const handleSelectProject = (project) => {
     setSelectedProject(project)
+    console.log(project)
   }
 
   //
@@ -150,10 +150,10 @@ const Projects = () => {
                 <div className="modal-content" ref={modalRef}>
                   <p>{t('projects.deleteMsg')}</p>
                   <div className='modal-footer mt-auto'>
-                    <button className='tyme-delete' onClick={() => deleteProject(false)}>{t('projects.delete')}</button>
-                    <button className='tyme-save' onClick={() => deleteProject(true)}>{t('projects.deleteAll')}</button>
+                    <button className='modal-delete' onClick={() => deleteProject(false)}>{t('projects.delete')}</button>
+                    <button className='modal-save' onClick={() => deleteProject(true)}>{t('projects.deleteAll')}</button>
                   </div>
-                  <button className='tyme-cancel' onClick={() => setShowAdd(false)}>{t('tyme.cancel')}</button>
+                  <button className='modal-cancel' onClick={() => setShowAdd(false)}>{t('tyme.cancel')}</button>
                 </div>
               </div>
               : null

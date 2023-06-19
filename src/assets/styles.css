@@ -175,7 +175,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .account-option { @apply w-full min-h-[4rem] flex flex-col md:flex-row md:items-center gap-2 md:gap-8 p-2 }
 
-.account-option p { @apply p-2 bg-white border-2 border-solid border-lightgray rounded-2xl }
+.account-option p { @apply p-2 bg-white text-black border-2 border-solid border-lightgray rounded-2xl }
 
 .settings hr { @apply hidden md:block w-full }
 
@@ -247,7 +247,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .charts input { @apply bg-transparent }
 
-.charts-container { @apply full flex flex-wrap justify-center overflow-y-auto p-4 md:p-12 gap-12 }
+.charts-container { @apply full flex flex-wrap justify-center text-black overflow-y-auto p-4 md:p-12 gap-12 }
 
 .charts canvas { width: 100% !important; }
 
@@ -321,7 +321,7 @@ input[type=checkbox]
 
 ::-webkit-scrollbar
 {
-	width: 6px;
+	width: 8px;
 	background-color: #F5F5F5;
 }
 

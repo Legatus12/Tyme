@@ -1,9 +1,5 @@
-import { Menu, Transition } from '@headlessui/react'
 import { add, eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, startOfToday, startOfWeek } from 'date-fns'
 import { Fragment, useEffect, useState, useContext } from 'react'
-import { Link, Route } from 'react-router-dom'
-import { getTymes } from '../../../../firebase'
-import Day from './Day'
 import { useTranslation } from 'react-i18next'
 import { GlobalContext } from '../../../GlobalProvider'
 
@@ -13,45 +9,16 @@ function classNames(...classes) {
 
 export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
 
-  const { user } = useContext(GlobalContext)
+  const { user, tymes } = useContext(GlobalContext)
   
   const { t } = useTranslation()
 
-  const [tymesDates, setTymesDates] = useState([])
-  const [date, setDate] = useState(new Date())
   let today = startOfToday()
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
   //
 
-  const loadTymes = (uid) => {
-    setTymesDates([])
-    getTymes(uid, docs => {
-      const arr = []
-      docs.forEach(doc =>{
-        arr.push(doc.data().date)
-      })
-      setTymesDates(arr)
-    })
-    //console.log(today)
-
-  }
-
-  useEffect(() => {
-    loadTymes(user.uid);
-  }, [user])
-/**
-  const [dayModal, setDayModal] = useState(false)
-  let [selectedDay, setSelectedDay] = useState(today)
-
-  const openDayModal = (day) => {
-    setSelectedDay(day)
-    setDayModal(true)
-  }
-
-  const closeDayModal = () => setDayModal(false)
- */
   let days = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentMonth),
     end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
@@ -90,7 +57,7 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
           <div>{t('date.d.5')}</div>
           <div>{t('date.d.6')}</div>
         </div>
-        <div className="grid grid-cols-7 text-sm">
+        <div className="grid grid-cols-7 gap-1 text-sm">
           {days.map((day, dayIdx) => (
             <div
               key={day.toString()}
@@ -119,8 +86,8 @@ export default function Calendar({ openDayModal, closeDayModal, selectedDay }) {
                 </time>
               </button>
               <div className="w-full h-2 flex justify-center">
-                {tymesDates.some((tyme) =>
-                  tyme == format(day, 'dd-MM-yyyy')
+                {tymes.some((tyme) =>
+                  tyme.date == format(day, 'dd-MM-yyyy')
                 ) && (
                   <div className="w-2 h-2 rounded-full bg-sunset"></div>
                 )}
