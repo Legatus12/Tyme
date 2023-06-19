@@ -165,7 +165,7 @@ const GlobalProvider = ({ children }) => {
     loadingNotes
   }
 
-  if(loadingTymes || loadingProjects || loadingHabits || loadingNotes)
+  if((loadingTymes || loadingProjects || loadingHabits || loadingNotes) && user)
     return <div className='full flex justify-center items-center'>{t('loading')}</div>
   else return (
     <GlobalContext.Provider value={values}>

@@ -141,9 +141,7 @@ const Settings = () => {
               <p className='modal-error md:text-right'>{msg}</p>
               <button onClick={handleSubmit} className={`notes-submit ${smth ? 'notes-smth' : 'notes-none'}`}>{t('settings.reset')}</button>
             </div>
-            
           </div>
-          
         )}
       </div>
       <div className='drop'>
