@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme, getProjects, deleteTyme, updateTymeField } from "../../firebase"
+import { addTyme, updateTyme, deleteTyme, updateTymeField } from "../../firebase"
 import { GlobalContext } from '../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
@@ -57,7 +57,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
     if(title !== ''){
       if (tyme !== null) {
         let aux = { id: tyme.id, title: title, body: body, date: format(date, 'dd-MM-yyyy'), timestamp: date.getTime(), done: done }
-        typeof selectedProject !== 'undefined' ? aux.project = selectedProject : null
+        typeof selectedProject !== 'undefined' ? aux.project = selectedProject : ''
         updateTyme(tyme.id, aux)
       }
       else {
@@ -139,7 +139,7 @@ const ModalAddTyme = ({ tyme, day, isOpen, onClose }) => {
               <label className='p-4' htmlFor="date">{t('tyme.tag')}</label>
               <span className='mr-4'>-</span>
               <select id="project" className='bg-white' value={selectedProject} onChange={(e) => handleProjectChange(e.target.value)}>
-              <option value="">{t('tyme.withoutProj')}</option> {/* Agrega esta opción */}
+                <option value="">{t('tyme.withoutProj')}</option>
                 {projects.map((project, index) => (
                   <option key={index} value={project.name}>
                     {project.name}

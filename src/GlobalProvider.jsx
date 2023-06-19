@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { auth } from '../firebase'
-import { query, collection, where, onSnapshot } from 'firebase/firestore'
+import { query, collection, where, onSnapshot, orderBy } from 'firebase/firestore'
 import { db } from '../firebase'
+import { useTranslation } from 'react-i18next'
 
 const GlobalContext = createContext()
 
 const GlobalProvider = ({ children }) => {
+
+  const { t } = useTranslation()
 
   const [user, setUser] = useState(null)
   const [tymes, setTymes] = useState([])
@@ -27,6 +30,7 @@ const GlobalProvider = ({ children }) => {
           const unsubscribe = onSnapshot(query(collection(db, 'tymes'), where("uid", "==", uid)), (docs) => {
             const data = []
             docs.forEach((doc) => {
+              console.log(doc.data())
               data.push({ id: doc.id, ...doc.data() })
             })
             resolve(setTymes(data))
@@ -70,7 +74,7 @@ const GlobalProvider = ({ children }) => {
                 } catch (error) { console.log(error) }
               }
               await fetchNumbers()
-              data.push({ id: doc.id, ...doc.data(), number, done })
+              data.push({ id: doc.id, ...doc.data(), number, done, percentage: '' + ((done*100)/number) })
             })
             resolve(setProjects(data))
           })
@@ -113,7 +117,7 @@ const GlobalProvider = ({ children }) => {
     const fetchData = () => {
       try {
         return new Promise((resolve, reject) => {
-          const unsubscribe = onSnapshot(query(collection(db, 'notes'), where("uid", "==", uid)), (docs) => {
+          const unsubscribe = onSnapshot(query(collection(db, 'notes'), where("uid", "==", uid), orderBy('timestamp')), (docs) => {
             const data = []
             docs.forEach((doc) => {
               data.push({ id: doc.id, ...doc.data() })
@@ -162,7 +166,9 @@ const GlobalProvider = ({ children }) => {
     loadingNotes
   }
 
-  return (
+  if((loadingTymes || loadingProjects || loadingHabits || loadingNotes) && user)
+    return <div className='full flex justify-center items-center'>{t('loading')}</div>
+  else return (
     <GlobalContext.Provider value={values}>
       {children}
     </GlobalContext.Provider>
