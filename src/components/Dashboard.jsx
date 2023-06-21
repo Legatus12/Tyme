@@ -43,7 +43,7 @@ const Dashboard = () => {
             </div>
             
             <div className='dashboard-menu'>
-                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`../src/assets/img/${item.path}${document.documentElement.classList.contains("dark") ? '_dm' : '_dm'}.png`} className='w-8' /></abbr></Link>))}
+                {menu.map(item => (<Link key={item.path} to={item.path}><abbr className='no-underline' title={item.name}><img src={`/img/${item.path}${document.documentElement.classList.contains("dark") ? '_dm' : '_dm'}.png`} className='w-8' /></abbr></Link>))}
             </div>
 
         </div>

@@ -43,7 +43,7 @@ const Day = ({ day, closeDayModal }) => {
   return (
     <div className="day-view full">
       <div className="header-flex">
-        <button className="back" onClick={() => closeDayModal()}><img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+        <button className="back" onClick={() => closeDayModal()}><img src={`/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
         <h1 className='text-3xl'>
           {t('date.day.' + day.getDay()) + ', '}
           {i18n.resolvedLanguage == 'es'

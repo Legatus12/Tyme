@@ -12,7 +12,7 @@ const Verify = () => {
 
     if(user && !user.emailVerified) {return (
         <div className='verify full'>
-            <img src="../src/img/tyme.png" alt="TYME" className='w-48'/>
+            <img src="/img/tyme.png" alt="TYME" className='w-48'/>
             <p className='verify-message'>{t('verify.message')}</p>
             <button className='verify-button' onClick={() => user.delete()}>{t('verify.cancel')}</button>
         </div>

@@ -102,10 +102,10 @@ export function MiniCalendar({ selectedDay, habitId }) {
                         {t('date.month.' + firstDayCurrentMonth.getMonth())} {format(firstDayCurrentMonth, 'yyyy')}
                     </h2>
                     <button type="button" onClick={previousMonth} className="hover:bg-gray duration-200 rounded-full w-10 h-10 p-1 flex justify-center items-center">
-                        <img src="/src/assets/img/left.png" alt="" />
+                        <img src="/img/left.png" alt="" />
                     </button>
                     <button onClick={nextMonth} type="button" className="hover:bg-gray duration-200 rounded-full w-10 h-10 p-1 flex justify-center items-center">
-                        <img src="/src/assets/img/right.png" alt="" />
+                        <img src="/img/right.png" alt="" />
                     </button>
                 </div>
                 <div className="grid grid-cols-7 text-xs mt-4 leading-6 text-center text-silver">

@@ -175,7 +175,7 @@ const Login = () => {
     <div className='flex flex-col full'>
       <div className={`auth ${login ? 'flex-col lg:flex-row' : 'flex-col-reverse lg:flex-row-reverse'}`}>
         <div className='auth-img-container'>
-          <img src="../src/assets/img/tyme.png" alt="TYME" className='auth-img'/>
+          <img src="/img/tyme.png" alt="TYME" className='auth-img'/>
           {login ? (
             <p tabIndex={0} onClick={switchAuth} className='auth-redirect self-center'>{t('auth.signupRedirect')}</p>
           ) : (
@@ -233,7 +233,7 @@ const Login = () => {
               <hr className='w-full'/>
               <button onClick={signInWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
                 <p>{t('auth.google')}</p>
-                <img src="../src/assets/img/google.png" className='w-8'/>
+                <img src="/img/google.png" className='w-8'/>
               </button>
             </div>
           ) :  (

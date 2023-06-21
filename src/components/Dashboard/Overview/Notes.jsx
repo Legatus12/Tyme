@@ -47,7 +47,7 @@ const Notes = () => {
       <div className="notes full">
         <div className="header-flex tool-header">
           <Link className="back" to={'/dashboard/overview'} replace>
-            <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+            <img src={`/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
           </Link>
           <h1>{t('notes.title')}</h1>
         </div>
@@ -70,7 +70,7 @@ const Notes = () => {
                 <div className="note" key={note.id}>
                   <p>{note.text}</p>
                   <button className="notes-submit notes-delete" onClick={()=> deleteNote(note.id)}>
-                    <img src={`/src/assets/img/delete${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />  
+                    <img src={`/img/delete${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />  
                   </button>
                 </div>
               )

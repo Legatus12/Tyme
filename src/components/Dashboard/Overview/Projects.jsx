@@ -98,7 +98,7 @@ const Projects = () => {
     <div className='projects full'>
       <div className="header-flex tool-header">
         <Link className='back' to={'/dashboard/overview'} replace>
-          <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+          <img src={`/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
         <h1>{t('projects.title')}</h1>
       </div>
@@ -139,7 +139,7 @@ const Projects = () => {
     : (
       <div className='projects full'>
         <div className="header-flex tool-header">
-          <button onClick={() => setSelectedProject(null)} className="back" ><img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
+          <button onClick={() => setSelectedProject(null)} className="back" ><img src={`/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} /></button>
           <h1>{selectedProject.name}</h1>
         </div>
         <div className='full flex p-4 md:p-8'>

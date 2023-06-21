@@ -86,7 +86,7 @@ const Habits = () => {
     <div className="habits full">
       <div className="header-flex tool-header">
         <Link className="back" to={'/dashboard/overview'} replace>
-          <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+          <img src={`/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
         <h1>{t('habits.title')}</h1>
       </div>
@@ -103,7 +103,7 @@ const Habits = () => {
                   onChange={handleChange}
                   placeholder={t('habits.write')}
                 />
-                <button className="tyme-sm-add" type="submit">{t('habits.save')}</button>
+                <button className="modal-cancel" type="submit">{t('habits.save')}</button>
               </form>
             </div>
           </div>

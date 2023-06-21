@@ -17,7 +17,7 @@ const Charts = () => {
     <div className="charts full">
       <div className="header-flex tool-header">
         <Link className="back" to={'/dashboard/overview'} replace>
-          <img src={`/src/assets/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
+          <img src={`/img/back${document.documentElement.classList.contains("dark") ? '_dm' : ''}.png`} />
         </Link>
         <h1>{t('charts.title')}</h1>
       </div>
