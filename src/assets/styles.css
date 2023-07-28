@@ -14,15 +14,15 @@ body { font-family: 'Inter', sans-serif; }
 
 .loading { @apply full flex justify-center items-center text-lg font-bold }
 
-.auth { @apply full flex lg:flex-row justify-around lg:justify-center items-center sm:shadow-2xl text-black }
+.auth { @apply full flex lg:flex-row lg:justify-center items-center sm:shadow-2xl text-black }
 
-.auth-img-container { @apply w-full md:h-full bg-sunset flex flex-col gap-8 justify-center items-center p-8 }
+.auth-img-container { @apply w-full lg:h-full bg-sunset flex flex-col gap-8 justify-center items-center p-8 }
 
 .auth-img { @apply w-24 h-24 lg:w-64 lg:h-64 hidden lg:block }
 
 .auth-languages { @apply flex gap-2 }
 
-.auth-form { @apply full flex flex-col justify-center gap-4 lg:gap-5 p-12 md:p-24 bg-white } 
+.auth-form { @apply full flex flex-col justify-center gap-4 lg:gap-5 p-8 md:p-24 bg-white } 
 
 .auth-title { @apply text-3xl font-black mb-4 }
 

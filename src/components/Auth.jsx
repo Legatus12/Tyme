@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPer
 import { useTranslation } from 'react-i18next'
 import { Navigate } from 'react-router-dom'
 import { GlobalContext } from '../GlobalProvider'
+import LanguageSwitcher from './Dashboard/Settings/LanguageSwitcher'
 
 const Login = () => {
 
@@ -239,6 +240,8 @@ const Login = () => {
           ) :  (
             <div className='hidden'></div>
           )}
+          
+          <div className='self-center mt-4'><LanguageSwitcher /></div>
 
         </form>
       </div>
