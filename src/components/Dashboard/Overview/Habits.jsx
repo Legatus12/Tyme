@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef, useMountEffect } from "react"
 import { Link, Route, Routes } from 'react-router-dom'
-import { addHabit, deleteHabitFB } from "../../../../firebase"
+import { addHabit, deleteHabitFB } from "../../../../fb"
 import { GlobalContext } from '../../../GlobalProvider'
 import { useTranslation } from "react-i18next"
 import { ModalHabit } from './Habits/Habit'

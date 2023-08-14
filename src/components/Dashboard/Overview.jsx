@@ -133,14 +133,21 @@ const Overview = () => {
                 : t('date.month.' + date.getMonth()) + ' ' + date.getDate() + getOrdinal(date.getDate())}
               </p>
               <br />
-              <div className='tyme-container'>
+              <div className='tyme-container relative'>
                 {tymes.filter(x => x.date == format(date, 'dd-MM-yyyy')).map((tyme, index) => (
                 <div className='tyme-sm' key={index} tabIndex={0} onClick={() => openTyme(tyme)}>
                     <p className='tyme-sm-title'>{tyme.title}</p>
                     <p className='tyme-sm-body'>{tyme.body}</p>
                 </div>
                 ))}
-                <button className='tyme-add' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
+                <button className='tyme-add z-10' onClick={() => openTyme(null)}>{t('overview.todayMsg')}</button>
+                {tymes.filter(x => x.date == format(date, 'dd-MM-yyyy')).length < 1 && (
+                  <div className='hidden md:flex flex-col justify-center items-center absolute top-0 left-0 full'>
+                    <br />
+                    <img src="/img/sitting.png" className='w-32' />
+                    <p>{t('nothing')}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

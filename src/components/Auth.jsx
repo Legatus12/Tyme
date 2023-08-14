@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { auth } from '../../firebase'
+import { auth } from '../../fb'
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification  } from 'firebase/auth'
 import { useTranslation } from 'react-i18next'
 import { Navigate } from 'react-router-dom'
@@ -176,7 +176,7 @@ const Login = () => {
     <div className='flex flex-col full'>
       <div className={`auth ${login ? 'flex-col lg:flex-row' : 'flex-col-reverse lg:flex-row-reverse'}`}>
         <div className='auth-img-container'>
-          <img src="/img/tyme.png" alt="TYME" className='auth-img'/>
+          <img src={"/img/tyme.png"} alt="TYME" className='auth-img'/>
           {login ? (
             <p tabIndex={0} onClick={switchAuth} className='auth-redirect self-center'>{t('auth.signupRedirect')}</p>
           ) : (
@@ -234,7 +234,7 @@ const Login = () => {
               <hr className='w-full'/>
               <button onClick={signInWithGoogle} className='auth-button flex justify-center items-center gap-4 p-4'>
                 <p>{t('auth.google')}</p>
-                <img src="/img/google.png" className='w-8'/>
+                <img src={"/img/google.png"} className='w-8'/>
               </button>
             </div>
           ) :  (

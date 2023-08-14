@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate } from 'react-router-dom'
 import { GlobalContext } from '../GlobalProvider'
-import { auth } from '../../firebase'
+import { auth } from '../../fb'
 
 const Verify = () => {
 

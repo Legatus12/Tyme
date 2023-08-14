@@ -1,6 +1,6 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Auth from './components/Auth'
-import { auth } from '../firebase'
+import { auth } from '../fb'
 import { onAuthStateChanged } from 'firebase/auth'
 import Dashboard from './components/Dashboard'
 import { useState, createContext } from 'react'

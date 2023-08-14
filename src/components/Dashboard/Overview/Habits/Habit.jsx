@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { deleteHabitFB, handleRecurHabitDays, updateHabit } from "../../../../../firebase"
+import { deleteHabitFB, handleRecurHabitDays, updateHabit } from "../../../../../fb"
 import { GlobalContext } from '../../../../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { isSameDay } from 'date-fns'

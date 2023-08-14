@@ -3,7 +3,7 @@ import ThemeSwitcher from './settings/ThemeSwitcher'
 import LanguageSwitcher from './settings/LanguageSwitcher'
 import { useContext, useState } from 'react'
 import { GlobalContext } from '../../GlobalProvider'
-import { auth } from '../../../firebase'
+import { auth } from '../../../fb'
 import { updatePassword, deleteUser } from 'firebase/auth'
 import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth'
 

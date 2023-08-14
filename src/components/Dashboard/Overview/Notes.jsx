@@ -1,6 +1,6 @@
 import { useState, useEffect,useContext } from "react"
 import { Link, Route, Routes } from 'react-router-dom'
-import { addNote, deleteNoteFB } from "../../../../firebase"
+import { addNote, deleteNoteFB } from "../../../../fb"
 import { GlobalContext } from '../../../GlobalProvider'
 import useMountEffect from '@restart/hooks/useMountEffect'
 import { useTranslation } from "react-i18next"

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { auth } from '../firebase'
+import { auth } from '../fb'
 import { query, collection, where, onSnapshot, orderBy } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../fb'
 import { useTranslation } from 'react-i18next'
 
 const GlobalContext = createContext()

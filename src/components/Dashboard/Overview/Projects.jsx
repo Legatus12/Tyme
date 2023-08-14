@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
-import { addProject, deleteProjectFB, deleteTymeByProject } from "../../../../firebase"
+import { addProject, deleteProjectFB, deleteTymeByProject } from "../../../../fb"
 import { GlobalContext } from '../../../GlobalProvider'
 import Tyme from '../../Tyme'
 import { startOfToday } from 'date-fns'
@@ -59,16 +59,18 @@ const Projects = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if(projects.some(project => project.name === name)){
-      setmsgerror('No puedes añadir dos proyectos con el mismo nombre')
+    if(name == ""){
+      setmsgerror(t('error.undefinedProject'))
     }
-    else{
+    else if(projects.some(project => project.name === name)) {
+      setmsgerror(t('error.existingProject'))
+    }
+    else {
       addProject(user.uid, name)
       setName('')
       setShowAdd(false)
       setSelectedProject({ uid: user.uid, name: name })
     }
-
   }
 
   const handleChange = (event) => setName(event.target.value)
@@ -126,9 +128,8 @@ const Projects = () => {
                   onChange={handleChange}
                   placeholder={t('tyme.withoutTitle')}
                 />
-                <br />
-                <p className='modal-error'>{msgerror}</p>
-                <button className='tyme-sm-add' type="submit">{t('projects.save')}</button>
+                <p className='modal-error mb-4'>{msgerror}</p>
+                <button className='modal-cancel' type="submit">{t('projects.save')}</button>
               </form>
             </div>
           </div>

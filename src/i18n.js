@@ -24,6 +24,7 @@ i18n
           pass: 'contraseña',
           cancel: 'cancelar',
           confirmDelete: '¿Desea continuar con el borrado?',
+          nothing: 'Nada por hacer, relájate. ',
           auth: {
             loginTitle: '¡Bienvenido!',
             loginIntro: 'Llegas justo a tiempo.',
@@ -141,7 +142,9 @@ i18n
             userDisabled: 'El usuario ha sido deshabilitado.',
             default: 'Ocurrió un error al iniciar sesión.',
             alreadyInUse: 'Correo electrónico en uso.',
-            weak: 'La nueva contraseña es demasiado corta.'
+            weak: 'La nueva contraseña es demasiado corta.',
+            undefinedProject: "El proyecto necesita un nombre.",
+            existingProject: "No puedes tener dos proyectos con el mismo nombre."
           },
           tyme: {
             withoutTitle: 'Sin título',

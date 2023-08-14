@@ -247,7 +247,7 @@ body { font-family: 'Inter', sans-serif; }
 
 .charts input { @apply bg-transparent }
 
-.charts-container { @apply full flex flex-wrap justify-center text-black overflow-y-auto p-4 md:p-12 gap-12 }
+.charts-container { @apply full flex flex-wrap justify-center text-black overflow-y-auto p-8 md:p-12 gap-12 }
 
 .charts canvas { width: 100% !important; }
 

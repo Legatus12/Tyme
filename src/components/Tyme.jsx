@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import Select from 'react-select'
-import { addTyme, updateTyme, deleteTyme, updateTymeField } from "../../firebase"
+import { addTyme, updateTyme, deleteTyme, updateTymeField } from "../../fb"
 import { GlobalContext } from '../GlobalProvider'
 import { useTranslation } from 'react-i18next'
 import { add, eachDayOfInterval, endOfMonth, format, getDay, isEqual, isSameDay, isSameMonth, isToday, parse, parseISO, set, startOfToday } from 'date-fns'
