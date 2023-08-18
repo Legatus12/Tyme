@@ -1,12 +1,1 @@
-# Tyme
-Proyecto de final de grado de desarrollo de aplicaciones web. 
-
-# Install
-```
-npm install
-npm install -D tailwindcss
-npm install firebase
-npm i react-select
-npm i date-fns
-npm i @headlessui/react
-```
+TYME es una aplicación web que simplifica la forma en que gestionas tu agenda y tareas diarias. Diseñada para adaptarse perfectamente a tu estilo de vida ocupado, TYME ofrece una experiencia intuitiva y eficiente que te permite llevar un seguimiento de tus compromisos, actividades, proyectos y hábitos con facilidad. Con su enfoque en la simplicidad y la funcionalidad, TYME redefine la manera en que te relacionas con tu agenda digital, brindándote las herramientas esenciales para optimizar tu tiempo y alcanzar tus objetivos.
